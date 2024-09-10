@@ -7,11 +7,11 @@ app.use(cors());
 
 const db = require("./models/Users");
 
-// const usersRouter = require("./routes/User");
-// app.use("/login", usersRouter);
+const usersRouter = require("./routes/User");
+app.use("/user", usersRouter);
 
 // Initialize the database and then start the server
-db().then(() => {
+db.usersQuery().then(() => {
     // Once the database is initialized, start the server
     app.listen(5174, () => {
       console.log('Server is running on port 5174');

@@ -9,12 +9,12 @@ const usersQuery = () => {
         username VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
-        userClass ENUM('admin', 'moderator', 'user') NOT NULL,
-        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        userClass ENUM('admin', 'moderator', 'user') NOT NULL
       );
     `;
 
+    // createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     connection.query(createUsersTableQuery, (err, results) => {
       if (err) {
         reject('Error creating Users table:', err.stack);
@@ -94,4 +94,4 @@ const getUserByUsername = (username) => {
     });
   };
 
-module.exports = usersQuery;
+module.exports = {usersQuery, deleteUserById, insertUser, updateUserById, getUserByUsername};
