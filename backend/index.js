@@ -6,12 +6,52 @@ app.use(express.json());
 app.use(cors());
 
 const db = require("./models/Users");
+const planesDb = require("./models/Planes");
+const reservationsDb = require("./models/Reservation");
+const registered = require("./models/RegisteredUsers");
+const airportModel = require('./models/Airports');
+const aircraftModel = require('./models/Aircrafts');
+const aircraftModelModel = require('./models/AircraftsModels');
+const flightScheduleModel = require('./models/FlightSchedules');
+const adminDb = require('./models/Admins');
 
 const usersRouter = require("./routes/User");
 app.use("/user", usersRouter);
 
-// Initialize the database and then start the server
-db.usersQuery().then(() => {
+const registerRouter = require("./routes/RegisteredUsers");
+app.use("/register", registerRouter);
+
+const adminRouter = require("./routes/Admin");
+app.use("/admin", adminRouter);
+
+const modelsRouter = require("./routes/AircraftsModels");
+app.use("/models", modelsRouter);
+
+const aircraftRouter = require("./routes/Aircrafts");
+app.use("/aircraft", aircraftRouter);
+
+const scheduleRouter = require("./routes/FlightSchedules");
+app.use("/schedule", scheduleRouter);
+
+// app.use(express.json()); // to handle JSON body in requests
+// app.use('/auth', signupRoute);
+
+// const reserveRouter = require("./routes/Reservation");
+// app.use("/reserve", reserveRouter);
+
+// Initialize the databases and then start the server
+Promise.all([
+  db.usersQuery(),          // Initialize users
+  planesDb.planesQuery(),   // Initialize planes
+  aircraftModelModel.modelsQuery(),
+  aircraftModel.aircraftsQuery(),
+  flightScheduleModel.ScheduleQuery(),
+  reservationsDb.reservationQuery(), // Initialize reservations
+  registered.registeredQuery(), // Initialize registered users
+  airportModel.airportsQuery(),
+  adminDb.adminsQuery(),
+
+]).then(() => {
     // Once the database is initialized, start the server
     app.listen(5174, () => {
       console.log('Server is running on port 5174');
