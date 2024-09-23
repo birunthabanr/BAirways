@@ -105,20 +105,20 @@ DELIMITER ;
 --avoid deleting flight
 DELIMITER //
 
-CREATE TRIGGER before_flight_delete
-BEFORE DELETE ON Flights
-FOR EACH ROW
-BEGIN
-    DECLARE booking_count INT;
+-- CREATE TRIGGER before_flight_delete
+-- BEFORE DELETE ON Flights
+-- FOR EACH ROW
+-- BEGIN
+--     DECLARE booking_count INT;
 
-    -- Count active bookings for the flight being deleted
-    SELECT COUNT(*) INTO booking_count
-    FROM Bookings
-    WHERE flight_id = OLD.flight_id;
+--     -- Count active bookings for the flight being deleted
+--     SELECT COUNT(*) INTO booking_count
+--     FROM Bookings
+--     WHERE flight_id = OLD.flight_id;
 
-    IF booking_count > 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cannot delete flight with active bookings.';
-    END IF;
-END //
+--     IF booking_count > 0 THEN
+--         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cannot delete flight with active bookings.';
+--     END IF;
+-- END //
 
 DELIMITER ;
