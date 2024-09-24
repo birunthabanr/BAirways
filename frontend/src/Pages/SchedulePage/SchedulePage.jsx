@@ -31,7 +31,7 @@ const Schedule = ({ isAdmin }) => {
                     <Link to ="/book" className = "btn btn-success">Book</Link>
                 </td>
                 <td>
-                    <Link to ="/" className = "btn btn-success">Edit</Link>
+                    <Link to={`/edit/${item.Flight_ID}`} className="btn btn-success">Edit</Link>
                 </td>
             </tr>
         )
