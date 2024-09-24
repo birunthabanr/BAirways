@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {addSchedule, getAllFlightSchedules} = require("../models/FlightSchedules");
+const {addSchedule, getAllFlightSchedules, updateSchedule} = require("../models/FlightSchedules");
 
 router.post("/", async (req, res) => {
     const { Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By } = req.body;
@@ -23,5 +23,11 @@ router.get("/", async (req, res) => {
       res.send("Error fetching schedule");
     }
   });
+
+
+router.put("/:id", async (req,res) => {
+  const { Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By } = req.body;
+  await updateSchedule(Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By);
+});
 
 module.exports = router;

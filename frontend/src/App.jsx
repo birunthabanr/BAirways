@@ -6,6 +6,8 @@ import Footer from './components/Footer/Footer';
 import Loginpage from './components/LoginPage/Loginpage'; // Import the Loginpage component
 import SchedulePage from './Pages/SchedulePage/SchedulePage';
 import BookingPage from './Pages/BookingPage/BookingPage';
+import EditPage from './Pages/EditPage/EditPage';
+import AddSchedulePage from './Pages/AddSchedulePage/AddSchedulePage';
 import { AuthContext } from './helpers/AuthContext';
 
 const App = () => {
@@ -23,6 +25,8 @@ const App = () => {
           <Route path="/login" element={<Loginpage />} />
           <Route path="/schedule" element={<SchedulePage />} />
           <Route path="/book" element={<BookingPage />} />
+          <Route path="/edit/:id" element={<EditPage />} />
+          <Route path="/add-schedule" element={<AddSchedulePage />} />
           {/* Define other routes here */}
         </Routes>
         </div>

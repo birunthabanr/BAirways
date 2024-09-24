@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-
-
+import EditPage from '../EditPage/EditPage';
 
 const Schedule = ({ isAdmin }) => {
     const [flights, setFlights] = useState([]);
@@ -13,6 +12,10 @@ const Schedule = ({ isAdmin }) => {
 
     const handleEdit = (id) => {
         navigate(`/edit/${id}`); // Redirect to the edit page with flight ID
+    };
+
+    const handleAddSchedule = () => {
+        navigate('/add-schedule'); // Redirect to the add schedule page
     };
 
     // Fetch flight schedule data on component mount
@@ -77,7 +80,7 @@ const Schedule = ({ isAdmin }) => {
                         <div className='card'>
                             <div className = "card-header">
                                 <h4>Flight Schedule
-                                    <Link to="/" className ="btn btn-primary float-end">Add Schedule</Link>
+                                    <Link to="/add-schedule" className ="btn btn-primary float-end">Add Schedule</Link>
                                 </h4>
                             </div>
                             <div className='card-body'>
@@ -105,6 +108,9 @@ const Schedule = ({ isAdmin }) => {
                 </div>
             </div>
             
+            {/* <Router>
+                <Route path="/edit/:id" element={<EditPage />} />
+            </Router> */}
             {/* <table border="1">
                 <thead>
                     <tr>
