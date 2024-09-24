@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+
 
 const Schedule = ({ isAdmin }) => {
     const [flights, setFlights] = useState([]);
     const [editable, setEditable] = useState(null);
     const [schedule, setSchedule] = useState([]);
+
+    let navigate = useNavigate();
+
+    const handleEdit = (id) => {
+        navigate(`/edit/${id}`); // Redirect to the edit page with flight ID
+    };
 
     // Fetch flight schedule data on component mount
     useEffect(() => {
@@ -31,15 +39,18 @@ const Schedule = ({ isAdmin }) => {
                     <Link to ="/book" className = "btn btn-success">Book</Link>
                 </td>
                 <td>
-                    <Link to={`/edit/${item.Flight_ID}`} className="btn btn-success">Edit</Link>
+                    <button 
+                        className="btn btn-success" 
+                        onClick={() => handleEdit(item.Flight_ID)} // Use item.Flight_ID for navigation
+                    >
+                        Edit
+                    </button>
                 </td>
             </tr>
         )
     });
 
-    const handleEdit = (id) => {
-        setEditable(id);
-    };
+    
 
     const handleSave = (id) => {
         axios.put(`http://localhost:5174/api/schedule/${id}`, schedule)
