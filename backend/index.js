@@ -37,7 +37,7 @@ app.use("/schedule", scheduleRouter);
 // app.use('/auth', signupRoute);
 
 // const reserveRouter = require("./routes/Reservation");
-// app.use("/reserve", reserveRouter);
+// app.use("/reserve-seats", reserveRouter);
 
 // Initialize the databases and then start the server
 Promise.all([

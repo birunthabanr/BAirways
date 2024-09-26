@@ -8,6 +8,7 @@ import SchedulePage from './Pages/SchedulePage/SchedulePage';
 import BookingPage from './Pages/BookingPage/BookingPage';
 import EditPage from './Pages/EditPage/EditPage';
 import AddSchedulePage from './Pages/AddSchedulePage/AddSchedulePage';
+import AdminPage from './Pages/AdminPage/AdminPage';
 import { AuthContext } from './helpers/AuthContext';
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/book" element={<BookingPage />} />
           <Route path="/edit/:id" element={<EditPage />} />
           <Route path="/add-schedule" element={<AddSchedulePage />} />
+          <Route path = "/admin" element={<AdminPage />} />
           {/* Define other routes here */}
         </Routes>
         </div>
