@@ -34,10 +34,10 @@ GROUP BY Aircrafts.aircraft_type;
 DELIMITER //
 
 CREATE PROCEDURE CreateBooking(
-    IN p_flight_id INT,
-    IN p_passenger_id INT,
-    IN p_seat_number VARCHAR(10),
-    OUT p_booking_id INT
+    IN flight_id INT,
+    IN passenger_id INT,
+    IN seat_number VARCHAR(10),
+    OUT booking_id INT
 )
 BEGIN
     DECLARE seat_count INT;
@@ -45,17 +45,17 @@ BEGIN
     -- Check if the seat is already booked
     SELECT COUNT(*) INTO seat_count
     FROM Bookings
-    WHERE flight_id = p_flight_id AND seat_number = p_seat_number;
+    WHERE flight_id = flight_id AND seat_number = seat_number;
 
     IF seat_count > 0 THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Seat is already booked.';
     ELSE
         -- Insert the new booking
         INSERT INTO Bookings (flight_id, passenger_id, seat_number, booking_date, ticket_price)
-        VALUES (p_flight_id, p_passenger_id, p_seat_number, NOW(), 100.00);  -- Assuming a fixed price for simplicity
+        VALUES (flight_id, passenger_id, seat_number, NOW(), 100.00);  -- Assuming a fixed price for simplicity
 
         -- Get the booking ID of the newly created booking
-        SET p_booking_id = LAST_INSERT_ID();
+        SET booking_id = LAST_INSERT_ID();
     END IF;
 END //
 
@@ -66,7 +66,7 @@ DELIMITER ;
 DELIMITER //
 
 CREATE PROCEDURE CancelBooking(
-    IN p_booking_id INT
+    IN booking_id INT
 )
 BEGIN
     DECLARE seat_num VARCHAR(10);
@@ -75,10 +75,10 @@ BEGIN
     -- Get the seat number and flight ID of the booking to be cancelled
     SELECT seat_number, flight_id INTO seat_num, flight_id
     FROM Bookings
-    WHERE booking_id = p_booking_id;
+    WHERE booking_id = booking_id;
 
     -- Delete the booking
-    DELETE FROM Bookings WHERE booking_id = p_booking_id;
+    DELETE FROM Bookings WHERE booking_id = booking_id;
 
     -- Optional: Logic to notify the passenger about the cancellation can go here
 END //
