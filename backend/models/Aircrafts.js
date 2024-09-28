@@ -38,4 +38,21 @@ const insertAircraft = () => {
   });
 }
 
-module.exports = { aircraftsQuery, insertAircraft };
+const fetchAircraftById = (aircraftId) => {
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT model_id FROM aircrafts WHERE Aircraft_ID = ?';
+    connection.query(query, [aircraftId], (err, results) => {
+      if (err) {
+        reject('Error fetching aircraft: ' + err.stack);
+      } else if (results.length === 0) {
+        reject('Aircraft not found');
+      } else {
+        resolve(results[0].model_id); // return the model_id from the result
+      }
+    });
+  });
+};
+
+
+
+module.exports = { aircraftsQuery, insertAircraft, fetchAircraftById };

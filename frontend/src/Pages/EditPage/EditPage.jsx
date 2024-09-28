@@ -4,37 +4,52 @@ import axios from 'axios';
 import "./EditPage.css"
 
 const EditPage = () => {
-    const { id } = useParams(); // Get flight ID from the URL
-    const navigate = useNavigate();
-    const [flight, setFlight] = useState({
+    const { id } = useParams(); // Get flight ID from URL parameters
+    const [flightData, setFlightData] = useState({
         Aircraft_ID: '',
-        Flight_price: '',
-        Expected_arrival_date_time: '',
         Departure_date_time: '',
-        Created_By: ''
+        Expected_arrival_date_time: '',
+        Flight_price: '',
+        Created_By: '',
+        // Add more fields as necessary
     });
+    const navigate = useNavigate();
 
-    // Fetch the flight details when the component is mounted
+    // Fetch flight data on component mount
     useEffect(() => {
-        axios.get(`http://localhost:5174/schedule/${id}`)
-            .then(res => setFlight(res.data))
-            .catch(err => console.error(err));
+        const fetchFlightData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5174/schedule/${id}`);
+                console.log(response.data);
+                setFlightData(response.data);
+            } catch (error) {
+                console.error('Error fetching flight data:', error);
+                alert('Could not fetch flight data. Please try again.');
+            }
+        };
+        fetchFlightData();
     }, [id]);
 
-    // Handle form input change
+    // Handle form field changes
     const handleChange = (e) => {
-        setFlight({ ...flight, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFlightData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
     };
 
-    // Handle form submission to update the flight details
-    const handleSubmit = (e) => {
+    const handleSave = async (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:5174/schedule/${id}`, flight)
-            .then(res => {
-                alert('Flight details updated successfully');
-                // navigate('/'); // Redirect to schedule page after successful update
-            })
-            .catch(err => console.error(err));
+        try {
+            const response = await axios.put(`http://localhost:5174/schedule/${id}`, flightData);
+            console.log(response.data);
+            alert('Flight schedule updated successfully!');
+            navigate('/schedule');
+        } catch (error) {
+            console.error('Error updating flight schedule:', error);
+            alert('Could not update flight schedule. Please try again.');
+        }
     };
 
     return (
@@ -45,62 +60,57 @@ const EditPage = () => {
                     <label htmlFor="Aircraft_ID">Aircraft ID</label>
                     <input
                         type="text"
-                        className="form-control"
-                        id="Aircraft_ID"
                         name="Aircraft_ID"
-                        value={flight.Aircraft_ID}
+                        value={flightData.Aircraft_ID || ''} // Ensure default value is ''
                         onChange={handleChange}
+                        required
+                        className="form-control"
                     />
                 </div>
-
-                <div className="form-group">
-                    <label htmlFor="Flight_price">Flight Price</label>
+                <div className="mb-3">
+                    <label>Departure Date & Time</label>
                     <input
-                        type="text"
-                        className="form-control"
-                        id="Flight_price"
-                        name="Flight_price"
-                        value={flight.Flight_price}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="Expected_arrival_date_time">Expected Arrival Time</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="Expected_arrival_date_time"
-                        name="Expected_arrival_date_time"
-                        value={flight.Expected_arrival_date_time}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="Departure_date_time">Departure Time</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="Departure_date_time"
+                        type="datetime-local"
                         name="Departure_date_time"
-                        value={flight.Departure_date_time}
+                        value={flightData.Departure_date_time ? flightData.Departure_date_time.split('.')[0] : ''} // Check for undefined
                         onChange={handleChange}
+                        required
+                        className="form-control"
                     />
                 </div>
-
-                <div className="form-group">
-                    <label htmlFor="Created_By">Created By</label>
+                <div className="mb-3">
+                    <label>Expected Arrival Date & Time</label>
+                    <input
+                        type="datetime-local"
+                        name="Expected_arrival_date_time"
+                        value={flightData.Expected_arrival_date_time ? flightData.Expected_arrival_date_time.split('.')[0] : ''} // Check for undefined
+                        onChange={handleChange}
+                        required
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label>Flight Price</label>
+                    <input
+                        type="number"
+                        name="Flight_price"
+                        value={flightData.Flight_price || ''} // Ensure default value is ''
+                        onChange={handleChange}
+                        required
+                        className="form-control"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label>Created By</label>
                     <input
                         type="text"
-                        className="form-control"
-                        id="Created_By"
                         name="Created_By"
-                        value={flight.Created_By}
+                        value={flightData.Created_By || ''} // Ensure default value is ''
                         onChange={handleChange}
+                        required
+                        className="form-control"
                     />
                 </div>
-
                 <button type="submit" className="btn btn-primary">Save Changes</button>
             </form>
         </div>
