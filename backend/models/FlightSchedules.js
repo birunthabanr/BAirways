@@ -65,18 +65,24 @@ const addSchedule = (Aircraft_ID, Departure_date_time, Expected_arrival_date_tim
     });
   };
   
-  // Function to update a schedule
   const updateSchedule = (Flight_ID, scheduleData) => {
     return new Promise((resolve, reject) => {
       const { Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Modified_by } = scheduleData;
+  
       const updateScheduleQuery = `
-        UPDATE Airport 
-        SET Aircraft_ID = ?, Departure_date_time = ?, Expected_arrival_date_time = ?, Flight_price = ?, Modified_by = ?, Modified_time = NOW() 
+        UPDATE FlightSchedules 
+        SET 
+          Aircraft_ID = ?, 
+          Flight_price = ?, 
+          Departure_date_time = ?, 
+          Expected_arrival_date_time = ?, 
+          Modified_by = ?  -- Changed from Created_By to Modified_by
         WHERE Flight_ID = ?
       `;
+  
       connection.query(
         updateScheduleQuery, 
-        [Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Modified_by, Flight_ID], 
+        [Aircraft_ID, Flight_price, Departure_date_time, Expected_arrival_date_time, Modified_by, Flight_ID], // Use Flight_ID here
         (err, result) => {
           if (err) {
             reject('Error updating schedule: ' + err.stack);
@@ -88,7 +94,7 @@ const addSchedule = (Aircraft_ID, Departure_date_time, Expected_arrival_date_tim
       );
     });
   };
-
+  
   const getAllFlightSchedules = () => {
     return new Promise((resolve, reject) => {
       const getFlightSchedulesQuery = 'SELECT * FROM FlightSchedules';

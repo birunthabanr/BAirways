@@ -14,6 +14,16 @@ router.post("/", async (req, res) => {
     }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const schedule = await getAllFlightSchedules();
+    res.json(schedule);
+  } catch (err) {
+    console.error(err);
+    res.send("Error fetching schedule");
+  }
+});
+
 router.get("/", async (req, res) => {
     try {
       const schedule = await getAllFlightSchedules();
@@ -25,9 +35,17 @@ router.get("/", async (req, res) => {
   });
 
 
-router.put("/:id", async (req,res) => {
-  const { Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By } = req.body;
-  await updateSchedule(Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By);
-});
+  router.put("/:id", async (req, res) => { 
+    try {
+      const id = req.params.id;  // Get the id from request parameters
+      const scheduleData = req.body; // Get the whole body as scheduleData
+      await updateSchedule(id, scheduleData); // Pass id and scheduleData
+      res.send("Schedule updated successfully.");
+    } catch (error) {
+      console.error("Error updating schedule:", error);
+      res.status(500).send("Error updating schedule: " + error.message);
+    }
+  });
+  
 
 module.exports = router;

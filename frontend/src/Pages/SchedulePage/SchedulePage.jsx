@@ -11,12 +11,23 @@ const Schedule = ({ isAdmin }) => {
     let navigate = useNavigate();
 
     const handleEdit = (id) => {
-        navigate(`/edit/${id}`); // Redirect to the edit page with flight ID
+        navigate(`/edit/${id}`); // direct to the edit page with flight ID
     };
 
     const handleAddSchedule = () => {
-        navigate('/add-schedule'); // Redirect to the add schedule page
+        navigate('/add-schedule'); // direct to the add schedule page
     };
+     
+    const handleBook = async (aircraft_Id) => {
+        try {
+          const response = await axios.get(`http://localhost:5174/aircraft/${aircraft_Id}`);
+          const seatConfiguration = response.data; // This will contain economy, business, platinum seat counts
+          navigate('/book', { state: { seatConfiguration } });
+        } catch (error) {
+          console.error('Error fetching seat configuration', error);
+        }
+      };
+      
 
     // Fetch flight schedule data on component mount
     useEffect(() => {
@@ -39,7 +50,12 @@ const Schedule = ({ isAdmin }) => {
                 <td>{item.Departure_date_time}</td>
                 <td>{item.Created_By}</td>
                 <td>
-                    <Link to ="/book" className = "btn btn-success">Book</Link>
+                    <button 
+                    className="btn btn-success" 
+                    onClick={() => handleBook(item.Aircraft_ID)} // Pass Aircraft_ID to handleBook
+                    >
+                    Book
+                    </button>
                 </td>
                 <td>
                     <button 
