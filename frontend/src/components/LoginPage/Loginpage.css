@@ -100,8 +100,9 @@ form.sign-in-form {
   color: #333;
 }
 
+
 .input-field input::placeholder {
-  color: #aaa;
+  color: #333;
   font-weight: 500;
 }
 
@@ -235,12 +236,19 @@ form.sign-in-form {
 
 .btn.transparent {
   margin: 0;
+  display: flex;
+  justify-content: center;
+  padding-top: 5px;
   background: none;
   border: 2px solid #fff;
   width: 130px;
   height: 41px;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 18px;
+}
+.btn.transparent:hover {
+  background-color: #fff;
+  color: #000;
 }
 
 .right-panel .image,
@@ -415,3 +423,137 @@ form.sign-in-form {
     left: 50%;
   }
 }
+
+
+/**/
+
+/* Form container styling */
+.sign-up-form {
+  /* background: linear-gradient(135deg, #1f4037 0%, #99f2c8 100%); */
+  padding: 40px;
+  border-radius: 15px;
+  /* box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); */
+  max-width: 600px;
+  margin: 0 auto;
+  color: #fff;
+}
+
+.sign-up-form h2 {
+  margin-bottom: 20px;
+  color: #f9f9f9;
+  text-align: center;
+}
+
+/* Input field row for grouped inputs */
+/* .input-field-row {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+} */
+
+/* Input field styling */
+/* .input-field {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+} */
+
+/* .input-field i {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #ccc;
+  font-size: 18px;
+} */
+
+.LoginInput {
+  width: 100%;
+  padding: 12px 45px 12px 35px;
+  font-size: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #080707;
+  transition: all 0.3s ease;
+}
+
+.LoginInput:focus {
+  /* border-color: #00bfa6; */
+  /* box-shadow: 0 0 10px rgba(0, 191, 166, 0.5); */
+  /* color: #000; */
+}
+
+/* Fix for placeholder color contrast */
+.LoginInput::placeholder {
+  color: rgba(255, 255, 255, 0.9);  /* Brighter white for visibility */
+  opacity: 1; /* Ensures the placeholder remains visible */
+}
+
+.error-message {
+  color: #ffb3b3;
+  font-size: 13px;
+  position: absolute;
+  bottom: -18px;
+}
+
+/* Gender dropdown styling */
+.LoginInput select {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 12px 35px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 30px;
+}
+
+.LoginInput option {
+  color: #000; /* Ensures the options are visible when dropdown is expanded */
+}
+
+/* Ensure the date picker works */
+.LoginInput[type='date'] {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px 35px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 30px;
+}
+
+/* Submit button styling */
+input[type='submit'] {
+  background: #00bfa6;
+  border: 2px solid #00bfa6;
+  color: #fff;
+  cursor: pointer;
+  padding: 12px 30px;
+  border-radius: 30px;
+  text-align: center;
+  font-size: 18px;
+  transition: 0.3s ease;
+  display: block;
+  margin: 20px auto 0;
+}
+
+input[type='submit']:hover {
+  background: #fff;
+  color: #00bfa6;
+  border: 2px solid #fff;
+  /* box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .input-field-row {
+    flex-direction: column;
+  }
+
+  .input-field {
+    width: 100%;
+    color: #000;
+  }
+
+  .sign-up-form {
+    padding: 30px;
+  }
+}
+

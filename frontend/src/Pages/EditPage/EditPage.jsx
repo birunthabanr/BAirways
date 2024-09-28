@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import "./EditPage.css"
 
 const EditPage = () => {
     const { id } = useParams(); // Get flight ID from the URL
@@ -37,7 +38,7 @@ const EditPage = () => {
     };
 
     return (
-        <div className="contain">
+        <div className="contain2">
             <h2>Edit Flight {id}</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import "./SchedulePage.css"
 import EditPage from '../EditPage/EditPage';
 
 const Schedule = ({ isAdmin }) => {
@@ -30,7 +31,7 @@ const Schedule = ({ isAdmin }) => {
     var scheduleDetails = "";
     scheduleDetails = schedule.map((item, index) => {
         return (
-            <tr key = {index}>
+            <tr key = {index} className='data'>
                 <td>{item.Flight_ID}</td>
                 <td>{item.Aircraft_ID}</td>
                 <td>{item.Flight_price}</td>

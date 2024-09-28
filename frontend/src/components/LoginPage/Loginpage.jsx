@@ -242,7 +242,8 @@ function Loginpage() {
               city: "", gender: "", phone: ""
             }}
             validationSchema={signUpSchema}
-            onSubmit={handleLogInSubmit}
+            // onSubmit={handleLogInSubmit}
+            onSubmit={handleSignUpSubmit}
           >
             <Form className='sign-up-form'>
                 <h2 className='title text-4xl font-semibold text-gray-200'>Sign up</h2>
@@ -288,7 +289,7 @@ function Loginpage() {
 
               <div className='input-field'>
                 <i className="fas fa-calendar"></i>
-                <Field className='LoginInput' type="date" name="dob" placeholder="Date of Birth" />
+                <Field className='LoginInput' type="date" name="dob" placeholder="Date of Birth" style={{ color: 'black' }} />
                 <ErrorMessage name="dob" component="div" className="error-message" />
               </div>
               </div>
