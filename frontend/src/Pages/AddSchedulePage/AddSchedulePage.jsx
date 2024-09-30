@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import "./AddSchedulePage.css"
+
 
 const AddSchedulePage = () => {
     const [formData, setFormData] = useState({
@@ -37,7 +39,7 @@ const AddSchedulePage = () => {
     };
 
     return (
-        <div className="contain">
+        <div className="contain1">
             <h2>Add New Schedule</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
@@ -106,7 +108,7 @@ const AddSchedulePage = () => {
                         required
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">Add Schedule</button>
+                <button type="submit" className="btn-btn-primary">Add Schedule</button>
             </form>
         </div>
     );

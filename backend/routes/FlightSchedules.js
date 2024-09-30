@@ -6,7 +6,7 @@ router.post("/", async (req, res) => {
     const { Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By } = req.body;
 
     try {
-        await addSchedule(Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By, Created_By);
+        await addSchedule(Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By);
         res.json({ message: "Flight schedule created successfully!" });
     } catch (err) {
         console.error("Error creating flight schedule:", err);

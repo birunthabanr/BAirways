@@ -39,7 +39,8 @@ const AdminPage = () => {
     };
 
     return (
-        <div className="contain">
+        <div className='cont-body'>
+            <div className="contain0">
             <h1>Admin Dashboard</h1>
             <div className="button-container">
                 <button onClick={() => handleButtonClick('Passengers by Flight')}>Passengers by Flight</button>
@@ -103,6 +104,8 @@ const AdminPage = () => {
                     </div>
                 </div>
             )}
+        </div>
+
         </div>
     );
 };
