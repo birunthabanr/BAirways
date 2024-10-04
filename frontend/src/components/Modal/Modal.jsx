@@ -5,6 +5,8 @@ const Modal = ({ isOpen, onClose, title, onSubmit }) => {
     const [flightId, setFlightId] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [originId, setOriginId] = useState('');
+    const [destinationId, setDestinationId] = useState('');
 
     const handleSubmit = () => {
         if (title === 'Passengers by Flight' && flightId) {
@@ -12,6 +14,9 @@ const Modal = ({ isOpen, onClose, title, onSubmit }) => {
             onClose(); // Close the modal after submitting
         } else if (title === 'Passengers by Destination' && startDate && endDate) {
             onSubmit({ startDate, endDate });
+            onClose(); // Close the modal after submitting
+        } else if (title === 'Flights by Destination and Origin' && originId && destinationId) {
+            onSubmit({ originId, destinationId });
             onClose(); // Close the modal after submitting
         } else {
             alert('Please fill in all required fields.'); // Simple validation
@@ -45,6 +50,22 @@ const Modal = ({ isOpen, onClose, title, onSubmit }) => {
                             type="date" 
                             value={endDate} 
                             onChange={(e) => setEndDate(e.target.value)} 
+                        />
+                    </div>
+                )}
+                {title === 'Flights by Destination and Origin' && (
+                    <div>
+                        <input 
+                            type="text" 
+                            placeholder="Enter Origin Airport ID" 
+                            value={originId} 
+                            onChange={(e) => setOriginId(e.target.value)} 
+                        />
+                        <input 
+                            type="text" 
+                            placeholder="Enter Destination Airport ID" 
+                            value={destinationId} 
+                            onChange={(e) => setDestinationId(e.target.value)} 
                         />
                     </div>
                 )}
