@@ -21,13 +21,16 @@ const Schedule = ({ isAdmin }) => {
      
     const handleBook = async (aircraft_Id) => {
         try {
-          const response = await axios.get(`http://localhost:5174/aircraft/${aircraft_Id}`);
-          const seatConfiguration = response.data; // This will contain economy, business, platinum seat counts
-          navigate('/book', { state: { seatConfiguration } });
+            const response = await axios.get(`http://localhost:5174/aircraft/${aircraft_Id}`);
+            const seatConfiguration = response.data; // This will contain economy, business, platinum seat counts
+    
+            // Pass state correctly
+            navigate('/book', { state: { seatConfiguration } }); // Make sure to use `state` object
         } catch (error) {
-          console.error('Error fetching seat configuration', error);
+            console.error('Error fetching seat configuration', error);
         }
-      };
+    };
+    
       
 
     // Fetch flight schedule data on component mount
