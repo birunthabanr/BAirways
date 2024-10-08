@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import "./SchedulePage.css"
 import EditPage from '../EditPage/EditPage';
+import AdminNav from '../../components/AdminNav/AdminNav';
 
 const Schedule = ({ isAdmin }) => {
     const [flights, setFlights] = useState([]);
@@ -30,6 +31,15 @@ const Schedule = ({ isAdmin }) => {
             console.error('Error fetching seat configuration', error);
         }
     };
+
+
+    const handleRemove = (Flight_ID) => {
+         axios.delete(`http://localhost:5174/schedule/${Flight_ID}`);
+            setSchedule(schedule.filter((item) => item.Flight_ID !== Flight_ID));
+    };
+
+
+
     
       
 
@@ -56,9 +66,9 @@ const Schedule = ({ isAdmin }) => {
                 <td>
                     <button 
                     className="btn btn-success" 
-                    onClick={() => handleBook(item.Aircraft_ID)} // Pass Aircraft_ID to handleBook
+                    onClick={() => handleRemove(item.Flight_ID)} // Pass Aircraft_ID to handleBook
                     >
-                    Book
+                    Remove
                     </button>
                 </td>
                 <td>
@@ -94,6 +104,7 @@ const Schedule = ({ isAdmin }) => {
     return (
         <div>
             {/* <h1>Flight Schedule</h1> */}
+            <AdminNav />
             <div className ="contain">
                 <div className = "row">
                     <div className = "col-md-12">

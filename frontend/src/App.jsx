@@ -10,6 +10,8 @@ import EditPage from './Pages/EditPage/EditPage';
 import AddSchedulePage from './Pages/AddSchedulePage/AddSchedulePage';
 import AdminPage from './Pages/AdminPage/AdminPage';
 import { AuthContext } from './helpers/AuthContext';
+import AdminLogin from './Pages/Admin/AdminLogin/AdminLogin';
+import Dashbord from './Pages/Admin/Dashbord/Dashbord';
 
 const App = () => {
 
@@ -19,8 +21,9 @@ const App = () => {
     <Router>
       <div>
       <main className='min-h-screen flex flex-col bg-gradient-to-r from-slate-800 to-slate-950 text-white text-sm sm:text-base'>
-        <Navbar />
-        <div style={{ marginTop: '80px' }}>
+        {/* <Navbar /> */}
+        {/* <div style={{ marginTop: '80px' }}> */}
+        <div>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Loginpage />} />
@@ -29,6 +32,8 @@ const App = () => {
           <Route path="/edit/:id" element={<EditPage />} />
           <Route path="/add-schedule" element={<AddSchedulePage />} />
           <Route path = "/admin" element={<AdminPage />} />
+          <Route path = "/admin/login" element = {<AdminLogin />} />
+          <Route path = "/admin/dashboard" element = {<Dashbord/>} />
           {/* Define other routes here */}
         </Routes>
         </div>

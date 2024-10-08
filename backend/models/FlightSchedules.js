@@ -53,7 +53,7 @@ const addSchedule = (Aircraft_ID, Departure_date_time, Expected_arrival_date_tim
   // Function to delete a schedule by Flight_ID
   const deleteSchedule = (Flight_ID) => {
     return new Promise((resolve, reject) => {
-      const deleteScheduleQuery = 'DELETE FROM Airport WHERE Flight_ID = ?';
+      const deleteScheduleQuery = 'DELETE FROM flightschedules WHERE Flight_ID = ?';
       connection.query(deleteScheduleQuery, [Flight_ID], (err, result) => {
         if (err) {
           reject('Error deleting schedule: ' + err.stack);
