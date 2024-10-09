@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import "./SchedulePage.css"
-import EditPage from '../EditPage/EditPage';
-import AdminNav from '../../components/AdminNav/AdminNav';
+import "./Airplane.css"
+// import EditPage from '../EditPage/EditPage';
+import AdminNav from '../../../components/AdminNav/AdminNav';
 
-const Schedule = ({ isAdmin }) => {
+const Airplane = ({ isAdmin }) => {
     const [flights, setFlights] = useState([]);
     const [editable, setEditable] = useState(null);
-    const [schedule, setSchedule] = useState([]);
+    const [planes, setPlanes] = useState([]);
 
     let navigate = useNavigate();
 
@@ -33,9 +33,9 @@ const Schedule = ({ isAdmin }) => {
     };
 
 
-    const handleRemove = (Flight_ID) => {
-         axios.delete(`http://localhost:5174/schedule/${Flight_ID}`);
-            setSchedule(schedule.filter((item) => item.Flight_ID !== Flight_ID));
+    const handleRemove = (Aircraft_ID) => {
+         axios.delete(`http://localhost:5174/aircraft/${Aircraft_ID}`);
+            setPlanes(planes.filter((item) => item.Aircraft_ID !== Aircraft_ID));
     };
 
 
@@ -45,28 +45,26 @@ const Schedule = ({ isAdmin }) => {
 
     // Fetch flight schedule data on component mount
     useEffect(() => {
-        axios.get('http://localhost:5174/schedule').then(res => {
+        axios.get('http://localhost:5174/aircraft').then(res => {
             console.log(res);
-            setSchedule(res.data);
+            setPlanes(res.data);
         })
 
     }, []);
 
-    var scheduleDetails = "";
-    scheduleDetails = schedule.map((item, index) => {
+    var planeDetails = "";
+    planeDetails = planes.map((item, index) => {
         return (
             <tr key = {index} className='data'>
-                <td>{item.Flight_ID}</td>
                 <td>{item.Aircraft_ID}</td>
-                <td>{item.Flight_price}</td>
-                <td>{item.Flight_price}</td>
-                <td>{item.Expected_arrival_date_time}</td>
-                <td>{item.Departure_date_time}</td>
-                <td>{item.Created_By}</td>
+                <td>{item.Model_name}</td>
+                <td>{item.EconomyClassSeatCount}</td>
+                <td>{item.BusinessClassSeatCount}</td>
+                <td>{item.PlatinumClassSeatCount}</td>
                 <td>
                     <button 
                     className="btn btn-success" 
-                    onClick={() => handleRemove(item.Flight_ID)} // Pass Aircraft_ID to handleBook
+                    onClick={() => handleRemove(item.Aircraft_ID)} // Pass Aircraft_ID to handleBook
                     >
                     Remove
                     </button>
@@ -85,21 +83,21 @@ const Schedule = ({ isAdmin }) => {
 
     
 
-    const handleSave = (id) => {
-        axios.put(`http://localhost:5174/api/schedule/${id}`, schedule)
-            .then(res => {
-                alert(res.data);
-                setEditable(null);
-                // Refresh the table after saving
-                return axios.get('http://localhost:5174/schedule');
-            })
-            .then(res => setFlights(res.data))
-            .catch(err => console.error(err));
-    };
+    // const handleSave = (id) => {
+    //     axios.put(`http://localhost:5174/api/schedule/${id}`, schedule)
+    //         .then(res => {
+    //             alert(res.data);
+    //             setEditable(null);
+    //             // Refresh the table after saving
+    //             return axios.get('http://localhost:5174/schedule');
+    //         })
+    //         .then(res => setFlights(res.data))
+    //         .catch(err => console.error(err));
+    // };
 
-    const handleChange = (e, field) => {
-        setUpdatedFlight({ ...updatedFlight, [field]: e.target.value });
-    };
+    // const handleChange = (e, field) => {
+    //     setUpdatedFlight({ ...updatedFlight, [field]: e.target.value });
+    // };
 
     return (
         <div>
@@ -110,27 +108,25 @@ const Schedule = ({ isAdmin }) => {
                     <div className = "col-md-12">
                         <div className='card'>
                             <div className = "card-header">
-                                <h4>Flight Schedule
-                                    <Link to="/add-schedule" className ="btn btn-primary float-end">Add Schedule</Link>
+                                <h4>Aircrafts
+                                    <Link to="/admin/add-airplane" className ="btn btn-primary float-end">Add Aircraft</Link>
                                 </h4>
                             </div>
                             <div className='card-body'>
                                 <table className = "table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Route Code</th>
-                                            <th>Name of the Plane</th>
-                                            <th>Price</th>
-                                            <th>Route</th>
-                                            <th>Arrival Time</th>
-                                            <th>Landing Time</th>
-                                            <th>Created By</th>
-                                            <th>Book</th>
+                                            <th>Aircraft_ID</th>
+                                            <th>Name of Model</th>
+                                            <th>Economy Class Seat Count</th>
+                                            <th>Business Class Seat Count</th>
+                                            <th>Platinum Class Seat Count</th>
+                                            <th>Remove</th>
                                             <th>Edit</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {scheduleDetails}
+                                        {planeDetails}
                                     </tbody>
                                 </table>
                             </div>
@@ -228,4 +224,4 @@ const Schedule = ({ isAdmin }) => {
     );
 };
 
-export default Schedule;
+export default Airplane;

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {addSchedule, getAllFlightSchedules, updateSchedule} = require("../models/FlightSchedules");
+const {addSchedule, getAllFlightSchedules, updateSchedule,deleteSchedule} = require("../models/FlightSchedules");
 
 router.post("/", async (req, res) => {
     const { Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By } = req.body;
@@ -44,6 +44,18 @@ router.get("/", async (req, res) => {
     } catch (error) {
       console.error("Error updating schedule:", error);
       res.status(500).send("Error updating schedule: " + error.message);
+    }
+  });
+
+
+  router.delete("/:id", async (req, res) => {   //modified
+    try {
+      const id = req.params.id;
+      await deleteSchedule(id);
+      res.send("Schedule deleted successfully.");
+    } catch (error) {
+      console.error("Error deleting schedule:", error);
+      res.status(500).send("Error deleting schedule: " + error.message);
     }
   });
   
