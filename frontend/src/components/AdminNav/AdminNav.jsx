@@ -19,7 +19,7 @@ const AdminNav = () => {
         </div>
         <div className='links'>
         <a href="/admin/dashboard">Dashboard</a>
-        <a href="#">Airplane</a>
+        <a href="/admin/airplane">Airplane</a>
         <div 
             className="submenu" 
             onMouseEnter={handleMouseEnter} 
@@ -34,7 +34,7 @@ const AdminNav = () => {
             </div>
             )}
         </div>
-        <a href="/schedule">Flight Schedule</a>
+        <a href="/admin/schedule">Flight Schedule</a>
         </div>
         </div>
   );

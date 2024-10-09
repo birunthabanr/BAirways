@@ -15,9 +15,6 @@ const AdminLogin = () => {
 
   return (
     <div className='big'>
-      <div>
-        <AdminNav />
-      </div>
       <div className="login-container">
           <div className="login-box">
             <h2 className="login-title">Admin Login</h2>

@@ -12,6 +12,8 @@ import AdminPage from './Pages/AdminPage/AdminPage';
 import { AuthContext } from './helpers/AuthContext';
 import AdminLogin from './Pages/Admin/AdminLogin/AdminLogin';
 import Dashbord from './Pages/Admin/Dashbord/Dashbord';
+import Airplane from './Pages/Admin/Airplane/Airplane';
+import AddAirplane from './Pages/Admin/AddAirplane/AddAirplane';
 
 const App = () => {
 
@@ -27,13 +29,15 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Loginpage />} />
-          <Route path="/schedule" element={<SchedulePage />} />
+          <Route path="/admin/schedule" element={<SchedulePage />} />
           <Route path="/book" element={<BookingPage />} />
           <Route path="/edit/:id" element={<EditPage />} />
           <Route path="/add-schedule" element={<AddSchedulePage />} />
           <Route path = "/admin" element={<AdminPage />} />
           <Route path = "/admin/login" element = {<AdminLogin />} />
           <Route path = "/admin/dashboard" element = {<Dashbord/>} />
+          <Route path = "/admin/airplane" element = {<Airplane/>} />
+          <Route path = "/admin/add-airplane" element = {<AddAirplane/>} />
           {/* Define other routes here */}
         </Routes>
         </div>

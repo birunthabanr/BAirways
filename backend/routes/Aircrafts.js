@@ -1,18 +1,22 @@
 const express = require('express');
 const router =express.Router();
-const {insertAircraft, fetchAircraftById } = require("../models/Aircrafts");
+const {insertAircraft, fetchAircraftById ,fetchAllAircrafts,deleteAircraft} = require("../models/Aircrafts");
 const {fetchSeatConfiguration} = require("../models/AircraftsModels");
 // const connection = require('../database/connection');
 
 router.post('/', async (req, res) => {
-    const { modelId} =req.body;
+    const aircraft_Id =req.body.Aircraft_ID;
+    const model_name = req.body.Model_name;
 
     try {
-        await insertAircraft(modelId);
-        res.json({message:"Craft created successfully"});
+        const insertID = await insertAircraft(aircraft_Id,model_name);
+        res.status(200).json({ message: 'Aircraft added successfully', aircraftId: insertID });
+
+
     } catch (err) {
-        console.error("Error creating aircraft: ", error);
-        res.json({error: err.message});
+        console.error("Error creating aircraft: ", err);
+        // res.json({error: err.message});
+        res.status(400).json({ error: err.message });
     }
 });
 
@@ -46,6 +50,31 @@ router.get('/:id', async (req, res) => {
         res.status(500).send({ error: error.message });
     }
 });
+
+router.get('/', async (req, res) => {
+    try {
+        const aircrafts = await fetchAllAircrafts();
+        res.json(aircrafts);
+    } catch (error) {
+        console.error("Error fetching aircrafts: ", error);
+        res.json({ error: error.message });
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    const aircraftId = req.params.id;
+    
+    try {
+        await deleteAircraft(aircraftId);
+        
+        res.json({ message: 'Aircraft deleted successfully' });
+    } catch (error) {
+        console.error("Error deleting aircraft: ", error);
+        res.json({ error: error.message });
+    }
+});
+
+
 
 
 module.exports = router;
