@@ -1,6 +1,6 @@
 const express = require('express');
 const router =express.Router();
-const {insertAircraft, fetchAircraftById ,fetchAllAircrafts,deleteAircraft} = require("../models/Aircrafts");
+const {insertAircraft, fetchAircraftById ,fetchAllAircrafts,deleteAircraft,updateAircraft,countAircrafts} = require("../models/Aircrafts");
 const {fetchSeatConfiguration} = require("../models/AircraftsModels");
 // const connection = require('../database/connection');
 
@@ -74,6 +74,37 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+
+router.put('/:id' , async (req,res)=>{
+    const aircraftId = req.params.id;
+    const modelName = req.body.Model_name;
+    try{
+        await updateAircraft(aircraftId,modelName);
+        res.json({ message: 'Aircraft updated successfully' });
+    }
+    catch(error)
+    {
+        console.error("Error deleting aircraft: ", error);
+        res.json({ error: error.message });
+    }
+}
+    
+)
+
+router.get('/count/total' ,async(req,res)=>{
+   try{
+        const count = await countAircrafts();
+        res.json(count)
+
+   }
+   catch(error)
+    {
+        console.error("Error counting aircraft: ", error);
+        res.json({ error: error.message });
+    }
+
+
+})
 
 
 

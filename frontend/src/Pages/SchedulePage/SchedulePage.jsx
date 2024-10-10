@@ -12,8 +12,13 @@ const Schedule = ({ isAdmin }) => {
 
     let navigate = useNavigate();
 
-    const handleEdit = (id) => {
-        navigate(`/edit/${id}`); // direct to the edit page with flight ID
+    // const handleEdit = (id) => {
+    //     navigate(`/edit/${id}`); // direct to the edit page with flight ID
+    // };
+
+    const handleEdit = (flight) => {
+        // Pass the entire flight data to the edit page
+        navigate(`/edit/${flight.Flight_ID}`, { state: { flight } });
     };
 
     const handleAddSchedule = () => {
@@ -74,7 +79,8 @@ const Schedule = ({ isAdmin }) => {
                 <td>
                     <button 
                         className="btn btn-success" 
-                        onClick={() => handleEdit(item.Flight_ID)} // Use item.Flight_ID for navigation
+                        // onClick={() => handleEdit(item.Flight_ID)} // Use item.Flight_ID for navigation
+                        onClick={() => handleEdit(item)}
                     >
                         Edit
                     </button>

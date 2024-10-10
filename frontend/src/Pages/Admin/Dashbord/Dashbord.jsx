@@ -1,9 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
 import './Dashbord.css'; // CSS file for styling
 import AdminNav from '../../../components/AdminNav/AdminNav';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Dashbord = () => {
+   const [count, setCount] = useState(0);
+   const [flight_count, setFlight_count] = useState(0);
+   const [aircraft_count, setAircraft_count] = useState(0);
+   const [airport_count,setAirport_count] = useState(0);
+
+
+
+   useEffect(() => {
+    axios.get('http://localhost:5174/user/count').then(res => {
+        console.log(res);
+        setCount(res.data);
+    })
+
+
+    axios.get('http://localhost:5174/schedule/count').then(res => {
+        setFlight_count(res.data);
+    })
+
+    axios.get('http://localhost:5174/aircraft/count/total').then(res => {
+      setAircraft_count(res.data);
+     })
+
+    axios.get('http://localhost:5174/airport/count').then(res => {
+      setAirport_count(res.data);
+    });
+
+}, []);
+
+
+  // axios.get('http://localhost:5174/schedule/count')
+  // .then(res => setFlight_count(res.data))
+  // .catch(err => console.error(err));
+
+
   return (
     <div>
         <AdminNav />
@@ -12,12 +48,12 @@ const Dashbord = () => {
         <div className='line'>
           <div className="tile">
             <h2>Users</h2>
-            <p>75+</p>
+            <p>{count}+</p>
           </div>
-          <Link to='/schedule'>
+          <Link to='/admin/schedule'>
           <div className="tile">
             <h2>Flights</h2>
-            <p>60+</p>
+            <p>{flight_count}+</p>
           </div>
           </Link>
         </div>
@@ -25,12 +61,12 @@ const Dashbord = () => {
              <Link to = "/admin/airplane">
             <div className="tile">
               <h2>Airplanes</h2>
-              <p>30+</p>
+              <p>{aircraft_count}+</p>
             </div>
             </Link>
             <div className="tile">
               <h2>Airports</h2>
-              <p>20+</p>
+              <p>{airport_count}+</p>
             </div>
         </div>
       </div>

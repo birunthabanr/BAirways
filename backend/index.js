@@ -14,6 +14,7 @@ const aircraftModel = require('./models/Aircrafts');
 const aircraftModelModel = require('./models/AircraftsModels');
 const flightScheduleModel = require('./models/FlightSchedules');
 const adminDb = require('./models/Admins');
+const routes = require('./models/Route');
 
 const usersRouter = require("./routes/User");
 app.use("/user", usersRouter);
@@ -33,6 +34,14 @@ app.use("/aircraft", aircraftRouter);
 const scheduleRouter = require("./routes/FlightSchedules");
 app.use("/schedule", scheduleRouter);
 
+const flightRouter = require("./routes/Route");
+app.use("/route", flightRouter);
+
+const airportRouter = require("./routes/Airports");
+app.use("/airport", airportRouter);
+
+
+
 // app.use(express.json()); // to handle JSON body in requests
 // app.use('/auth', signupRoute);
 
@@ -50,6 +59,7 @@ Promise.all([
   registered.registeredQuery(), // Initialize registered users
   airportModel.airportsQuery(),
   adminDb.adminsQuery(),
+  routes.RouteQuery()
 
 ]).then(() => {
     // Once the database is initialized, start the server

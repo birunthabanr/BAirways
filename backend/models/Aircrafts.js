@@ -113,6 +113,46 @@ const deleteAircraft = (aircraftId) => {
   });
 };
 
+const updateAircraft = (aircraftId, modelName) => {
+  return new Promise((resolve, reject) => {
+    const selectModelIDQuery = 'SELECT Model_ID FROM models WHERE Model_name = ?';
+    const updateAircraftQuery = 'UPDATE aircrafts SET Model_ID = ? WHERE Aircraft_ID = ?';
+
+    connection.query(selectModelIDQuery, [modelName], (err, results) => {
+      if (err) {
+        reject('Error finding model ID: ' + err.stack);
+      } else if (results.length === 0) {
+        reject(`Invalid model name: ${modelName}`);
+      } else {
+        const modelId = results[0].Model_ID;
+        connection.query(updateAircraftQuery, [modelId, aircraftId], (err, results) => {
+          if (err) {
+            reject('Error updating aircraft: ' + err.stack);
+          } else {
+            resolve();
+          }
+        });
+      }
+    });
+  });
+};
 
 
-module.exports = { aircraftsQuery, insertAircraft, fetchAircraftById,fetchAllAircrafts,deleteAircraft };
+const countAircrafts = ()=>
+{
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT COUNT(*) AS total FROM aircrafts;
+    `;
+    connection.query(query, (err, results) => {
+      if (err) {
+        reject('Error counting users:', err.stack);
+      } else {
+        resolve(results[0].total);
+      }
+    });
+  });
+}
+
+
+module.exports = { aircraftsQuery, insertAircraft, fetchAircraftById,fetchAllAircrafts,deleteAircraft ,updateAircraft,countAircrafts};
