@@ -103,4 +103,19 @@ const deleteUserById = (id) => {
   });
 };
 
-module.exports = { usersQuery, insertUser, getUserByEmail, updateUserById, deleteUserById };
+const countUsers = () => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT COUNT(*) AS total FROM Users;
+    `;
+    connection.query(query, (err, results) => {
+      if (err) {
+        reject('Error counting users:', err.stack);
+      } else {
+        resolve(results[0].total);
+      }
+    });
+  });
+}
+
+module.exports = { usersQuery, insertUser, getUserByEmail, updateUserById, deleteUserById,countUsers };

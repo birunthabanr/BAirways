@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {insertUser, getUserByEmail} = require('../models/Users');
+const {insertUser, getUserByEmail,countUsers} = require('../models/Users');
 const {insertRegistered, getRegisteredByUsername} = require('../models/RegisteredUsers');
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -79,5 +79,19 @@ router.post("/signup", async (req, res) => {
 //         res.status(500).json({ error: "Failed to log in user." });
 //     }
 // });
+
+
+router.get("/count", async (req, res) => {
+    try {
+        const count = await countUsers();
+        res.json(count);
+    } catch (error) {
+        console.error("Error counting users:", error);
+        res.status(500).json({ error: "Failed to count users." });
+    }
+}); 
+
+
+
 
 module.exports = router;

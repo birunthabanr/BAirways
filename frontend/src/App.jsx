@@ -14,6 +14,11 @@ import AdminLogin from './Pages/Admin/AdminLogin/AdminLogin';
 import Dashbord from './Pages/Admin/Dashbord/Dashbord';
 import Airplane from './Pages/Admin/Airplane/Airplane';
 import AddAirplane from './Pages/Admin/AddAirplane/AddAirplane';
+import Model from './Pages/Admin/Model/Model';
+import AddModel from './Pages/Admin/AddModel/AddModel';
+import EditAirplane from './Pages/Admin/EditAirplane/EditAirplane';
+import EditModel from './Pages/Admin/EditModel/EditModel';
+
 
 const App = () => {
 
@@ -38,6 +43,10 @@ const App = () => {
           <Route path = "/admin/dashboard" element = {<Dashbord/>} />
           <Route path = "/admin/airplane" element = {<Airplane/>} />
           <Route path = "/admin/add-airplane" element = {<AddAirplane/>} />
+          <Route path = "/admin/model" element = {<Model/>} />  
+          <Route path = "/admin/add-model" element = {<AddModel/>} />
+          <Route path = "/admin/edit-airplane/:id" element = {<EditAirplane/>} />
+          <Route path = "/admin/edit-model/:id" element = {<EditModel/>}/>
           {/* Define other routes here */}
         </Routes>
         </div>

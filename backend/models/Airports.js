@@ -24,4 +24,20 @@ const airportsQuery = () => {
   });
 };
 
-module.exports = { airportsQuery };
+
+const countAirports = ()=>{
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT COUNT(*) AS total FROM airport;
+    `;
+    connection.query(query, (err, results) => {
+      if (err) {
+        reject('Error counting users:', err.stack);
+      } else {
+        resolve(results[0].total);
+      }
+    });
+  });
+}
+
+module.exports = { airportsQuery,countAirports };
