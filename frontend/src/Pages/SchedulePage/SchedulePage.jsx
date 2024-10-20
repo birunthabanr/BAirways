@@ -25,7 +25,7 @@ const Schedule = ({ isAdmin }) => {
             const seatConfiguration = response.data; // This will contain economy, business, platinum seat counts
     
             // Pass state correctly
-            navigate('/book', { state: { seatConfiguration } }); // Make sure to use `state` object
+            navigate(`/book/${aircraft_Id}`, { state: { seatConfiguration } }); // Make sure to use `state` object
         } catch (error) {
             console.error('Error fetching seat configuration', error);
         }

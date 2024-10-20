@@ -10,6 +10,7 @@ import EditPage from './Pages/EditPage/EditPage';
 import AddSchedulePage from './Pages/AddSchedulePage/AddSchedulePage';
 import AdminPage from './Pages/AdminPage/AdminPage';
 import { AuthContext } from './helpers/AuthContext';
+import SeatBooking from './Pages/SeatBooking/SeatBooking';
 
 const App = () => {
 
@@ -25,7 +26,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Loginpage />} />
           <Route path="/schedule" element={<SchedulePage />} />
-          <Route path="/book" element={<BookingPage />} />
+          <Route path="/book/:aircraftId" element={<SeatBooking />} />
           <Route path="/edit/:id" element={<EditPage />} />
           <Route path="/add-schedule" element={<AddSchedulePage />} />
           <Route path = "/admin" element={<AdminPage />} />
