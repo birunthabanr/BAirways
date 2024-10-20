@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {addSchedule, getAllFlightSchedules, updateSchedule} = require("../models/FlightSchedules");
+const {addSchedule, getAllFlightSchedules, updateSchedule,deleteSchedule,countFlightSchedules} = require("../models/FlightSchedules");
 
 router.post("/", async (req, res) => {
     const { Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By } = req.body;
@@ -14,15 +14,15 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.get("/:id", async (req, res) => {
-  try {
-    const schedule = await getAllFlightSchedules();
-    res.json(schedule);
-  } catch (err) {
-    console.error(err);
-    res.send("Error fetching schedule");
-  }
-});
+// router.get("/:id", async (req, res) => {
+//   try {
+//     const schedule = await getAllFlightSchedules();
+//     res.json(schedule);
+//   } catch (err) {
+//     console.error(err);
+//     res.send("Error fetching schedule");
+//   }
+// });
 
 router.get("/", async (req, res) => {
     try {
@@ -46,6 +46,27 @@ router.get("/", async (req, res) => {
       res.status(500).send("Error updating schedule: " + error.message);
     }
   });
+
+
+  router.delete("/:id", async (req, res) => {   //modified
+    try {
+      const id = req.params.id;
+      await deleteSchedule(id);
+      res.send("Schedule deleted successfully.");
+    } catch (error) {
+      console.error("Error deleting schedule:", error);
+      res.status(500).send("Error deleting schedule: " + error.message);
+    }
+  });
   
+  router.get('/count', async (req, res) => {
+    try {
+        const count = await countFlightSchedules();
+        res.json(count);
+    } catch (error) {
+        console.error("Error counting users:", error);
+        res.status(500).json({ error: "Failed to count users." });
+    }
+} );
 
 module.exports = router;

@@ -55,4 +55,36 @@ const fetchSeatConfiguration = (modelId) => {
   });
 };
 
-module.exports = { modelsQuery, insertModel, fetchSeatConfiguration };
+const fetchAllModels = () => {
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT * FROM Models';
+    connection.query(query, (err, results) => {
+      if (err) {
+        reject('Error fetching all models: ' + err.stack);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+};
+
+const deleteModel = (modelId) => {
+  return new Promise((resolve, reject) => {
+    const deleteModelQuery = 'DELETE FROM Models WHERE Model_ID = ?';
+    connection.query(deleteModelQuery, [modelId], (err, results) => {
+      if (err) {
+        reject('Error deleting model: ' + err.stack);
+      } else if (results.affectedRows === 0) {
+        reject('Model not found');
+      } else {
+        console.log('Model deleted successfully.');
+        resolve(results);
+      }
+    });
+  });
+};
+
+
+
+
+module.exports = { modelsQuery, insertModel, fetchSeatConfiguration,fetchAllModels,deleteModel };

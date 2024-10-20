@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import Navbar from '../../../components/Navbar/Navbar';
 
 const Hero = () => {
   const navigate = useNavigate(); // Initialize navigate
@@ -24,6 +25,7 @@ const Hero = () => {
 
   return (
     <div className='w-full h-[calc(100vh-8ch)] lg:ps-28 md:ps-16 sm:ps-7 ps-4 mt-[8ch] flex items-center justify-center flex-col hero relative'>
+      <Navbar />
       <div className="flex-1 w-full flex items-stretch justify-between gap-12 pb-10">
         <motion.div
           className="w-[35%] h-auto rounded-md flex justify-center flex-col space-y-14"

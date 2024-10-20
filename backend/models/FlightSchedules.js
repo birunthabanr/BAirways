@@ -53,7 +53,7 @@ const addSchedule = (Aircraft_ID, Departure_date_time, Expected_arrival_date_tim
   // Function to delete a schedule by Flight_ID
   const deleteSchedule = (Flight_ID) => {
     return new Promise((resolve, reject) => {
-      const deleteScheduleQuery = 'DELETE FROM Airport WHERE Flight_ID = ?';
+      const deleteScheduleQuery = 'DELETE FROM flightschedules WHERE Flight_ID = ?';
       connection.query(deleteScheduleQuery, [Flight_ID], (err, result) => {
         if (err) {
           reject('Error deleting schedule: ' + err.stack);
@@ -67,8 +67,13 @@ const addSchedule = (Aircraft_ID, Departure_date_time, Expected_arrival_date_tim
   
   const updateSchedule = (Flight_ID, scheduleData) => {
     return new Promise((resolve, reject) => {
-      const { Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Modified_by } = scheduleData;
-  
+      // const { Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Modified_by } = scheduleData;
+      const Aircraft_ID = scheduleData.Aircraft_ID;
+      const Departure_date_time = scheduleData.Departure_date_time;
+      const Expected_arrival_date_time = scheduleData.Expected_arrival_date_time;
+      const Flight_price = scheduleData.Flight_price;
+      const Modified_by = scheduleData.Modified_by;
+
       const updateScheduleQuery = `
         UPDATE FlightSchedules 
         SET 
@@ -76,7 +81,7 @@ const addSchedule = (Aircraft_ID, Departure_date_time, Expected_arrival_date_tim
           Flight_price = ?, 
           Departure_date_time = ?, 
           Expected_arrival_date_time = ?, 
-          Modified_by = ?  -- Changed from Created_By to Modified_by
+          Modified_by = ?   
         WHERE Flight_ID = ?
       `;
   
@@ -115,6 +120,22 @@ const addSchedule = (Aircraft_ID, Departure_date_time, Expected_arrival_date_tim
       });
     });
   };
+
+
+  const countFlightSchedules = () => {
+    return new Promise((resolve, reject) => {
+      const countFlightSchedulesQuery = 'SELECT COUNT(*) as count FROM FlightSchedules';
+      connection.query(countFlightSchedulesQuery, (err, result) => {
+        if (err) {
+          reject('Error counting flight schedules: ' + err.stack);
+        } else {
+          console.log('Flight schedules counted successfully.');
+          console.log(result);
+          resolve(result[0].count);
+        }
+      });
+    });
+  };
   
 
   module.exports = {
@@ -122,5 +143,7 @@ const addSchedule = (Aircraft_ID, Departure_date_time, Expected_arrival_date_tim
     addSchedule,
     deleteSchedule,
     updateSchedule, 
-    getAllFlightSchedules
+    getAllFlightSchedules,
+    countFlightSchedules
+
   };

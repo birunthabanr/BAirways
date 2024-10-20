@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import "./AddSchedulePage.css"
-import AdminNav from '../../components/AdminNav/AdminNav';
+import "./AddAirplane.css"
 
 
-const AddSchedulePage = () => {
+const AddAirplane = () => {
     const [formData, setFormData] = useState({
-        Flight_ID: '',
         Aircraft_ID: '',
-        Flight_price: '',
-        Expected_arrival_date_time: '',
-        Departure_date_time: '',
-        Created_By: '',
+        Model_name: '',
     });
 
     const navigate = useNavigate();
@@ -23,39 +18,32 @@ const AddSchedulePage = () => {
             ...formData,
             [e.target.name]: e.target.value,
         });
-    };
+    };``
 
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5174/schedule', formData)
+        axios.post('http://localhost:5174/aircraft', formData)
             .then(res => {
-                alert('Schedule added successfully!');
-                navigate('/admin/schedule'); // Redirect to schedule list page after successful addition
+                if(res.status === 400){
+                    alert('Model name not found in the models table.');
+                }
+                else
+                {
+                alert('Craft added successfully!');
+                navigate('/admin/airplane');
+                } // Redirect to schedule list page after successful addition
             })
             .catch(err => {
                 console.error(err);
-                alert('Error adding schedule');
+                alert('Error adding Aircraft');
             });
     };
 
     return (
-        <div>
-            <AdminNav />
         <div className="contain1">
-            <h2>Add New Schedule</h2>
+            <h2>Add New Aircraft</h2>
             <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label className="form-label">Flight ID</label>
-                    <input 
-                        type="text" 
-                        className="form-control"
-                        name="Flight_ID"
-                        value={formData.Flight_ID}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
                 <div className="mb-3">
                     <label className="form-label">Aircraft ID</label>
                     <input 
@@ -68,6 +56,17 @@ const AddSchedulePage = () => {
                     />
                 </div>
                 <div className="mb-3">
+                    <label className="form-label">Model_name</label>
+                    <input 
+                        type="text" 
+                        className="form-control"
+                        name="Model_name"
+                        value={formData.Model_name}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                {/* <div className="mb-3">
                     <label className="form-label">Flight Price</label>
                     <input 
                         type="number" 
@@ -110,12 +109,11 @@ const AddSchedulePage = () => {
                         onChange={handleChange}
                         required
                     />
-                </div>
-                <button type="submit" className="btn-btn-primary">Add Schedule</button>
+                </div> */}
+                <button type="submit" className="btn-btn-primary">Add Aircraft</button>
             </form>
-        </div>
         </div>
     );
 };
 
-export default AddSchedulePage;
+export default AddAirplane;
