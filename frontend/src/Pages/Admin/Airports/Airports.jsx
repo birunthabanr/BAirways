@@ -84,14 +84,6 @@ const Airports = ({ isAdmin }) => {
                         Edit
                     </button>
                 </td>
-                <td>
-                <button 
-                        className="btn btn-success" 
-                        onClick={() => handleBook(item)} // Use item.Flight_ID for navigation
-                    >
-                        Book
-                    </button>
-                </td>
             </tr>
         )
     });
@@ -122,7 +114,6 @@ const Airports = ({ isAdmin }) => {
                                             <th>City</th>
                                             <th>Remove</th>
                                             <th>Edit</th>
-                                            <th>Book</th>
                                         </tr>
                                     </thead>
                                     <tbody>
