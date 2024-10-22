@@ -85,6 +85,14 @@ const Schedule = ({ isAdmin }) => {
                         Edit
                     </button>
                 </td>
+                <td>
+                <button 
+                        className="btn btn-success" 
+                        onClick={() => handleBook(item)} // Use item.Flight_ID for navigation
+                    >
+                        Book
+                    </button>
+                </td>
             </tr>
         )
     });
@@ -133,6 +141,7 @@ const Schedule = ({ isAdmin }) => {
                                             <th>Created By</th>
                                             <th>Book</th>
                                             <th>Edit</th>
+                                            <th>Book</th>
                                         </tr>
                                     </thead>
                                     <tbody>

@@ -18,6 +18,8 @@ import Model from './Pages/Admin/Model/Model';
 import AddModel from './Pages/Admin/AddModel/AddModel';
 import EditAirplane from './Pages/Admin/EditAirplane/EditAirplane';
 import EditModel from './Pages/Admin/EditModel/EditModel';
+import Airports from './Pages/Admin/Airports/Airports';
+import AddAirports from './Pages/Admin/AddAirpots/AddAirports';
 
 
 const App = () => {
@@ -35,6 +37,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Loginpage />} />
           <Route path="/admin/schedule" element={<SchedulePage />} />
+          <Route path ="/schedule" element={<SchedulePage/>} />
           <Route path="/book" element={<BookingPage />} />
           <Route path="/edit/:id" element={<EditPage />} />
           <Route path="/add-schedule" element={<AddSchedulePage />} />
@@ -47,6 +50,8 @@ const App = () => {
           <Route path = "/admin/add-model" element = {<AddModel/>} />
           <Route path = "/admin/edit-airplane/:id" element = {<EditAirplane/>} />
           <Route path = "/admin/edit-model/:id" element = {<EditModel/>}/>
+          <Route path = "/admin/airport" element = {<Airports/>}/>
+          <Route path = "/admin/add-airport" element = {<AddAirports/>}/>
           {/* Define other routes here */}
         </Routes>
         </div>

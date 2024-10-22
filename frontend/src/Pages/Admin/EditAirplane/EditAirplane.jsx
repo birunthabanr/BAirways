@@ -14,6 +14,7 @@ const EditAirplane = () => {
 
     // If data is passed from the previous page, use it. Otherwise, fetch from API.
     useEffect(() => {
+
         if (location.state?.plane) {
             setPlane(location.state.plane);
         } else {

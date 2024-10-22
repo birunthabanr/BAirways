@@ -28,16 +28,31 @@ const airportsQuery = () => {
 const countAirports = ()=>{
   return new Promise((resolve, reject) => {
     const query = `
-      SELECT COUNT(*) AS total FROM airport;
+       call  count_airports();
     `;
     connection.query(query, (err, results) => {
       if (err) {
         reject('Error counting users:', err.stack);
       } else {
-        resolve(results[0].total);
+        // resolve(results[0].total);
+        resolve(results[0][0].total);
       }
     });
   });
 }
 
-module.exports = { airportsQuery,countAirports };
+
+const fetchAllAirports = ()=> {
+  return new Promise((resolve,reject)=>{
+    const query = `select * from airport;`;
+    connection.query(query,(err,results)=>{
+      if(err){
+        reject('Error fetching airports:',err.stack);
+      }else{
+        resolve(results);
+      }
+    });
+  })
+}
+
+module.exports = { airportsQuery,countAirports,fetchAllAirports };
