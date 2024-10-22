@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {countAirports } = require("../models/Airports");
+const {countAirports ,fetchAllAirports} = require("../models/Airports");
 
 
 router.get('/count', async (req, res) => {
@@ -30,6 +30,18 @@ router.post('/', async (req, res) => {
     }
 }
 );
+
+router.get('/airport/all',async(req,res)=>{
+    try{
+        const airports = await fetchAllAirports();
+        res.json(airports);
+    }
+    catch(err)
+    {
+        console.error('Error fetching airports:', err);
+        res.status(500).json({ error: "Failed to fetch airports." });
+    }
+})
 
 
 module.exports = router;

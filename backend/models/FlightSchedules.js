@@ -124,14 +124,14 @@ const addSchedule = (Aircraft_ID, Departure_date_time, Expected_arrival_date_tim
 
   const countFlightSchedules = () => {
     return new Promise((resolve, reject) => {
-      const countFlightSchedulesQuery = 'SELECT COUNT(*) as count FROM FlightSchedules';
+      const countFlightSchedulesQuery = 'call count_flights();';
       connection.query(countFlightSchedulesQuery, (err, result) => {
         if (err) {
           reject('Error counting flight schedules: ' + err.stack);
         } else {
           console.log('Flight schedules counted successfully.');
           console.log(result);
-          resolve(result[0].count);
+          resolve(result[0][0].count);
         }
       });
     });

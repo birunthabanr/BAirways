@@ -58,7 +58,7 @@ const AdminNav = () => {
         </div>
         <a href="/admin/schedule">Flight Schedule</a>
         <a href="#">Routes</a>
-        <a href = "#">Airports</a>
+        <a href = "/admin/airport">Airports</a>
         </div>
         </div>
   );

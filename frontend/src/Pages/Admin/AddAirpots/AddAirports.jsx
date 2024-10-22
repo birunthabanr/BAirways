@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import "./AddSchedulePage.css"
-import AdminNav from '../../components/AdminNav/AdminNav';
+import "./AddAirports.css"
 
 
-const AddSchedulePage = () => {
+const AddAirports = () => {
     const [formData, setFormData] = useState({
-        Flight_ID: '',
-        Aircraft_ID: '',
-        Flight_price: '',
-        Expected_arrival_date_time: '',
-        Departure_date_time: '',
-        Created_By: '',
+        Airport_ID: '',
+        Short_name: '',
+        Name: '',
+        Country: '',
+        State: '',
+        City: ''
     });
 
     const navigate = useNavigate();
@@ -23,99 +22,103 @@ const AddSchedulePage = () => {
             ...formData,
             [e.target.name]: e.target.value,
         });
-    };
+    };``
 
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5174/schedule', formData)
+        axios.post('http://localhost:5174/aircraft', formData)
             .then(res => {
-                alert('Schedule added successfully!');
-                navigate('/admin/schedule'); // Redirect to schedule list page after successful addition
+                if(res.status === 400){
+                    alert('Model name not found in the models table.');
+                }
+                else
+                {
+                alert('Craft added successfully!');
+                navigate('/admin/airplane');
+                } // Redirect to schedule list page after successful addition
             })
             .catch(err => {
                 console.error(err);
-                alert('Error adding schedule');
+                alert('Error adding Aircraft');
             });
     };
 
     return (
-        <div>
-            <AdminNav/>
         <div className="contain1">
-            <h2>Add New Schedule</h2>
+            <h2>Add New Airport</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                    <label className="form-label">Flight ID</label>
+                    <label className="form-label">Airport ID</label>
                     <input 
                         type="text" 
                         className="form-control"
-                        name="Flight_ID"
-                        value={formData.Flight_ID}
+                        name="Airport_ID"
+                        value={formData.Airport_ID}
                         onChange={handleChange}
                         required
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Aircraft ID</label>
+                    <label className="form-label">Short Name</label>
                     <input 
                         type="text" 
                         className="form-control"
-                        name="Aircraft_ID"
-                        value={formData.Aircraft_ID}
+                        name="Short_name"
+                        value={formData.Short_name}
                         onChange={handleChange}
                         required
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Flight Price</label>
-                    <input 
-                        type="number" 
-                        className="form-control"
-                        name="Flight_price"
-                        value={formData.Flight_price}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Expected Arrival Date/Time</label>
-                    <input 
-                        type="datetime-local" 
-                        className="form-control"
-                        name="Expected_arrival_date_time"
-                        value={formData.Expected_arrival_date_time}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Departure Date/Time</label>
-                    <input 
-                        type="datetime-local" 
-                        className="form-control"
-                        name="Departure_date_time"
-                        value={formData.Departure_date_time}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Created By</label>
+                    <label className="form-label"> Name</label>
                     <input 
                         type="text" 
                         className="form-control"
-                        name="Created_By"
-                        value={formData.Created_By}
+                        name="Name"
+                        value={formData.Name}
                         onChange={handleChange}
                         required
                     />
                 </div>
-                <button type="submit" className="btn-btn-primary">Add Schedule</button>
+                <div className="mb-3">
+                    <label className="form-label">Country</label>
+                    <input 
+                        type="text" 
+                        className="form-control"
+                        name="Country"
+                        value={formData.Country}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">State</label>
+                    <input 
+                        type="text" 
+                        className="form-control"
+                        name="State"
+                        value={formData.State}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">City</label>
+                    <input 
+                        type="text" 
+                        className="form-control"
+                        name="City"
+                        value={formData.City}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                
+                <button type="submit" className="btn-btn-primary">Add Airport</button>
             </form>
-        </div>
         </div>
     );
 };
 
-export default AddSchedulePage;
+export default AddAirports;
