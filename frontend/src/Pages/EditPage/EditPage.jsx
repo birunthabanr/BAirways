@@ -111,7 +111,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, Route } from 'react-router-dom';
 import axios from 'axios';
 import "./EditPage.css";
 
@@ -121,6 +121,7 @@ const EditPage = () => {
     const location = useLocation(); // Use location to get state
     const [flight, setFlight] = useState({
         Aircraft_ID: '',
+        Route_ID: '',
         Flight_price: '',
         Expected_arrival_date_time: '',
         Departure_date_time: '',
@@ -131,6 +132,7 @@ const EditPage = () => {
     useEffect(() => {
         if (location.state?.flight) {
             setFlight(location.state.flight);
+            console.log(flight);
         } else {
             axios.get(`http://localhost:5174/schedule/${id}`)
                 .then(res => setFlight(res.data))
@@ -166,6 +168,17 @@ const EditPage = () => {
                         id="Aircraft_ID"
                         name="Aircraft_ID"
                         value={flight.Aircraft_ID}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="Route_ID">Route ID</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="Route_ID"
+                        name="Route_ID"
+                        value={flight.Route_ID}
                         onChange={handleChange}
                     />
                 </div>

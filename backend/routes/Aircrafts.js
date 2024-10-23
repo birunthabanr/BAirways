@@ -1,6 +1,6 @@
 const express = require('express');
 const router =express.Router();
-const {insertAircraft, fetchAircraftById ,fetchAllAircrafts,deleteAircraft,updateAircraft,countAircrafts} = require("../models/Aircrafts");
+const {insertAircraft, fetchAircraftById ,fetchAllAircrafts,deleteAircraft,updateAircraft,countAircrafts,GetRevanueBYAircraftModel,TotalRevanueByEachAircraft} = require("../models/Aircrafts");
 const {fetchSeatConfiguration} = require("../models/AircraftsModels");
 // const connection = require('../database/connection');
 
@@ -105,6 +105,29 @@ router.get('/count/total' ,async(req,res)=>{
 
 
 })
+
+router.get('/admin/report4', async (req, res) => {
+    const model_name = req.query.short_code;
+    try {
+        const revanue = await GetRevanueBYAircraftModel(model_name);
+        res.json(revanue);
+    } catch (error) {
+        console.error("Error fetching revanue:", error);
+        res.json({ error: error.message });
+    }
+});
+
+router.get('/admin/report4/all', async (req, res) => {
+    try {
+        const revanue = await TotalRevanueByEachAircraft();
+        res.json(revanue);
+    } catch (error) {
+        console.error("Error fetching revanue:", error);
+        res.json({ error: error.message });
+    }
+});
+
+
 
 
 

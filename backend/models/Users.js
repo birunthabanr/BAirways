@@ -4,19 +4,20 @@ const connection = require('../database/connection');
 const usersQuery = () => {
   return new Promise((resolve, reject) => {
     const createUsersTableQuery = `
-      CREATE TABLE IF NOT EXISTS Users (
-        User_ID INT AUTO_INCREMENT PRIMARY KEY,
-        FirstName VARCHAR(50) NOT NULL,
-        SecondName VARCHAR(50) NOT NULL,
-        Country VARCHAR(255) NOT NULL,
-        DOB DATETIME NOT NULL,
-        Address VARCHAR(100) NOT NULL,
-        City VARCHAR(50) NOT NULL,
-        Email VARCHAR(50) NOT NULL UNIQUE,
-        Gender VARCHAR(10) NOT NULL,
-        Phone_number VARCHAR(20) NOT NULL,
-        Num_Of_Users INT NOT NULL
-      );
+      CREATE TABLE IF NOT EXISTS Passenger (
+        Passenger_ID INT AUTO_INCREMENT PRIMARY KEY,
+        FirstName VARCHAR(50),
+        SecondName VARCHAR(50),
+        Country VARCHAR(50),
+        DOB DATE,
+        Address VARCHAR(100),
+        City VARCHAR(50),
+        Email VARCHAR(50),
+        Gender VARCHAR(10),
+        Phone_number VARCHAR(20),
+        Num_of_booking INT
+);
+
     `;
 
     // createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -36,7 +37,7 @@ const usersQuery = () => {
 const insertUser = (firstName, secondName, country, dob, address, city, email, gender, phoneNumber, numOfUsers) => {
   return new Promise((resolve, reject) => {
     const query = `
-      INSERT INTO Users (FirstName, SecondName, Country, DOB, Address, City, Email, Gender, Phone_number, Num_Of_Users)
+      INSERT INTO Passenger (FirstName, SecondName, Country, DOB DATE, Address, City, Email, Gender, Phone_number, Num_of_booking)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     `;
     connection.query(query, [firstName, secondName, country, dob, address, city, email, gender, phoneNumber, numOfUsers], (err, results) => {
@@ -106,16 +107,50 @@ const deleteUserById = (id) => {
 const countUsers = () => {
   return new Promise((resolve, reject) => {
     const query = `
-      SELECT COUNT(*) AS total FROM Users;
+      call GetTotalPassengerCount()
     `;
     connection.query(query, (err, results) => {
       if (err) {
         reject('Error counting users:', err.stack);
       } else {
-        resolve(results[0].total);
+        resolve(results[0][0].total);
       }
     });
   });
 }
 
-module.exports = { usersQuery, insertUser, getUserByEmail, updateUserById, deleteUserById,countUsers };
+const  GetPassengerAgeGroupByFlight=(Filght_ID)=>{
+  return new Promise((resolve, reject) => {
+    const query = `
+      call GetPassengerAgeGroupByFlight(?)
+    `;
+    connection.query(query,[Filght_ID], (err, results) => {
+      if (err) {
+        reject('Error counting users:', err.stack);
+      } else {
+        resolve(results[0]);
+      }
+    });
+  });
+};
+
+const GetPassengerCountByDestinationAndDateRange = (Short_code,start_date,end_date) =>{
+  return new Promise((resolve, reject) => {
+    const query = `
+      call GetPassengerCountByDestinationAndDateRange(?,?,?)
+    `;
+    connection.query(query,[Short_code,start_date,end_date], (err, results) => {
+      if (err) {
+        reject('Error counting users:', err.stack);
+      } else {
+        resolve(results[0]);
+      }
+    });
+
+});
+};
+
+
+
+
+module.exports = { usersQuery, insertUser, getUserByEmail, updateUserById, deleteUserById,countUsers,GetPassengerAgeGroupByFlight ,GetPassengerCountByDestinationAndDateRange};

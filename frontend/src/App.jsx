@@ -20,6 +20,11 @@ import EditAirplane from './Pages/Admin/EditAirplane/EditAirplane';
 import EditModel from './Pages/Admin/EditModel/EditModel';
 import Airports from './Pages/Admin/Airports/Airports';
 import AddAirports from './Pages/Admin/AddAirpots/AddAirports';
+import AdminScheduleFlight from './Pages/Admin/ScheduleFlight/ScheduleFlight';
+import Report1 from './Pages/Reports/Report 1/Report_1';
+import Report2 from './Pages/Reports/Report 2/Report_2';
+import Report3 from './Pages/Reports/Report 3/Report_3';
+import Report4 from './Pages/Reports/Report 4/Report_4';
 
 
 const App = () => {
@@ -52,6 +57,11 @@ const App = () => {
           <Route path = "/admin/edit-model/:id" element = {<EditModel/>}/>
           <Route path = "/admin/airport" element = {<Airports/>}/>
           <Route path = "/admin/add-airport" element = {<AddAirports/>}/>
+          <Route path = "/admin/add-schedule" element = {<AdminScheduleFlight/>}/>
+          <Route path = "/admin/report1" element = {<Report1/>}/>
+          <Route path = "/admin/report2" element = {<Report2/>}/>
+          <Route path = "/admin/report3" element = {<Report3/>}/>
+          <Route path = "/admin/report4" element = {<Report4/>}/>
           {/* Define other routes here */}
         </Routes>
         </div>

@@ -4,14 +4,25 @@ const { usersQuery } = require('./Users');
 // Function to initialize the Airport table
 const registeredQuery = () => {
   return new Promise((resolve, reject) => {
+    // const createRegisteredTableQuery = `
+    //   CREATE TABLE IF NOT EXISTS RegisteredUsers (
+    //     Register_ID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    //     Username VARCHAR(30) NOT NULL UNIQUE,
+    //     Password VARCHAR(255) NOT NULL,
+    //     User_ID INT,
+    //     FOREIGN KEY (User_ID) REFERENCES Users(User_ID)
+    //   );
+    // `;
+
     const createRegisteredTableQuery = `
-      CREATE TABLE IF NOT EXISTS RegisteredUsers (
-        Register_ID INTEGER PRIMARY KEY AUTO_INCREMENT,
-        Username VARCHAR(30) NOT NULL UNIQUE,
-        Password VARCHAR(255) NOT NULL,
-        User_ID INT,
-        FOREIGN KEY (User_ID) REFERENCES Users(User_ID)
-      );
+            CREATE TABLE IF NOT EXISTS Registered (
+                Username VARCHAR(30) PRIMARY KEY,
+                Password VARCHAR(30),
+                Passenger_ID INT,
+                Reward_ID INT,
+                FOREIGN KEY (Passenger_ID) REFERENCES Passenger(Passenger_ID),
+                FOREIGN KEY (Reward_ID) REFERENCES Reward(Reward_ID)
+            );
     `;
     connection.query(createRegisteredTableQuery, (err, results) => {
       if (err) {

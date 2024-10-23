@@ -4,7 +4,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     user: 'root',      // Database user
     password: 'Gaya@123',  // Database password
-    database: 'airlinedb'
+    database: 'Bairways'
 });
 
 // Connect to the database

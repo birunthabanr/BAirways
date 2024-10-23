@@ -4,13 +4,13 @@ const connection = require('../database/connection');
 const modelsQuery = () => {
   return new Promise((resolve, reject) => {
     const createModelsTableQuery = `
-      CREATE TABLE IF NOT EXISTS Models (
-        Model_ID INT AUTO_INCREMENT PRIMARY KEY,
-        Model_name VARCHAR(10) NOT NULL UNIQUE,
-        EconomyClassSeatCount INT,
-        BusinessClassSeatCount INT,
-        PlatinumClassSeatCount INT
-      );
+      CREATE TABLE IF NOT EXISTS Aircraft_model (
+          Model_ID INT AUTO_INCREMENT PRIMARY KEY,
+          Model_name VARCHAR(10),
+          EconomyClassSeatCount INT,
+          BusinessClassSeatCount INT,
+          PlatinumClassSeatCount INT
+);
     `;
     connection.query(createModelsTableQuery, (err, results) => {
       if (err) {
@@ -57,12 +57,12 @@ const fetchSeatConfiguration = (modelId) => {
 
 const fetchAllModels = () => {
   return new Promise((resolve, reject) => {
-    const query = 'SELECT * FROM Models';
+    const query = `call GetAllAircraftModels()`;
     connection.query(query, (err, results) => {
       if (err) {
         reject('Error fetching all models: ' + err.stack);
       } else {
-        resolve(results);
+        resolve(results[0]);
       }
     });
   });

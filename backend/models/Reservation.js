@@ -3,18 +3,37 @@ const connection = require('../database/connection');
 // Function to initialize the Bookings table for planes
 const reservationQuery = () => {
   return new Promise((resolve, reject) => {
-    const createBookingsTableQuery = `
-      CREATE TABLE IF NOT EXISTS Bookings (
-        Ticket_ID INT AUTO_INCREMENT PRIMARY KEY,
-        User_ID INT NOT NULL,
-        Flight_ID INT NOT NULL,
-        Seat_ID INT NOT NULL,
-        seatNumber VARCHAR(6) NOT NULL,
-        Price FLOAT NOT NULL,
-        FOREIGN KEY (User_ID) REFERENCES Users(User_ID),
-        FOREIGN KEY (Flight_ID) REFERENCES FlightSchedules(Flight_ID)
-      );
-    `;
+    // const createBookingsTableQuery = `
+    //   CREATE TABLE IF NOT EXISTS Bookings (
+    //     Ticket_ID INT AUTO_INCREMENT PRIMARY KEY,
+    //     User_ID INT NOT NULL,
+    //     Flight_ID INT NOT NULL,
+    //     Seat_ID INT NOT NULL,
+    //     seatNumber VARCHAR(6) NOT NULL,
+    //     Price FLOAT NOT NULL,
+    //     FOREIGN KEY (User_ID) REFERENCES Users(User_ID),
+    //     FOREIGN KEY (Flight_ID) REFERENCES FlightSchedules(Flight_ID)
+    //   );
+    // `;
+     
+    
+     const createBookingsTableQuery = `
+       CREATE TABLE IF NOT EXISTS Ticket (
+          Ticket_ID INT AUTO_INCREMENT PRIMARY KEY,
+          Passenger_ID INT,
+          Flight_ID VARCHAR(7),
+          Seat_ID INT,
+          Price FLOAT,
+          FOREIGN KEY (Passenger_ID) REFERENCES Passenger(Passenger_ID),
+          FOREIGN KEY (Flight_ID) REFERENCES FlightSchedule(Flight_ID),
+          FOREIGN KEY (Seat_ID) REFERENCES Seat(Seat_ID)
+          );
+     `;
+
+
+
+
+
     connection.query(createBookingsTableQuery, (err, results) => {
       if (err) {
         console.error('Detailed error:', err);

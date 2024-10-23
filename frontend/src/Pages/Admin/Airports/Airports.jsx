@@ -64,10 +64,10 @@ const Airports = ({ isAdmin }) => {
             <tr key = {index} className='data'>
                 <td>{item.Airport_ID}</td>
                 <td>{item.Short_code}</td>
-                <td>{item.name}</td>
+                <td>{item.Name}</td>
                 <td>{item.Country}</td>
                 <td>{item.State}</td>
-                <td>{item.city}</td>
+                <td>{item.City}</td>
                 <td>
                     <button 
                     className="btn btn-success" 
