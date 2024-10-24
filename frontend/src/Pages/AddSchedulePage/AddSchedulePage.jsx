@@ -9,6 +9,7 @@ const AddSchedulePage = () => {
     const [formData, setFormData] = useState({
         Flight_ID: '',
         Aircraft_ID: '',
+        Route_ID: '',
         Flight_price: '',
         Expected_arrival_date_time: '',
         Departure_date_time: '',
@@ -31,7 +32,7 @@ const AddSchedulePage = () => {
         axios.post('http://localhost:5174/schedule', formData)
             .then(res => {
                 alert('Schedule added successfully!');
-                navigate('/admin/schedule'); // Redirect to schedule list page after successful addition
+                navigate('/admin/add-schedule'); // Redirect to schedule list page after successful addition
             })
             .catch(err => {
                 console.error(err);
@@ -46,23 +47,23 @@ const AddSchedulePage = () => {
             <h2>Add New Schedule</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                    <label className="form-label">Flight ID</label>
-                    <input 
-                        type="text" 
-                        className="form-control"
-                        name="Flight_ID"
-                        value={formData.Flight_ID}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Aircraft ID</label>
+                    <label className="form-label">Aircraft_ID</label>
                     <input 
                         type="text" 
                         className="form-control"
                         name="Aircraft_ID"
                         value={formData.Aircraft_ID}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Route_ID</label>
+                    <input 
+                        type="text" 
+                        className="form-control"
+                        name="Route_ID"
+                        value={formData.Route_ID}
                         onChange={handleChange}
                         required
                     />

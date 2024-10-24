@@ -50,13 +50,15 @@ const AdminNav = () => {
             <a href="#">Reports</a>
             {showReportsMenu && (
             <div className="submenu-items">
-                <a href="#">Report 1</a>
-                <a href="#">Report 2</a>
-                <a href="#">Report 3</a>
+                <a href="/admin/report1">Report 1</a>
+                <a href="/admin/report2">Report 2</a>
+                <a href="/admin/report3">Report 3</a>
+                <a href ="/admin/report4">Report 4</a>
+                <a href ="#">Report 5</a>
             </div>
             )}
         </div>
-        <a href="/admin/schedule">Flight Schedule</a>
+        <a href="/admin/add-schedule">Flight Schedule</a>
         <a href="#">Routes</a>
         <a href = "/admin/airport">Airports</a>
         </div>

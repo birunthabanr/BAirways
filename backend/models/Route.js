@@ -2,16 +2,27 @@ const connection = require('../database/connection');
 
 const RouteQuery = () =>{
     return new Promise((resolve, reject) => {
+        // const createRouteTableQuery = `
+        //    CREATE TABLE IF NOT EXISTS routes (
+        //     Route_ID INT PRIMARY KEY,
+        //     Arrival_Airport_ID INT,
+        //     Departure_Airport_ID INT,
+        //     Distance FLOAT,
+        //     FOREIGN KEY (Arrival_Airport_ID) REFERENCES airport(Airport_ID),
+        //     FOREIGN KEY (Departure_Airport_ID) REFERENCES airport(Airport_ID)
+        //     );
+        // `;
+
         const createRouteTableQuery = `
-           CREATE TABLE IF NOT EXISTS routes (
-            Route_ID INT PRIMARY KEY,
-            Arrival_Airport_ID INT,
-            Departure_Airport_ID INT,
-            Distance FLOAT,
-            FOREIGN KEY (Arrival_Airport_ID) REFERENCES airport(Airport_ID),
-            FOREIGN KEY (Departure_Airport_ID) REFERENCES airport(Airport_ID)
-            );
-        `;
+             CREATE TABLE IF NOT EXISTS Route (
+                Route_ID INT AUTO_INCREMENT PRIMARY KEY,
+                Departure_Airport_ID INT,
+                Arrival_Airport_ID INT,
+                Distance FLOAT,
+                FOREIGN KEY (Departure_Airport_ID) REFERENCES Airport(Airport_ID),
+                FOREIGN KEY (Arrival_Airport_ID) REFERENCES Airport(Airport_ID)
+);`
+
 connection.query(createRouteTableQuery, (err, results) => {
     if (err) {
         reject('Error creating Users table:', err.stack);

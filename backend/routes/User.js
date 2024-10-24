@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {insertUser, getUserByEmail,countUsers} = require('../models/Users');
+const {insertUser, getUserByEmail,countUsers,GetPassengerAgeGroupByFlight,GetPassengerCountByDestinationAndDateRange} = require('../models/Users');
 const {insertRegistered, getRegisteredByUsername} = require('../models/RegisteredUsers');
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -89,7 +89,33 @@ router.get("/count", async (req, res) => {
         console.error("Error counting users:", error);
         res.status(500).json({ error: "Failed to count users." });
     }
-}); 
+});
+
+
+router.get('/admin/report2', async (req, res) => {
+    const flightID = req.query.flightID;
+    try {
+        const ageGroup = await GetPassengerAgeGroupByFlight(flightID);
+        res.json(ageGroup);
+    } catch (error) {
+        console.error("Error fetching age group:", error);
+        res.json({ error: error.message });
+    }
+});
+
+
+router.get('/admin/report3', async (req, res) => {
+    const start_date = req.query.start_date;
+    const end_date = req.query.end_date;
+    const Short_code = req.query.short_code;
+    try {
+        const passengerCount = await GetPassengerCountByDestinationAndDateRange(Short_code,start_date, end_date);
+        res.json(passengerCount);
+    } catch (error) {
+        console.error("Error fetching passenger count:", error);
+        res.json({ error: error.message });
+    }
+});
 
 
 

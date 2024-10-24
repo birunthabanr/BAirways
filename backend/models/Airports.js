@@ -28,7 +28,7 @@ const airportsQuery = () => {
 const countAirports = ()=>{
   return new Promise((resolve, reject) => {
     const query = `
-       call  count_airports();
+       call GetTotalAirportCount();
     `;
     connection.query(query, (err, results) => {
       if (err) {
@@ -44,12 +44,12 @@ const countAirports = ()=>{
 
 const fetchAllAirports = ()=> {
   return new Promise((resolve,reject)=>{
-    const query = `select * from airport;`;
+    const query = `call GetAllAirports()`;
     connection.query(query,(err,results)=>{
       if(err){
         reject('Error fetching airports:',err.stack);
       }else{
-        resolve(results);
+        resolve(results[0]);
       }
     });
   })
