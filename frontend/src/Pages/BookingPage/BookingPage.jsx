@@ -8,40 +8,75 @@ const BookingPage = () => {
     state?.seatConfiguration || {}; // Safely access seatConfiguration
 
   return (
-    <div className=" flex items-center justify-center p-48 ">
-      <div className=" w-full p-16 glass-back grid grid-cols-3 gap-3">
-        <div className=" w-full m-3 mb-0 h-14 col-span-3 text-3xl font-bold tracking-wide">
+    <div className="flex items-center justify-center p-48 min-h-screen">
+      <div className="w-full p-16 shadow-lg rounded-lg grid grid-cols-3 gap-3 glass-back">
+        {/* Title */}
+        <div className="w-full col-span-3 mb-6 text-center text-3xl font-bold tracking-wide">
           Book Your Flight!
         </div>
-        <div className=" w-full m-3 h-14"></div>
-        <div className=" w-full m-3 h-14 bg-black"></div>
-        <div className=" w-full m-3 h-14 bg-black"></div>
-        <div className=" w-full m-3 h-14 bg-black"></div>
-        <div className=" w-full m-3 h-14 bg-black"></div>
-        <div className=" w-full m-3 h-14 bg-black"></div>
+
+        <div className="w-full">
+          <label className="block text-sm font-medium text-gray-100">
+            Select Departure
+          </label>
+          <select className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+            <option>Select...</option>
+            <option>City A</option>
+            <option>City B</option>
+          </select>
+        </div>
+
+        <div className="w-full">
+          <label className="block text-sm font-medium text-gray-100">
+            Select Destination
+          </label>
+          <select className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+            <option>Select...</option>
+            <option>City X</option>
+            <option>City Y</option>
+          </select>
+        </div>
+
+        <div className="w-full">
+          <label className="block text-sm font-medium text-gray-100">
+            Select Class
+          </label>
+          <select className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+            <option>Select...</option>
+            <option>Economy</option>
+            <option>Business</option>
+            <option>Platinum</option>
+          </select>
+        </div>
+
+        <div className="w-full">
+          <label className="block text-sm font-medium text-gray-100">
+            Select Date
+          </label>
+          <input
+            type="date"
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+          />
+        </div>
+
+        <div className="w-full">
+          <label className="block text-sm font-medium text-gray-100">
+            Select Time
+          </label>
+          <select className="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+            <option>Select...</option>
+            <option>Morning</option>
+            <option>Afternoon</option>
+            <option>Evening</option>
+          </select>
+        </div>
+
+        <div className="w-full flex items-end">
+          <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+            Book Now
+          </button>
+        </div>
       </div>
-
-      {/*       
-      {economySeats && (
-        <>
-          <h3>Economy</h3>
-          <AircraftSeatLayout totalSeats={economySeats} seatType="Economy" />
-        </>
-      )}
-      
-      {businessSeats && (
-        <>
-          <h3>Business</h3>
-          <AircraftSeatLayout totalSeats={businessSeats} seatType="Business" />
-        </>
-      )}
-
-      {platinumSeats && (
-        <>
-          <h3>Platinum</h3>
-          <AircraftSeatLayout totalSeats={platinumSeats} seatType="Platinum" />
-        </>
-      )} */}
     </div>
   );
 };

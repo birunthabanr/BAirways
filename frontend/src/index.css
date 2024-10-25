@@ -6,7 +6,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins",   sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .blueShadow {
@@ -28,10 +28,20 @@
 }
 
 span {
-  font-family : inherit;
-  font-weight : inherit;
+  font-family: inherit;
+  font-weight: inherit;
   color: #60a5fa;
 }
 
 /* .hero {
 } */
+
+.glass-back {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
