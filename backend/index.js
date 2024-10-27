@@ -1,6 +1,6 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const cors = require('cors');
+const cors = require("cors");
 
 app.use(express.json());
 app.use(cors());
@@ -9,14 +9,13 @@ const db = require("./models/Users");
 const planesDb = require("./models/Planes");
 const reservationsDb = require("./models/Reservation");
 const registered = require("./models/RegisteredUsers");
-const airportModel = require('./models/Airports');
-const aircraftModel = require('./models/Aircrafts');
-const aircraftModelModel = require('./models/AircraftsModels');
-const flightScheduleModel = require('./models/FlightSchedules');
-const adminDb = require('./models/Admins');
-const routes = require('./models/Route');
-const rewards = require('./models/Rewards');
-
+const airportModel = require("./models/Airports");
+const aircraftModel = require("./models/Aircrafts");
+const aircraftModelModel = require("./models/AircraftsModels");
+const flightScheduleModel = require("./models/FlightSchedules");
+const adminDb = require("./models/Admins");
+const routes = require("./models/Route");
+const rewards = require("./models/Rewards");
 const usersRouter = require("./routes/User");
 app.use("/user", usersRouter);
 
@@ -44,7 +43,11 @@ app.use("/airport", airportRouter);
 const rewardsRouter = require("./routes/Rewards");
 app.use("/rewards", rewardsRouter);
 
+const searchFlightsRouter = require("./routes/SearchFlights");
+app.use("/api/search-flights", searchFlightsRouter);
 
+const bookFlightRouter = require("./routes/BookFlight");
+app.use("/api/book-flight", bookFlightRouter);
 
 // app.use(express.json()); // to handle JSON body in requests
 // app.use('/auth', signupRoute);
@@ -54,8 +57,8 @@ app.use("/rewards", rewardsRouter);
 
 // Initialize the databases and then start the server
 Promise.all([
-  db.usersQuery(),          // Initialize users
-  planesDb.planesQuery(),   // Initialize planes
+  db.usersQuery(), // Initialize users
+  planesDb.planesQuery(), // Initialize planes
   aircraftModelModel.modelsQuery(),
   aircraftModel.aircraftsQuery(),
   flightScheduleModel.ScheduleQuery(),
@@ -64,21 +67,19 @@ Promise.all([
   airportModel.airportsQuery(),
   adminDb.adminsQuery(),
   routes.RouteQuery(),
-  rewards.rewardsQuery()
-
-]).then(() => {
+  rewards.rewardsQuery(),
+])
+  .then(() => {
     // Once the database is initialized, start the server
     app.listen(5174, () => {
-      console.log('Server is running on port 5174');
+      console.log("Server is running on port 5174");
     });
   })
   .catch((error) => {
     // If the database initialization fails, log the error and don't start the server
-    console.error('Failed to initialize the database:', error);
+    console.error("Failed to initialize the database:", error);
   });
-
 
 // app.get('/', (req, res) => {
 //     res.send('Hello, World!');
 //   });
-  

@@ -1,19 +1,24 @@
-const mysql = require('mysql2');
+const sql = require("mssql");
 
-const connection = mysql.createConnection({
-    host: "localhost",
-    user: 'root',      // Database user
-    password: 'Gaya@123',  // Database password
-    database: 'Bairways'
-});
-
-// Connect to the database
-connection.connect((err) => {
-    if (err) {
-      console.error('Error connecting to the database:', err.stack);
-      return;
-    }
-    console.log('Connected to the database.');
-  });
-
-  module.exports = connection;
+const sqlConfig = {
+  user: "root",
+  password: "Pulinduv@2002",
+  database: "BAirways",
+  server: "localhost",
+  pool: {
+    max: 10,
+    min: 0,
+    idleTimeoutMillis: 30000,
+  },
+  options: {
+    encrypt: true,
+    trustServerCertificate: false,
+  },
+};
+(async () => {
+  try {
+    await sql.connect(sqlConfig);
+    const result = await sql.query`select * from mytable where id = ${value}`;
+    console.dir(result);
+  } catch (err) {}
+})();

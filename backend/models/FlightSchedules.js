@@ -1,4 +1,4 @@
-const connection = require('../database/connection');
+const connection = require("../database/connection");
 
 // Function to initialize the Airport table
 const ScheduleQuery = () => {
@@ -17,7 +17,6 @@ const ScheduleQuery = () => {
     //     FOREIGN KEY (Aircraft_ID) REFERENCES Aircrafts(Aircraft_ID)
     //   );
     // `;
-
 
     const createScheduleTableQuery = `
          CREATE TABLE IF NOT EXISTS FlightSchedule (
@@ -40,9 +39,9 @@ const ScheduleQuery = () => {
 
     connection.query(createScheduleTableQuery, (err, results) => {
       if (err) {
-        reject('Error creating Schedule table: ' + err.stack);
+        reject("Error creating Schedule table: " + err.stack);
       } else {
-        console.log('Schedule table is ready.');
+        console.log("Schedule table is ready.");
         resolve();
       }
     });
@@ -50,59 +49,80 @@ const ScheduleQuery = () => {
 };
 
 // Function to add a new schedule
-const addSchedule = (Aircraft_ID,Route_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By) => {
-  console.log(Aircraft_ID, Route_ID,Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By);
-    return new Promise((resolve, reject) => {
-      // const addScheduleQuery = `
-      //   INSERT INTO FlightSchedules (Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By, Created_time, Modified_by, Modified_time) 
-      //   VALUES (?, ?, ?, ?, ?, NOW(), ?, NOW());
-      // `;
-      
-      const addScheduleQuery = `call InsertFlight(?,?,?,?,?,?)`;
-     
+const addSchedule = (
+  Aircraft_ID,
+  Route_ID,
+  Departure_date_time,
+  Expected_arrival_date_time,
+  Flight_price,
+  Created_By
+) => {
+  console.log(
+    Aircraft_ID,
+    Route_ID,
+    Departure_date_time,
+    Expected_arrival_date_time,
+    Flight_price,
+    Created_By
+  );
+  return new Promise((resolve, reject) => {
+    // const addScheduleQuery = `
+    //   INSERT INTO FlightSchedules (Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By, Created_time, Modified_by, Modified_time)
+    //   VALUES (?, ?, ?, ?, ?, NOW(), ?, NOW());
+    // `;
 
-      connection.query(
-        addScheduleQuery, 
-        [Aircraft_ID, Route_ID,Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By], 
-        (err, result) => {
-          if (err) {
-            reject('Error adding schedule: ' + err.stack);
-          } else {
-            console.log('Schedule added successfully.');
-            resolve(result);
-          }
-        }
-      );
-    });
-  };
-  
-  // Function to delete a schedule by Flight_ID
-  const deleteSchedule = (Flight_ID) => {
-    return new Promise((resolve, reject) => {
-      const deleteScheduleQuery = 'DELETE FROM flightschedules WHERE Flight_ID = ?';
-      connection.query(deleteScheduleQuery, [Flight_ID], (err, result) => {
+    const addScheduleQuery = `call InsertFlight(?,?,?,?,?,?)`;
+
+    connection.query(
+      addScheduleQuery,
+      [
+        Aircraft_ID,
+        Route_ID,
+        Departure_date_time,
+        Expected_arrival_date_time,
+        Flight_price,
+        Created_By,
+      ],
+      (err, result) => {
         if (err) {
-          reject('Error deleting schedule: ' + err.stack);
+          reject("Error adding schedule: " + err.stack);
         } else {
-          console.log(`Schedule with Flight_ID ${Flight_ID} deleted successfully.`);
+          console.log("Schedule added successfully.");
           resolve(result);
         }
-      });
+      }
+    );
+  });
+};
+
+// Function to delete a schedule by Flight_ID
+const deleteSchedule = (Flight_ID) => {
+  return new Promise((resolve, reject) => {
+    const deleteScheduleQuery =
+      "DELETE FROM flightschedules WHERE Flight_ID = ?";
+    connection.query(deleteScheduleQuery, [Flight_ID], (err, result) => {
+      if (err) {
+        reject("Error deleting schedule: " + err.stack);
+      } else {
+        console.log(
+          `Schedule with Flight_ID ${Flight_ID} deleted successfully.`
+        );
+        resolve(result);
+      }
     });
-  };
-  
-  const updateSchedule = (Flight_ID, scheduleData) => {
-    return new Promise((resolve, reject) => {
-      // const { Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Modified_by } = scheduleData;
-      // const Aircraft_ID = scheduleData.Aircraft_ID;
-      // const Departure_date_time = scheduleData.Departure_date_time;
-      // const Expected_arrival_date_time = scheduleData.Expected_arrival_date_time;
-      // const Flight_price = scheduleData.Flight_price;
-      // const Modified_by = scheduleData.Modified_by;
+  });
+};
 
-       
+const updateSchedule = (Flight_ID, scheduleData) => {
+  return new Promise((resolve, reject) => {
+    // const { Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Modified_by } = scheduleData;
+    // const Aircraft_ID = scheduleData.Aircraft_ID;
+    // const Departure_date_time = scheduleData.Departure_date_time;
+    // const Expected_arrival_date_time = scheduleData.Expected_arrival_date_time;
+    // const Flight_price = scheduleData.Flight_price;
+    // const Modified_by = scheduleData.Modified_by;
 
-      const updateScheduleQuery = `
+    const updateScheduleQuery = `
         UPDATE FlightSchedules 
         SET 
           Aircraft_ID = ?, 
@@ -112,25 +132,34 @@ const addSchedule = (Aircraft_ID,Route_ID, Departure_date_time, Expected_arrival
           Modified_by = ?   
         WHERE Flight_ID = ?
       `;
-  
-      connection.query(
-        updateScheduleQuery, 
-        [Aircraft_ID, Flight_price, Departure_date_time, Expected_arrival_date_time, Modified_by, Flight_ID], // Use Flight_ID here
-        (err, result) => {
-          if (err) {
-            reject('Error updating schedule: ' + err.stack);
-          } else {
-            console.log(`Schedule with Flight_ID ${Flight_ID} updated successfully.`);
-            resolve(result);
-          }
+
+    connection.query(
+      updateScheduleQuery,
+      [
+        Aircraft_ID,
+        Flight_price,
+        Departure_date_time,
+        Expected_arrival_date_time,
+        Modified_by,
+        Flight_ID,
+      ], // Use Flight_ID here
+      (err, result) => {
+        if (err) {
+          reject("Error updating schedule: " + err.stack);
+        } else {
+          console.log(
+            `Schedule with Flight_ID ${Flight_ID} updated successfully.`
+          );
+          resolve(result);
         }
-      );
-    });
-  };
-  
-  const getAllFlightSchedules = () => {
-    return new Promise((resolve, reject) => {
-      const getFlightSchedulesQuery = `
+      }
+    );
+  });
+};
+
+const getAllFlightSchedules = () => {
+  return new Promise((resolve, reject) => {
+    const getFlightSchedulesQuery = `
             SELECT FLight_ID,am.Model_Name AS Aircraft,departure_ar.Name AS Departure_Airport,arrival_ar.Name AS Arrival_Airport,Departure_date_time,Expected_arrival_date_time,Flight_price, Created_BY,Created_time,Modified_BY,Modified_time
             FROM FlightSchedule f
             JOIN Aircraft a ON a.Aircraft_ID = f.Aircraft_ID
@@ -139,47 +168,71 @@ const addSchedule = (Aircraft_ID,Route_ID, Departure_date_time, Expected_arrival
             JOIN Airport departure_ar ON departure_ar.Airport_ID = r.Departure_Airport_ID
             JOIN Airport arrival_ar ON arrival_ar.Airport_ID = r.Arrival_Airport_ID;
       `;
-      connection.query(getFlightSchedulesQuery, (err, result) => {
-        if (err) {
-          reject('Error retrieving flight schedules: ' + err.stack);
+    connection.query(getFlightSchedulesQuery, (err, result) => {
+      if (err) {
+        reject("Error retrieving flight schedules: " + err.stack);
+      } else {
+        console.log("Flight schedules retrieved successfully.");
+        console.log(result);
+        if (result.length > 1) {
+          console.log("More than one schedule retrieved.");
         } else {
-          console.log('Flight schedules retrieved successfully.');
-          console.log(result);
-          if (result.length > 1) {
-            console.log('More than one schedule retrieved.');
-          } else {
-            console.log('Only one schedule retrieved.');
-          }
-  
-          resolve(result);
+          console.log("Only one schedule retrieved.");
         }
-      });
+
+        resolve(result);
+      }
     });
-  };
+  });
+};
 
+const countFlightSchedules = () => {
+  return new Promise((resolve, reject) => {
+    const countFlightSchedulesQuery = "call GetTotalFlightScheduleCount();";
+    connection.query(countFlightSchedulesQuery, (err, result) => {
+      if (err) {
+        reject("Error counting flight schedules: " + err.stack);
+      } else {
+        console.log("Flight schedules counted successfully.");
+        console.log(result);
+        resolve(result[0][0].total);
+      }
+    });
+  });
+};
 
-  const countFlightSchedules = () => {
-    return new Promise((resolve, reject) => {
-      const countFlightSchedulesQuery = 'call GetTotalFlightScheduleCount();';
-      connection.query(countFlightSchedulesQuery, (err, result) => {
+const searchFlights = (
+  departureAirport,
+  arrivalAirport,
+  leavingDate,
+  returnDate
+) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT * FROM FlightSchedule
+      WHERE Departure_Airport_ID = ? AND Arrival_Airport_ID = ?
+      AND Departure_date_time BETWEEN ? AND ?
+    `;
+    connection.query(
+      query,
+      [departureAirport, arrivalAirport, leavingDate, returnDate],
+      (err, results) => {
         if (err) {
-          reject('Error counting flight schedules: ' + err.stack);
+          reject("Error fetching flights:", err.stack);
         } else {
-          console.log('Flight schedules counted successfully.');
-          console.log(result);
-          resolve(result[0][0].total);
+          resolve(results);
         }
-      });
-    });
-  };
-  
+      }
+    );
+  });
+};
 
-  module.exports = {
-    ScheduleQuery,
-    addSchedule,
-    deleteSchedule,
-    updateSchedule, 
-    getAllFlightSchedules,
-    countFlightSchedules
-
-  };
+module.exports = {
+  ScheduleQuery,
+  addSchedule,
+  deleteSchedule,
+  updateSchedule,
+  getAllFlightSchedules,
+  countFlightSchedules,
+  searchFlights,
+};
