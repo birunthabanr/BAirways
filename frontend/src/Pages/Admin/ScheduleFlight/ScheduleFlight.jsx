@@ -127,11 +127,15 @@ const AdminScheduleFlight = () => {
     let navigate = useNavigate();
 
     const handleEdit = (flight) => {
-        navigate(`/edit/${flight.Flight_ID}`, { state: { flight } });
+        navigate(`/admin/edit-schedule/${flight.Flight_ID}`, { state: { flight } });
     };
 
     const handleRemove = (Flight_ID) => {
-        axios.delete(`http://localhost:5174/schedule/${Flight_ID}`)
+        alert('Are you sure you want to delete this schedule?');
+        console.log('Flight_ID:', Flight_ID);
+        axios.delete(`http://localhost:5174/schedule/delete`,
+            { params: { id: Flight_ID } }
+        )
             .then(() => setSchedule(schedule.filter((item) => item.Flight_ID !== Flight_ID)))
             .catch(err => console.error('Error deleting schedule:', err));
     };
@@ -153,7 +157,7 @@ const AdminScheduleFlight = () => {
 
         return (
             <tr key={index} className="data">
-                <td>{item.FLight_ID}</td>
+                <td>{item.Flight_ID}</td>
                 <td>{item.Aircraft}</td>
                 <td>{item.Departure_Airport}</td>
                 <td>{item.Arrival_Airport}</td>
@@ -187,7 +191,7 @@ const AdminScheduleFlight = () => {
                             <li>
                                 <button
                                     className="dropdown-item"
-                                    onClick={() => handleRemove(item.Flight_ID)}
+                                    onClick={() => handleRemove(item.FLight_ID)}
                                 >
                                     Remove
                                 </button>

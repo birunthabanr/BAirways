@@ -25,6 +25,10 @@ import Report1 from './Pages/Reports/Report 1/Report_1';
 import Report2 from './Pages/Reports/Report 2/Report_2';
 import Report3 from './Pages/Reports/Report 3/Report_3';
 import Report4 from './Pages/Reports/Report 4/Report_4';
+import EditSchedule from './Pages/Admin/EditSchedule/EditSchedule';
+import Report5 from './Pages/Reports/Report 5/Report_5';
+import AddRoutes from './Pages/Admin/AddRoutes/AddRoutes';
+import FlightRoute from './Pages/Admin/Route/Route';
 
 
 const App = () => {
@@ -62,6 +66,10 @@ const App = () => {
           <Route path = "/admin/report2" element = {<Report2/>}/>
           <Route path = "/admin/report3" element = {<Report3/>}/>
           <Route path = "/admin/report4" element = {<Report4/>}/>
+          <Route path = "/admin/report5" element = {<Report5/>}/>
+          <Route path = "/admin/edit-schedule/:id" element = {<EditSchedule/>}/>
+          <Route path = '/admin/add-routes' element = {<AddRoutes/>}/>
+          <Route path = '/admin/routes' element = {<FlightRoute/>}/>
           {/* Define other routes here */}
         </Routes>
         </div>

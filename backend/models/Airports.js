@@ -25,6 +25,9 @@ const airportsQuery = () => {
 };
 
 
+
+
+
 const countAirports = ()=>{
   return new Promise((resolve, reject) => {
     const query = `
@@ -55,4 +58,49 @@ const fetchAllAirports = ()=> {
   })
 }
 
-module.exports = { airportsQuery,countAirports,fetchAllAirports };
+const getAllAirportsShortCode = () => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      call GetAirportShortCodes()
+    `;
+    connection.query(query, (err, results) => {
+      if (err) {
+        reject('Error fetching airports:', err.stack);
+      } else {
+        resolve(results[0]);
+      }
+    });});
+  };
+
+  const fetchAllCountries = () => {
+    return new Promise((resolve, reject) => {
+      const query = `
+        select * from country
+      `;
+      connection.query(query, (err, results) => {
+        if (err) {
+          reject('Error fetching countries:', err.stack);
+        } else {
+          resolve(results);
+        }
+      });
+    });
+  }
+
+  const insertAirport = (Short_code, name, Country, State, city) => {
+    return new Promise((resolve, reject) => {
+      const insertAirportQuery = `
+        call InsertAirport(?,?,?,?,?);
+      `;
+      connection.query(insertAirportQuery, [Short_code, name, Country, State, city], (err, results) => {
+        if (err) {
+          reject('Error inserting airport: ' + err.stack);
+        } else {
+          resolve();
+        }
+      });
+    });
+  };
+
+
+module.exports = { airportsQuery,countAirports,fetchAllAirports,getAllAirportsShortCode,fetchAllCountries ,insertAirport};
