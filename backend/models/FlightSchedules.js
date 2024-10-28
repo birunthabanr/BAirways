@@ -172,6 +172,25 @@ const addSchedule = (Aircraft_ID,Route_ID, Departure_date_time, Expected_arrival
       });
     });
   };
+
+  const fetchAircraftById = (FLight_ID) => {
+    return new Promise((resolve, reject) => {
+      const query = 'SELECT EconomyClassSeatCount, BusinessClassSeatCount, PlatinumClassSeatCount FROM aircraftflightschedule WHERE FLight_ID = ?';
+      connection.query(query, [FLight_ID], (err, results) => {
+        if (err) {
+          reject('Error fetching aircraft: ' + err.stack);
+        } else if (results.length === 0) {
+          reject('Aircraft not found');
+        } else {
+          resolve({
+            EconomyClassSeatCount: results[0].EconomyClassSeatCount,
+            BusinessClassSeatCount: results[0].BusinessClassSeatCount,
+            PlatinumClassSeatCount: results[0].PlatinumClassSeatCount,
+          }); // return the model_id from the result
+        }
+      });
+    });
+  }
   
 
   module.exports = {
@@ -180,6 +199,6 @@ const addSchedule = (Aircraft_ID,Route_ID, Departure_date_time, Expected_arrival
     deleteSchedule,
     updateSchedule, 
     getAllFlightSchedules,
-    countFlightSchedules
-
+    countFlightSchedules,
+    fetchAircraftById
   };

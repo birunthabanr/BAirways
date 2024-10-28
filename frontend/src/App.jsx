@@ -25,6 +25,10 @@ import Report1 from './Pages/Reports/Report 1/Report_1';
 import Report2 from './Pages/Reports/Report 2/Report_2';
 import Report3 from './Pages/Reports/Report 3/Report_3';
 import Report4 from './Pages/Reports/Report 4/Report_4';
+// import BookSeats from './Pages//BookSeats/BookSeats';
+import SearchFlight from './Pages/SearchFlight/SearchFlight';
+import SeatBooking from './components/Seats/Seat';
+import Seats from './components/Seats/SeatBooking';
 
 
 const App = () => {
@@ -62,6 +66,9 @@ const App = () => {
           <Route path = "/admin/report2" element = {<Report2/>}/>
           <Route path = "/admin/report3" element = {<Report3/>}/>
           <Route path = "/admin/report4" element = {<Report4/>}/>
+          {/* <Route path = "/book/:aircraftid" element = {<BookSeats/>}/> */}
+          <Route path = "/search-flight" element = {<SearchFlight/>}/>
+          <Route path="/book/:FLight_ID" element={<Seats />} />
           {/* Define other routes here */}
         </Routes>
         </div>

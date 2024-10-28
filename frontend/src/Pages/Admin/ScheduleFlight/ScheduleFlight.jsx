@@ -136,8 +136,16 @@ const AdminScheduleFlight = () => {
             .catch(err => console.error('Error deleting schedule:', err));
     };
 
-    const handleBook = (flight) => {
-        navigate(`/book/${flight.Aircraft_ID}`, { state: { seatConfiguration: flight } });
+    const handleBook = async (flight) => {
+        try {
+            const response = await axios.get(`http://localhost:5174/aircraft/${flight.Flight_ID}/seatConfig`);
+            const seatConfig = response.data;
+            
+            // Navigate to booking page with seat config
+            navigate(`/book/${flight.Aircraft_ID}`, { state: { seatConfiguration: seatConfig } });
+        } catch (error) {
+            console.error('Error fetching seat configuration:', error);
+        }
     };
 
     // Fetch flight schedule data on component mount
@@ -179,7 +187,7 @@ const AdminScheduleFlight = () => {
                             <li>
                                 <button
                                     className="dropdown-item"
-                                    onClick={() => handleEdit(item)}
+                                    onClick={() => handleEdit(item.Flight_ID)}
                                 >
                                     Edit
                                 </button>
@@ -190,6 +198,14 @@ const AdminScheduleFlight = () => {
                                     onClick={() => handleRemove(item.Flight_ID)}
                                 >
                                     Remove
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    className="dropdown-item"
+                                    onClick={() => handleBook(item)}
+                                >
+                                    Book
                                 </button>
                             </li>
                         </ul>
