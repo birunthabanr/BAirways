@@ -16,17 +16,13 @@ const usersQuery = () => {
         Gender VARCHAR(10),
         Phone_number VARCHAR(20),
         Num_of_booking INT
-);
-
+      );
     `;
-
-    // createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    //     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     connection.query(createUsersTableQuery, (err, results) => {
       if (err) {
-        reject('Error creating Users table:', err.stack);
+        reject('Error creating Passenger table:', err.stack);
       } else {
-        console.log('Users table is ready.');
+        console.log('Passenger table is ready.');
         resolve();
       }
     });
@@ -34,13 +30,13 @@ const usersQuery = () => {
 };
 
 // Function to insert a user
-const insertUser = (firstName, secondName, country, dob, address, city, email, gender, phoneNumber, numOfUsers) => {
+const insertUser = (firstName, secondName, country, dob, address, city, email, gender, phoneNumber, numOfBookings) => {
   return new Promise((resolve, reject) => {
     const query = `
-      INSERT INTO Passenger (FirstName, SecondName, Country, DOB DATE, Address, City, Email, Gender, Phone_number, Num_of_booking)
+      INSERT INTO Passenger (FirstName, SecondName, Country, DOB, Address, City, Email, Gender, Phone_number, Num_of_booking)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     `;
-    connection.query(query, [firstName, secondName, country, dob, address, city, email, gender, phoneNumber, numOfUsers], (err, results) => {
+    connection.query(query, [firstName, secondName, country, dob, address, city, email, gender, phoneNumber, numOfBookings], (err, results) => {
       if (err) {
         reject('Error inserting user:', err.stack);
       } else {
@@ -55,7 +51,7 @@ const insertUser = (firstName, secondName, country, dob, address, city, email, g
 const getUserByEmail = (email) => {
   return new Promise((resolve, reject) => {
     const query = `
-      SELECT * FROM Users WHERE Email = ?;
+      SELECT * FROM Passenger WHERE Email = ?;
     `;
     connection.query(query, [email], (err, results) => {
       if (err) {
@@ -69,14 +65,14 @@ const getUserByEmail = (email) => {
 
 // Function to update a user by ID
 const updateUserById = (id, updates) => {
-  const { firstName, secondName, country, dob, address, city, email, gender, phoneNumber, numOfUsers } = updates;
+  const { firstName, secondName, country, dob, address, city, email, gender, phoneNumber, numOfBookings } = updates;
   return new Promise((resolve, reject) => {
     const query = `
-      UPDATE Users
-      SET FirstName = ?, SecondName = ?, Country = ?, DOB = ?, Address = ?, City = ?, Email = ?, Gender = ?, Phone_number = ?, Num_Of_Users = ?
-      WHERE User_ID = ?;
+      UPDATE Passenger
+      SET FirstName = ?, SecondName = ?, Country = ?, DOB = ?, Address = ?, City = ?, Email = ?, Gender = ?, Phone_number = ?, Num_of_booking = ?
+      WHERE Passenger_ID = ?;
     `;
-    connection.query(query, [firstName, secondName, country, dob, address, city, email, gender, phoneNumber, numOfUsers, id], (err, results) => {
+    connection.query(query, [firstName, secondName, country, dob, address, city, email, gender, phoneNumber, numOfBookings, id], (err, results) => {
       if (err) {
         reject('Error updating user:', err.stack);
       } else {
@@ -91,7 +87,7 @@ const updateUserById = (id, updates) => {
 const deleteUserById = (id) => {
   return new Promise((resolve, reject) => {
     const query = `
-      DELETE FROM Users WHERE User_ID = ?;
+      DELETE FROM Passenger WHERE Passenger_ID = ?;
     `;
     connection.query(query, [id], (err, results) => {
       if (err) {
@@ -104,10 +100,11 @@ const deleteUserById = (id) => {
   });
 };
 
+// Function to count users
 const countUsers = () => {
   return new Promise((resolve, reject) => {
     const query = `
-      call GetTotalPassengerCount()
+      CALL GetTotalPassengerCount();
     `;
     connection.query(query, (err, results) => {
       if (err) {
@@ -117,16 +114,17 @@ const countUsers = () => {
       }
     });
   });
-}
+};
 
-const  GetPassengerAgeGroupByFlight=(Filght_ID)=>{
+// Function to get passenger age group by flight
+const GetPassengerAgeGroupByFlight = (flightID) => {
   return new Promise((resolve, reject) => {
     const query = `
-      call GetPassengerAgeGroupByFlight(?)
+      CALL GetPassengerAgeGroupByFlight(?);
     `;
-    connection.query(query,[Filght_ID], (err, results) => {
+    connection.query(query, [flightID], (err, results) => {
       if (err) {
-        reject('Error counting users:', err.stack);
+        reject('Error fetching age group by flight:', err.stack);
       } else {
         resolve(results[0]);
       }
@@ -134,23 +132,20 @@ const  GetPassengerAgeGroupByFlight=(Filght_ID)=>{
   });
 };
 
-const GetPassengerCountByDestinationAndDateRange = (Short_code,start_date,end_date) =>{
+// Function to get passenger count by destination and date range
+const GetPassengerCountByDestinationAndDateRange = (shortCode, startDate, endDate) => {
   return new Promise((resolve, reject) => {
     const query = `
-      call GetPassengerCountByDestinationAndDateRange(?,?,?)
+      CALL GetPassengerCountByDestinationAndDateRange(?, ?, ?);
     `;
-    connection.query(query,[Short_code,start_date,end_date], (err, results) => {
+    connection.query(query, [shortCode, startDate, endDate], (err, results) => {
       if (err) {
-        reject('Error counting users:', err.stack);
+        reject('Error fetching passenger count by destination and date range:', err.stack);
       } else {
         resolve(results[0]);
       }
     });
-
-});
+  });
 };
 
-
-
-
-module.exports = { usersQuery, insertUser, getUserByEmail, updateUserById, deleteUserById,countUsers,GetPassengerAgeGroupByFlight ,GetPassengerCountByDestinationAndDateRange};
+module.exports = { usersQuery, insertUser, getUserByEmail, updateUserById, deleteUserById, countUsers, GetPassengerAgeGroupByFlight, GetPassengerCountByDestinationAndDateRange };

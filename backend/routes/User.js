@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {insertUser, getUserByEmail,countUsers,GetPassengerAgeGroupByFlight,GetPassengerCountByDestinationAndDateRange} = require('../models/Users');
+const {insertUser, getUserByEmail, countUsers, GetPassengerAgeGroupByFlight, GetPassengerCountByDestinationAndDateRange} = require('../models/Users');
 const {insertRegistered, getRegisteredByUsername} = require('../models/RegisteredUsers');
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -56,13 +56,13 @@ router.post("/signup", async (req, res) => {
 //     }
 
 //     try {
-//         const user = await getUserByUsername(username);
+//         const user = await getRegisteredByUsername(username);
 
 //         if (!user) {
 //             return res.status(400).json({ error: "Invalid username." });
 //         }
 
-//         const match = await bcrypt.compare(password, user.password);
+//         const match = await bcrypt.compare(password, user.Password);
 
 //         if (!match) {
 //             return res.status(400).json({ error: "Invalid password." });

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+
 import Navbar from '../../../components/Navbar/Navbar';
 
 const Hero = () => {
@@ -22,6 +23,10 @@ const Hero = () => {
   const handleSignInClick = () => {
     navigate('/login'); // Navigate to the login page
   };
+
+  const handleBookNowClick = () => {
+    navigate('/search-flight')
+  }
 
   return (
     <div className='w-full h-[calc(100vh-8ch)] lg:ps-28 md:ps-16 sm:ps-7 ps-4 mt-[8ch] flex items-center justify-center flex-col hero relative'>
@@ -58,8 +63,8 @@ const Hero = () => {
           </motion.div>
 
           <motion.button
-            className="bg-blue-400 px-5 py-2 rounded-md border-[2px] border-blue-400 border-solid ease-in-out blueShadowBig"
-            // onClick={handleSignInClick} // Attach the click handler
+            className="bg-blue-400 px-5 py-2 rounded-md border-[2px] border-blue-400 border-solid ease-in-out blueShadowBig" 
+            onClick={handleBookNowClick} // Attach the click handler
           >
             <p className="font-semibold text-lg">Book Now!</p>
           </motion.button>
