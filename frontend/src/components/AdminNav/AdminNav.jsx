@@ -54,12 +54,12 @@ const AdminNav = () => {
                 <a href="/admin/report2">Report 2</a>
                 <a href="/admin/report3">Report 3</a>
                 <a href ="/admin/report4">Report 4</a>
-                <a href ="#">Report 5</a>
+                <a href ="/admin/report5">Report 5</a>
             </div>
             )}
         </div>
         <a href="/admin/add-schedule">Flight Schedule</a>
-        <a href="#">Routes</a>
+        <a href="/admin/routes">Routes</a>
         <a href = "/admin/airport">Airports</a>
         </div>
         </div>
