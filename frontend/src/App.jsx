@@ -29,6 +29,10 @@ import Report4 from './Pages/Reports/Report 4/Report_4';
 import SearchFlight from './Pages/SearchFlight/SearchFlight';
 import SeatBooking from './components/Seats/Seat';
 import Seats from './components/Seats/SeatBooking';
+import EditSchedule from './Pages/Admin/EditSchedule/EditSchedule';
+import Report5 from './Pages/Reports/Report 5/Report_5';
+import AddRoutes from './Pages/Admin/AddRoutes/AddRoutes';
+import FlightRoute from './Pages/Admin/Route/Route';
 
 
 const App = () => {
@@ -69,6 +73,10 @@ const App = () => {
           {/* <Route path = "/book/:aircraftid" element = {<BookSeats/>}/> */}
           <Route path = "/search-flight" element = {<SearchFlight/>}/>
           <Route path="/book/:FLight_ID" element={<Seats />} />
+          <Route path = "/admin/report5" element = {<Report5/>}/>
+          <Route path = "/admin/edit-schedule/:id" element = {<EditSchedule/>}/>
+          <Route path = '/admin/add-routes' element = {<AddRoutes/>}/>
+          <Route path = '/admin/routes' element = {<FlightRoute/>}/>
           {/* Define other routes here */}
         </Routes>
         </div>

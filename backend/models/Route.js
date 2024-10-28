@@ -1,5 +1,6 @@
 const connection = require('../database/connection');
 
+
 const RouteQuery = () =>{
     return new Promise((resolve, reject) => {
         // const createRouteTableQuery = `
@@ -54,16 +55,33 @@ const insertRoute = (Route_ID, Arrival_Airport_ID, Departure_Airport_ID, Distanc
 
 const fetchAllRoutes = () => {
     return new Promise((resolve, reject) => {
-        const query = 'SELECT * FROM routes';
+        const query = `call GetAllRoutes()`;
         connection.query(query, (err, results) => {
             if (err) {
                 reject('Error fetching user:', err.stack);
             } else {
                 resolve(results);
+                console.log(results[0][0]);
+                console.log("Success");
             }
         });
     });
 };
-      
+  
+const AddRoute = ( Departure_Airport_ID,Arrival_Airport_ID, Distance) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+          call AddFlightRoute(?,?,?);
+        `;
+        connection.query(query, [ Departure_Airport_ID,Arrival_Airport_ID, Distance], (err, results) => {
+            if (err) {
+                reject('Error inserting user:', err.stack);
+            } else {
+                console.log('User inserted successfully.');
+                resolve(results);
+            }
+        });
+    });
+}
 
-module.exports = {RouteQuery,insertRoute,fetchAllRoutes};
+module.exports = {RouteQuery,insertRoute,fetchAllRoutes,AddRoute};
