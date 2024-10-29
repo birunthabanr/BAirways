@@ -195,7 +195,7 @@ const getAllFlightSchedules = () => {
             JOIN Aircraft_model am ON a.Model_ID = am.Model_ID
             JOIN Route r ON r.Route_ID = f.Route_ID
             JOIN Airport departure_ar ON departure_ar.Airport_ID = r.Departure_Airport_ID
-            JOIN Airport arrival_ar ON arrival_ar.Airport_ID = r.Arrival_Airport_ID;
+            JOIN Airport arrival_ar ON arrival_ar.Airport_ID = r.Arrival_Airport_ID`;
       connection.query(
         updateScheduleQuery, 
         [scheduleData.Flight_ID,scheduleData.Route_ID,scheduleData.Aircraft_ID,scheduleData.Departure_date_time,scheduleData.Expected_arrival_date_time,scheduleData.Flight_price,scheduleData.Modified_by], // Use Flight_ID here
@@ -335,6 +335,22 @@ const getAllFlightSchedules = () => {
       });
     });
   }
+
+  const searchFlights = (departure, destination, date) => {
+    return new Promise((resolve, reject) => {
+      const searchFlightsQuery = `CALL SearchFlights(? , ? , ?)`;
+      connection.query(searchFlightsQuery, [departure, destination, date] , (err, results) => {
+        if(err){
+          reject("Error searching flights: " + err.stack);
+        } else{
+          console.log("Flights retrieved successfully.");
+          resolve(results[0]);
+        }
+      });
+    });
+  }
+
+ 
   
 
   module.exports = {
@@ -347,5 +363,6 @@ const getAllFlightSchedules = () => {
     getScheduleById,
     GetFLightDetailsByAirports,
     TakeFlightbyID,
-    fetchAircraftById
+    fetchAircraftById,
+    searchFlights
   };

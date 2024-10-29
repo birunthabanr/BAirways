@@ -43,8 +43,8 @@ app.use("/airport", airportRouter);
 const rewardsRouter = require("./routes/Rewards");
 app.use("/rewards", rewardsRouter);
 
-const searchFlightsRouter = require("./routes/SearchFlights");
-app.use("/api/search-flights", searchFlightsRouter);
+// const searchFlightsRouter = require("./routes/SearchFlights");
+// app.use("//search-flights", searchFlightsRouter);
 
 const bookFlightRouter = require("./routes/BookFlight");
 app.use("/api/book-flight", bookFlightRouter);
