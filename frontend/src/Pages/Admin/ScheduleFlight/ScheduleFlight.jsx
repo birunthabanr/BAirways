@@ -127,7 +127,7 @@ const AdminScheduleFlight = () => {
     let navigate = useNavigate();
 
     const handleEdit = (flight) => {
-        navigate(`/admin/edit-schedule/${flight.Flight_ID}`, { state: { flight } });
+        navigate(`/admin/edit-schedule/${flight.FLight_ID}`, { state: { flight } });
     };
 
     const handleRemove = (Flight_ID) => {

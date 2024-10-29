@@ -4,7 +4,7 @@ import axios from 'axios';
 import "./EditSchedule.css";
 
 const EditSchedule = () => {
-    const { id } = useParams(); // Get flight ID from the URL
+    const { Flight_ID } = useParams(); // Get flight ID from the URL
     const navigate = useNavigate();
     const location = useLocation(); // Use location to get state
     // const [flight, setFlight] = useState({

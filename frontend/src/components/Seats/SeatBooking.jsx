@@ -1,15 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 
 function SeatCollection(props) {
-  const { rows, columns, FLight_ID, selectedClass } = props;
+  const { rows, columns, FLight_ID, selectedClass, onSeatSelect } = props;
 
   const seats = [];
 
 
   const [bookingData, setBookingData] = useState({});
+  const [selectedSeat, setSelectedSeat] = useState(null);
 
   console.log("bookingData",bookingData,rows, columns,selectedClass, "Platinum")
 
@@ -25,7 +26,12 @@ function SeatCollection(props) {
           })
       }
     }
-  }, [])
+  }, [FLight_ID, rows, columns, selectedClass]);
+
+  const handleSeatClick = (seatKey) => {
+    setSelectedSeat(seatKey);
+    onSeatSelect(seatKey);  // Pass selected seat to parent
+  };
 
   var count = 1;
   for (let i = 0; i < rows; i++) {
@@ -33,13 +39,15 @@ function SeatCollection(props) {
     for (let j = 0; j < columns; j++) {
       var seatNumber = count++;
 
-      let className = ''
-      if (!!bookingData[`${i + 1},${j + 1}`]) {
-        className =
-          "w-1/10 px-3 py-3 bg-red-400 rounded-2xl mr-2.5 my-1";
+      const seatKey = `${i + 1},${j + 1}`;
+
+      let className = "w-1/10 px-3 py-3 rounded-2xl ml-2.5 my-1 ";
+      if (bookingData[seatKey]) {
+        className += "bg-red-400";  // Booked seat
+      } else if (seatKey === selectedSeat) {
+        className += "bg-red-600";  // Selected seat
       } else {
-        className =
-          "w-1/10 px-3 py-3 bg-gray-400 hover:bg-gray-500 rounded-2xl ml-2.5 my-1";
+        className += "bg-gray-400 hover:bg-gray-500";  // Available seat
       }
 
       row.push(
@@ -47,6 +55,7 @@ function SeatCollection(props) {
           key={`seat-${i}-${j}`}
           className={className}
           style={{ width: "50px", height: "50px" }}
+          onClick={() => handleSeatClick(seatKey)}
         >
           <h5 className="text-sm text-center">
             {String(seatNumber).padStart(2, "0")}
@@ -71,7 +80,11 @@ function Seats(props) {
   let { FLight_ID } = useParams();
   console.log(FLight_ID);
 
+  const navigate = useNavigate();
+
   const [selectedClass, setSelectedClass] = useState(null);
+  const [selectedSeat, setSelectedSeat] = useState(null);
+  const [seatConfig, setSeatConfig] = useState([]);
   const [econrows, setEconrows] = useState("");
   const [goldrows, setGoldrows] = useState("");
   const [platrows, setPlatrows] = useState("");
@@ -83,18 +96,39 @@ function Seats(props) {
 
     axios.get(`http://localhost:5174/schedule/booking/${FLight_ID}`).then((response) => {
 
+      setSeatConfig(response.data);
+
       console.log(response)
     //   console.log("dhhhL ", response.data[0].Price)
       setObject(response.data)
+      setSeatConfig(response.data);
     //   console.log(object)
 
     });
 
-  }, [])
+  }, [FLight_ID])
 
 
   const handleClassSelection = (seatClass) => {
     setSelectedClass(seatClass);
+  };
+
+  const handleSeatSelect = (seat) => {
+    setSelectedSeat(seat);
+  };
+
+  const handleProceed = () => {
+    if (selectedClass && selectedSeat) {
+      navigate("/finalize-booking", {
+        state: {
+          FLight_ID,
+          selectedClass,
+          selectedSeat,
+        },
+      });
+    } else {
+      alert("Please select a class and a seat before proceeding.");
+    }
   };
 
   const econRows = object[0]?.EconomyRows;
@@ -119,7 +153,7 @@ function Seats(props) {
       const { rows, columns } = seatRows[selectedClass || 'Platinum'];
       return (
         <div className="flex-col w-2/3 m-4 rounded-2xl justify-center items-center">
-          <SeatCollection rows={rows} columns={columns} FLight_ID={FLight_ID} selectedClass={selectedClass}/>
+          <SeatCollection rows={rows} columns={columns} FLight_ID={FLight_ID} selectedClass={selectedClass} onSeatSelect={handleSeatSelect}/>
         </div>
       );
   };
@@ -168,12 +202,11 @@ function Seats(props) {
 
           <div className="flex justify-center px-5 mb-2 py-6">
             <button
-              type="submit"
+              type="button"
+              onClick={handleProceed}
               className="px-12 bg-[#F97827] rounded-xl text-white py-2 hover:scale-105 duration-300"
             >
-              <Link className="no-underline" to="/">
-                Proceed{" "}
-              </Link>
+              Proceed
             </button>
           </div>
         </div>

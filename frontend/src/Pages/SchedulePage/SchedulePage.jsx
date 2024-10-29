@@ -25,13 +25,13 @@ const Schedule = ({ isAdmin }) => {
 
     const handleBook = async (flight) => {
         try {
-            const response = await axios.get(`http://localhost:5174/schedule/${flight.FLight_ID}`);
+            const response = await axios.get(`http://localhost:5174/schedule/${flight.Flight_ID}`);
             const { EconomyClassSeatCount, BusinessClassSeatCount, PlatinumClassSeatCount } = response.data;
             const seatCounts = { EconomyClassSeatCount, BusinessClassSeatCount, PlatinumClassSeatCount };
             console.log(response); // This should return the seat counts
             
             // Navigate to the booking page and pass the seat configuration
-            navigate(`/book/${flight.FLight_ID}`, { state: { seatCounts } });
+            navigate(`/book/${flight.Flight_ID}`, { state: { seatCounts } });
         } catch (error) {
             console.error('Error fetching seat counts:', error);
         }
@@ -69,8 +69,8 @@ const Schedule = ({ isAdmin }) => {
                                     <tbody>
                                         {schedule.map((item, index) => (
                                             <tr key={index} className='data'>
-                                                <td>{item.FLight_ID}</td>
-                                                <td>{item.ROute_ID}</td>
+                                                <td>{item.Flight_ID}</td>
+                                                <td>{item.Route_ID}</td>
                                                 <td>{item.Aircraft}</td>
                                                 <td>{new Date(item.Departure_date_time).toLocaleString()}</td>
                                                 <td>{new Date(item.Expected_arrival_date_time).toLocaleString()}</td>

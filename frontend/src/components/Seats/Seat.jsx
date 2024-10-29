@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import "./SeatBooking.css"; // Create your own CSS for styles
 
 const SeatBooking = () => {
     const location = useLocation();
