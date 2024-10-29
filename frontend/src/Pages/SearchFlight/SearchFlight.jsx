@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
+import axios from "axios";
 
 const SearchFlight = () => {
   // State for selected departure and destination
@@ -38,6 +39,21 @@ const SearchFlight = () => {
 
   const handleDateChange = (e) => {
     setDate(e.target.value);
+  };
+
+  const handleSubmit = async () => {
+    const flightData = { departure, destination, date };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5174/schedule/search",
+        flightData
+      );
+      console.log("Sent flight data successfully!", response.data);
+    } catch (error) {
+      console.error("Error Retrieving flight data:", error);
+      alert("Fetch error.");
+    }
   };
 
   return (
@@ -106,7 +122,10 @@ const SearchFlight = () => {
 
         {/* Book Now Button */}
         <div className="col-span-3 mt-4">
-          <button className="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white text-lg font-semibold rounded-lg shadow-md hover:from-blue-600 hover:to-blue-800 transform hover:scale-105 transition-transform duration-200">
+          <button
+            onClick={handleSubmit}
+            className="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white text-lg font-semibold rounded-lg shadow-md hover:from-blue-600 hover:to-blue-800 transform hover:scale-105 transition-transform duration-200"
+          >
             Book Now
           </button>
         </div>

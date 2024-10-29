@@ -8,12 +8,13 @@ import { AuthContext } from "../../helpers/AuthContext";
 
 function Loginpage() {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
+  const { isAuthenticated } = useContext(AuthContext);
 
   const handleSignUpClick = () => setIsSignUpMode(true);
   const handleSignInClick = () => setIsSignUpMode(false);
 
   // const {setAuthState} = useContext(AuthContext);
-  const [authState, setAuthState] = useState(false);
+  //const [authState, setAuthState] = useState(false);
 
   let navigate = useNavigate();
 

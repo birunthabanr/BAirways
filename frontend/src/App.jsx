@@ -8,7 +8,7 @@ import BookingPage from "./Pages/BookingPage/BookingPage";
 import EditPage from "./Pages/EditPage/EditPage";
 import AddSchedulePage from "./Pages/AddSchedulePage/AddSchedulePage";
 import AdminPage from "./Pages/AdminPage/AdminPage";
-import { AuthContext } from "./helpers/AuthContext";
+import { AuthProvider } from "./helpers/AuthContext";
 import AdminLogin from "./Pages/Admin/AdminLogin/AdminLogin";
 import Dashbord from "./Pages/Admin/Dashbord/Dashbord";
 import Airplane from "./Pages/Admin/Airplane/Airplane";
@@ -35,61 +35,63 @@ import FlightRoute from "./Pages/Admin/Route/Route";
 
 const App = () => {
   return (
-    <div>
-      <Router>
-        <div>
-          <main className="min-h-screen flex flex-col bg-gradient-to-r from-slate-800 to-slate-950 text-white text-sm sm:text-base">
-            {/* <Navbar /> */}
-            {/* <div style={{ marginTop: '80px' }}> */}
-            <div>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Loginpage />} />
-                <Route path="/admin/schedule" element={<SchedulePage />} />
-                <Route path="/schedule" element={<SchedulePage />} />
-                <Route path="/book" element={<BookingPage />} />
-                <Route path="/edit/:id" element={<EditPage />} />
-                <Route path="/add-schedule" element={<AddSchedulePage />} />
-                <Route path="/admin" element={<AdminPage />} />
-                <Route path="/admin/login" element={<AdminLogin />} />
-                <Route path="/admin/dashboard" element={<Dashbord />} />
-                <Route path="/admin/airplane" element={<Airplane />} />
-                <Route path="/admin/add-airplane" element={<AddAirplane />} />
-                <Route path="/admin/model" element={<Model />} />
-                <Route path="/admin/add-model" element={<AddModel />} />
-                <Route
-                  path="/admin/edit-airplane/:id"
-                  element={<EditAirplane />}
-                />
-                <Route path="/admin/edit-model/:id" element={<EditModel />} />
-                <Route path="/admin/airport" element={<Airports />} />
-                <Route path="/admin/add-airport" element={<AddAirports />} />
-                <Route
-                  path="/admin/add-schedule"
-                  element={<AdminScheduleFlight />}
-                />
-                <Route path="/admin/report1" element={<Report1 />} />
-                <Route path="/admin/report2" element={<Report2 />} />
-                <Route path="/admin/report3" element={<Report3 />} />
-                <Route path="/admin/report4" element={<Report4 />} />
-                {/* <Route path = "/book/:aircraftid" element = {<BookSeats/>}/> */}
-                <Route path="/search-flight" element={<SearchFlight />} />
-                <Route path="/book/:FLight_ID" element={<Seats />} />
-                <Route path="/admin/report5" element={<Report5 />} />
-                <Route
-                  path="/admin/edit-schedule/:id"
-                  element={<EditSchedule />}
-                />
-                <Route path="/admin/add-routes" element={<AddRoutes />} />
-                <Route path="/admin/routes" element={<FlightRoute />} />
-                {/* Define other routes here */}
-              </Routes>
-            </div>
-          </main>
-        </div>
-      </Router>
-      <Footer />
-    </div>
+    <AuthProvider>
+      <div>
+        <Router>
+          <div>
+            <main className="min-h-screen flex flex-col bg-gradient-to-r from-slate-800 to-slate-950 text-white text-sm sm:text-base">
+              {/* <Navbar /> */}
+              {/* <div style={{ marginTop: '80px' }}> */}
+              <div>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/login" element={<Loginpage />} />
+                  <Route path="/admin/schedule" element={<SchedulePage />} />
+                  <Route path="/schedule" element={<SchedulePage />} />
+                  <Route path="/book" element={<BookingPage />} />
+                  <Route path="/edit/:id" element={<EditPage />} />
+                  <Route path="/add-schedule" element={<AddSchedulePage />} />
+                  <Route path="/admin" element={<AdminPage />} />
+                  <Route path="/admin/login" element={<AdminLogin />} />
+                  <Route path="/admin/dashboard" element={<Dashbord />} />
+                  <Route path="/admin/airplane" element={<Airplane />} />
+                  <Route path="/admin/add-airplane" element={<AddAirplane />} />
+                  <Route path="/admin/model" element={<Model />} />
+                  <Route path="/admin/add-model" element={<AddModel />} />
+                  <Route
+                    path="/admin/edit-airplane/:id"
+                    element={<EditAirplane />}
+                  />
+                  <Route path="/admin/edit-model/:id" element={<EditModel />} />
+                  <Route path="/admin/airport" element={<Airports />} />
+                  <Route path="/admin/add-airport" element={<AddAirports />} />
+                  <Route
+                    path="/admin/add-schedule"
+                    element={<AdminScheduleFlight />}
+                  />
+                  <Route path="/admin/report1" element={<Report1 />} />
+                  <Route path="/admin/report2" element={<Report2 />} />
+                  <Route path="/admin/report3" element={<Report3 />} />
+                  <Route path="/admin/report4" element={<Report4 />} />
+                  {/* <Route path = "/book/:aircraftid" element = {<BookSeats/>}/> */}
+                  <Route path="/search-flight" element={<SearchFlight />} />
+                  <Route path="/book/:FLight_ID" element={<Seats />} />
+                  <Route path="/admin/report5" element={<Report5 />} />
+                  <Route
+                    path="/admin/edit-schedule/:id"
+                    element={<EditSchedule />}
+                  />
+                  <Route path="/admin/add-routes" element={<AddRoutes />} />
+                  <Route path="/admin/routes" element={<FlightRoute />} />
+                  {/* Define other routes here */}
+                </Routes>
+              </div>
+            </main>
+          </div>
+        </Router>
+        <Footer />
+      </div>
+    </AuthProvider>
   );
 };
 
