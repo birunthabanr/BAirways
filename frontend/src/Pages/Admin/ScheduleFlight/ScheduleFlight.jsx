@@ -127,25 +127,78 @@ const AdminScheduleFlight = () => {
     let navigate = useNavigate();
 
     const handleEdit = (flight) => {
-        navigate(`/edit/${flight.Flight_ID}`, { state: { flight } });
+        navigate(`/admin/edit-schedule/${flight.Flight_ID}`, { state: { flight } });
     };
+
+    // const handleRemove = (Flight_ID) => {
+    //     // alert('Are you sure you want to delete this schedule?');
+    //     console.log('Flight_ID:', Flight_ID);
+    //     axios.delete(`http://localhost:5174/schedule/delete`,
+    //         { params: { id: Flight_ID } }
+    //     )
+    //         .then(() => setSchedule(schedule.filter((item) => item.Flight_ID !== Flight_ID)))
+    //         .catch(err => console.error('Error deleting schedule:', err));
+    // };
 
     const handleRemove = (Flight_ID) => {
-        axios.delete(`http://localhost:5174/schedule/${Flight_ID}`)
-            .then(() => setSchedule(schedule.filter((item) => item.Flight_ID !== Flight_ID)))
-            .catch(err => console.error('Error deleting schedule:', err));
+        // Ask for confirmation before deleting
+        const confirmDelete = window.confirm('Are you sure you want to delete this schedule?');
+        if (confirmDelete) {
+            axios.delete(`http://localhost:5174/schedule/delete`, { params: { id: Flight_ID } })
+                .then(() => setSchedule(schedule.filter((item) => item.Flight_ID !== Flight_ID)))
+                .catch(err => console.error('Error deleting schedule:', err));
+        }
     };
+    
 
-    const handleBook = (flight) => {
-        navigate(`/book/${flight.Aircraft_ID}`, { state: { seatConfiguration: flight } });
+    const handleBook = async (flight) => {
+        try {
+            const response = await axios.get(`http://localhost:5174/aircraft/${flight.Flight_ID}/seatConfig`);
+            const seatConfig = response.data;
+            
+            // Navigate to booking page with seat config
+            navigate(`/book/${flight.Aircraft_ID}`, { state: { seatConfiguration: seatConfig } });
+        } catch (error) {
+            console.error('Error fetching seat configuration:', error);
+        }
     };
 
     // Fetch flight schedule data on component mount
+    
+
+
+
     useEffect(() => {
         axios.get('http://localhost:5174/schedule')
-            .then(res => setSchedule(res.data))
+            .then(res => {
+                const fetchedFlight = res.data.map(flight => {
+                    // Format the date-time fields
+                    const departureDateTime = flight.Departure_date_time 
+                        ? new Date(flight.Departure_date_time).toISOString().slice(0, 19).replace('T', ' ') 
+                        : '';
+                    const arrivalDateTime = flight.Expected_arrival_date_time 
+                        ? new Date(flight.Expected_arrival_date_time).toISOString().slice(0, 19).replace('T', ' ') 
+                        : '';
+                    const ModifiedDateTime = flight.Modified_time
+                    ? new Date(flight.Modified_time).toISOString().slice(0, 19).replace('T', ' ') 
+                    : '';
+
+                    const price = flight.Flight_price+'$';
+    
+                    // Return a new object with formatted date-time fields
+                    return {
+                        ...flight,
+                        Departure_date_time: departureDateTime,
+                        Expected_arrival_date_time: arrivalDateTime,
+                        Modified_time: ModifiedDateTime,
+                        Flight_price : price
+                    };
+                });
+                setSchedule(fetchedFlight);
+            })
             .catch(err => console.error('Error fetching schedule data:', err));
     }, []);
+    
 
     const scheduleDetails = schedule.map((item, index) => {
         const modifiedBy = item.Modified_BY === null ? 'N/A' : item.Modified_BY;
@@ -153,7 +206,7 @@ const AdminScheduleFlight = () => {
 
         return (
             <tr key={index} className="data">
-                <td>{item.FLight_ID}</td>
+                <td>{item.Flight_ID}</td>
                 <td>{item.Aircraft}</td>
                 <td>{item.Departure_Airport}</td>
                 <td>{item.Arrival_Airport}</td>
@@ -179,7 +232,7 @@ const AdminScheduleFlight = () => {
                             <li>
                                 <button
                                     className="dropdown-item"
-                                    onClick={() => handleEdit(item)}
+                                    onClick={() => handleEdit(item.Flight_ID)}
                                 >
                                     Edit
                                 </button>
@@ -187,9 +240,17 @@ const AdminScheduleFlight = () => {
                             <li>
                                 <button
                                     className="dropdown-item"
-                                    onClick={() => handleRemove(item.Flight_ID)}
+                                    onClick={() => {handleRemove(item.Flight_ID) }}
                                 >
                                     Remove
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    className="dropdown-item"
+                                    onClick={() => handleBook(item)}
+                                >
+                                    Book
                                 </button>
                             </li>
                         </ul>

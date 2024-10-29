@@ -50,7 +50,7 @@ const Dashbord = () => {
             <h2>Users</h2>
             <p>{count}+</p>
           </div>
-          <Link to='/admin/schedule'>
+          <Link to='/admin/add-schedule'>
           <div className="tile">
             <h2>Flights</h2>
             <p>{flight_count}+</p>
@@ -65,8 +65,10 @@ const Dashbord = () => {
             </div>
             </Link>
             <div className="tile">
+              <Link to = "/admin/airport">
               <h2>Airports</h2>
               <p>{airport_count}+</p>
+              </Link>
             </div>
         </div>
       </div>

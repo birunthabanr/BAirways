@@ -1,49 +1,54 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import Navbar from '../../../components/Navbar/Navbar';
+import React from "react";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+
+import Navbar from "../../../components/Navbar/Navbar";
 
 const Hero = () => {
   const navigate = useNavigate(); // Initialize navigate
 
   const imageVariants = {
     initial: {
-      x: '100%',
+      x: "100%",
     },
     animate: {
-      x: '3%',
+      x: "3%",
       transition: {
         duration: 1,
-        ease: 'easeInOut',
+        ease: "easeInOut",
       },
     },
   };
 
   const handleSignInClick = () => {
-    navigate('/login'); // Navigate to the login page
+    navigate("/login"); // Navigate to the login page
+  };
+
+  const handleBookNowClick = () => {
+    navigate("/login");
   };
 
   return (
-    <div className='w-full h-[calc(100vh-8ch)] lg:ps-28 md:ps-16 sm:ps-7 ps-4 mt-[8ch] flex items-center justify-center flex-col hero relative'>
+    <div className="w-full h-[calc(100vh-8ch)] lg:ps-28 md:ps-16 sm:ps-7 ps-4 mt-[8ch] flex items-center justify-center flex-col hero relative">
       <Navbar />
       <div className="flex-1 w-full flex items-stretch justify-between gap-12 pb-10">
         <motion.div
           className="w-[35%] h-auto rounded-md flex justify-center flex-col space-y-14"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: 'linear', delay: 0.2 }}
+          transition={{ duration: 0.5, ease: "linear", delay: 0.2 }}
         >
           <motion.div
             className="space-y-5"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: 'linear', delay: 0.2 }}
+            transition={{ duration: 1, ease: "linear", delay: 0.2 }}
           >
             <motion.h1
               className="text-7xl font-bold text-neutral-50 leading-[1.15] text-center"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 2, ease: 'linear', delay: 0.4 }}
+              transition={{ duration: 2, ease: "linear", delay: 0.4 }}
             >
               Book Your <span> Tickets </span> now!
             </motion.h1>
@@ -51,7 +56,7 @@ const Hero = () => {
               className="text-lg font-normal text-neutral-300 line-clamp-3 text-center"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 2, ease: 'linear', delay: 0.6 }}
+              transition={{ duration: 2, ease: "linear", delay: 0.6 }}
             >
               Fly with us for a smooth and incredible flying experience!
             </motion.h1>
@@ -59,9 +64,9 @@ const Hero = () => {
 
           <motion.button
             className="bg-blue-400 px-5 py-2 rounded-md border-[2px] border-blue-400 border-solid ease-in-out blueShadowBig"
-            // onClick={handleSignInClick} // Attach the click handler
+            onClick={handleBookNowClick} // Attach the click handler
           >
-            <p className="font-semibold text-lg">Book Now!</p>
+            <p className="font-semibold text-lg">Let's Get Started</p>
           </motion.button>
         </motion.div>
 

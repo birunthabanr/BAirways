@@ -17,8 +17,8 @@ const registeredQuery = () => {
     const createRegisteredTableQuery = `
             CREATE TABLE IF NOT EXISTS Registered (
                 Username VARCHAR(30) PRIMARY KEY,
-                Password VARCHAR(30),
-                Passenger_ID INT,
+                Password VARCHAR(255),
+                Passenger_ID INT ,
                 Reward_ID INT,
                 FOREIGN KEY (Passenger_ID) REFERENCES Passenger(Passenger_ID),
                 FOREIGN KEY (Reward_ID) REFERENCES Reward(Reward_ID)
@@ -35,13 +35,13 @@ const registeredQuery = () => {
   });
 };
 
-const insertRegistered = (username, password, User_ID) => {
+const insertRegistered = (username, password, Passenger_ID) => {
     return new Promise((resolve, reject) => {
       const insertRegisteredQuery = `
-        INSERT INTO RegisteredUsers (Username, Password, User_ID)
+        INSERT INTO Registered (Username, Password, Passenger_ID)
         VALUES (?, ?, ?);
       `;
-      connection.query(insertRegisteredQuery, [username, password, User_ID], (err, results) => {
+      connection.query(insertRegisteredQuery, [username, password, Passenger_ID], (err, results) => {
         if (err) {
           reject('Error inserting registered user:', err.stack);
         } else {
@@ -55,7 +55,7 @@ const insertRegistered = (username, password, User_ID) => {
   const getRegisteredByUsername = (username) => {
     return new Promise((resolve, reject) => {
       const getRegisteredQuery = `
-        SELECT * FROM RegisteredUsers WHERE Username =?;
+        SELECT * FROM Registered WHERE Username =?;
       `;
       connection.query(getRegisteredQuery, [username], (err, results) => {
         if (err) {
