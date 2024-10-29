@@ -130,15 +130,26 @@ const AdminScheduleFlight = () => {
         navigate(`/admin/edit-schedule/${flight.FLight_ID}`, { state: { flight } });
     };
 
+    // const handleRemove = (Flight_ID) => {
+    //     // alert('Are you sure you want to delete this schedule?');
+    //     console.log('Flight_ID:', Flight_ID);
+    //     axios.delete(`http://localhost:5174/schedule/delete`,
+    //         { params: { id: Flight_ID } }
+    //     )
+    //         .then(() => setSchedule(schedule.filter((item) => item.Flight_ID !== Flight_ID)))
+    //         .catch(err => console.error('Error deleting schedule:', err));
+    // };
+
     const handleRemove = (Flight_ID) => {
-        alert('Are you sure you want to delete this schedule?');
-        console.log('Flight_ID:', Flight_ID);
-        axios.delete(`http://localhost:5174/schedule/delete`,
-            { params: { id: Flight_ID } }
-        )
-            .then(() => setSchedule(schedule.filter((item) => item.Flight_ID !== Flight_ID)))
-            .catch(err => console.error('Error deleting schedule:', err));
+        // Ask for confirmation before deleting
+        const confirmDelete = window.confirm('Are you sure you want to delete this schedule?');
+        if (confirmDelete) {
+            axios.delete(`http://localhost:5174/schedule/delete`, { params: { id: Flight_ID } })
+                .then(() => setSchedule(schedule.filter((item) => item.Flight_ID !== Flight_ID)))
+                .catch(err => console.error('Error deleting schedule:', err));
+        }
     };
+    
 
     const handleBook = async (flight) => {
         try {
@@ -153,11 +164,41 @@ const AdminScheduleFlight = () => {
     };
 
     // Fetch flight schedule data on component mount
+    
+
+
+
     useEffect(() => {
         axios.get('http://localhost:5174/schedule')
-            .then(res => setSchedule(res.data))
+            .then(res => {
+                const fetchedFlight = res.data.map(flight => {
+                    // Format the date-time fields
+                    const departureDateTime = flight.Departure_date_time 
+                        ? new Date(flight.Departure_date_time).toISOString().slice(0, 19).replace('T', ' ') 
+                        : '';
+                    const arrivalDateTime = flight.Expected_arrival_date_time 
+                        ? new Date(flight.Expected_arrival_date_time).toISOString().slice(0, 19).replace('T', ' ') 
+                        : '';
+                    const ModifiedDateTime = flight.Modified_time
+                    ? new Date(flight.Modified_time).toISOString().slice(0, 19).replace('T', ' ') 
+                    : '';
+
+                    const price = flight.Flight_price+'$';
+    
+                    // Return a new object with formatted date-time fields
+                    return {
+                        ...flight,
+                        Departure_date_time: departureDateTime,
+                        Expected_arrival_date_time: arrivalDateTime,
+                        Modified_time: ModifiedDateTime,
+                        Flight_price : price
+                    };
+                });
+                setSchedule(fetchedFlight);
+            })
             .catch(err => console.error('Error fetching schedule data:', err));
     }, []);
+    
 
     const scheduleDetails = schedule.map((item, index) => {
         const modifiedBy = item.Modified_BY === null ? 'N/A' : item.Modified_BY;
@@ -199,7 +240,7 @@ const AdminScheduleFlight = () => {
                             <li>
                                 <button
                                     className="dropdown-item"
-                                    onClick={() => handleRemove(item.FLight_ID)}
+                                    onClick={() => {handleRemove(item.Flight_ID) }}
                                 >
                                     Remove
                                 </button>
