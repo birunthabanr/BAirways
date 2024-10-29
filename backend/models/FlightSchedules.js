@@ -131,7 +131,7 @@ const updateSchedule = (Flight_ID, scheduleData) => {
           Departure_date_time = ?, 
           Expected_arrival_date_time = ?, 
           Modified_by = ?   
-        WHERE Flight_ID = ?
+        WHERE Flight_ID = ?`
       connection.query(
         addScheduleQuery, 
         [Aircraft_ID, Route_ID,Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By], 
@@ -148,20 +148,7 @@ const updateSchedule = (Flight_ID, scheduleData) => {
   };
   
   // Function to delete a schedule by Flight_ID
-  const deleteSchedule = (Flight_ID) => {
-    return new Promise((resolve, reject) => {
-      console.log('Flight_ID:', Flight_ID);
-      const deleteScheduleQuery = 'call DeleteFLight(?)';
-      connection.query(deleteScheduleQuery, [Flight_ID], (err, result) => {
-        if (err) {
-          reject('Error deleting schedule: ' + err.stack);
-        } else {
-          console.log(`Schedule with Flight_ID ${Flight_ID} deleted successfully.`);
-          resolve(result[0]);
-        }
-      });
-    });
-  };
+  
   
   const updateSchedule = (scheduleData) => {
     return new Promise((resolve, reject) => {
