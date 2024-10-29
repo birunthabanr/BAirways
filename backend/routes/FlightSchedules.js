@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {addSchedule, getAllFlightSchedules, updateSchedule,deleteSchedule,countFlightSchedules, fetchAircraftById,getScheduleById,GetFLightDetailsByAirports,TakeFlightbyID, searchFlights} = require("../models/FlightSchedules");
+const {addSchedule, getAllFlightSchedules, updateSchedule,deleteSchedule,countFlightSchedules, fetchAircraftById,getScheduleById,GetFLightDetailsByAirports,TakeFlightbyID} = require("../models/FlightSchedules");
 const connection = require('../database/connection');
 
 router.post("/", async (req, res) => {
@@ -186,19 +186,6 @@ router.get("/modify/id", async (req, res) => {
   }
 });
 
-
-router.post("/search" , async(req, res) =>{
-  const {departure, destination, date} = req.body;
-
-  try{
-    const flights = await searchFlights(departure, destination, date);
-    res.json(flights);
-
-  } catch (error){
-    console.error("Error searching flights: " error);
-    res.status(500).json({error: "Failed to search flights."});
-  }
-});
 
 
 module.exports = router;
