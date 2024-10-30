@@ -33,6 +33,7 @@ import EditSchedule from "./Pages/Admin/EditSchedule/EditSchedule";
 import Report5 from "./Pages/Reports/Report 5/Report_5";
 import AddRoutes from "./Pages/Admin/AddRoutes/AddRoutes";
 import FlightRoute from "./Pages/Admin/Route/Route";
+import FinalizeBooking from "./components/FinalizeBooking/FinalizeBooking";
 
 const App = () => {
   return (
@@ -86,6 +87,7 @@ const App = () => {
                   <Route path="/admin/add-routes" element={<AddRoutes />} />
                   <Route path="/admin/routes" element={<FlightRoute />} />
                   {/* Define other routes here */}
+                  <Route path="/finalize-booking" element={<FinalizeBooking />} />
                 </Routes>
               </div>
             </main>

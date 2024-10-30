@@ -96,22 +96,6 @@ router.get("/count", async (req, res) => {
   }
 });
 
-router.get("/:FLight_ID", (req, res) => {
-  const { FLight_ID } = req.params;
-
-  fetchAircraftById(FLight_ID)
-    .then((seatCounts) => {
-      res.json(seatCounts);
-    })
-    .catch((error) => {
-      if (error === "Aircraft not found") {
-        res.status(404).json({ message: error });
-      } else {
-        res.status(500).json({ message: error });
-      }
-    });
-});
-
 router.get("/booking/:FLight_ID", async (req, res) => {
   const id = req.params.FLight_ID;
 
@@ -219,6 +203,22 @@ router.post("/search", async (req, res) => {
     console.error("Error searching flights: ", error);
     res.status(500).json({ error: "Failed to search flights." });
   }
+});
+
+router.get("/:FLight_ID", (req, res) => {
+  const { FLight_ID } = req.params;
+
+  fetchAircraftById(FLight_ID)
+    .then((seatCounts) => {
+      res.json(seatCounts);
+    })
+    .catch((error) => {
+      if (error === "Aircraft not found") {
+        res.status(404).json({ message: error });
+      } else {
+        res.status(500).json({ message: error });
+      }
+    });
 });
 
 module.exports = router;
