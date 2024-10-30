@@ -38,39 +38,26 @@ const EditSchedule = () => {
 
 
     useEffect(() => {
-        axios.get('http://localhost:5174/schedule/modify/id', { params: { id: id } })
+        axios.get(`http://localhost:5174/schedule/modify/id`, { params: { id: id } })
             .then(res => {
-                console.log("Full API response:", res); // Log the entire response
+                const fetchedFlight = res.data;
     
-                if (res.data && typeof res.data === 'object') {
-                    const fetchedFlight = res.data;
+                // Format date-time fields for the datetime-local input
+                fetchedFlight.Departure_date_time = fetchedFlight.Departure_date_time
+                    ? fetchedFlight.Departure_date_time.slice(0, 16)
+                    : '';
+                fetchedFlight.Expected_arrival_date_time = fetchedFlight.Expected_arrival_date_time
+                    ? fetchedFlight.Expected_arrival_date_time.slice(0, 16)
+                    : '';
     
-                    // Format date-time fields for the datetime-local input
-                    fetchedFlight.Departure_date_time = fetchedFlight.Departure_date_time
-                        ? fetchedFlight.Departure_date_time.slice(0, 16)
-                        : '';
-                    fetchedFlight.Expected_arrival_date_time = fetchedFlight.Expected_arrival_date_time
-                        ? fetchedFlight.Expected_arrival_date_time.slice(0, 16)
-                        : '';
-    
-                    setFlight(fetchedFlight);
-                    console.log("Flight data:", fetchedFlight);
-                } else {
-                    console.error("Unexpected data format or empty response. Setting default values.");
-                    setFlight({ // Set fallback values if data is empty or in unexpected format
-                        Aircraft_ID: '',
-                        Route_ID: '',
-                        Flight_price: '',
-                        Departure_date_time: '',
-                        Expected_arrival_date_time: '',
-                        Modified_by: ''
-                    });
-                }
+                setFlight(fetchedFlight);
+                console.log(res.data);
+                console.log(flight);
             })
-            .catch(err => console.error("API error:", err));
+            .catch(err => console.error(err));
     }, [id, location.state]);
     
-    
+
     // Handle form input change
     const handleChange = (e) => {
         setFlight({ ...flight, [e.target.name]: e.target.value });
