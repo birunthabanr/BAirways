@@ -195,7 +195,17 @@ const AdminScheduleFlight = () => {
     const scheduleDetails = schedule.map((item, index) => {
         const modifiedBy = item.Modified_BY === null ? 'N/A' : item.Modified_BY;
         const modifiedTime = item.Modified_time === null ? 'N/A' : item.Modified_time;
-
+    
+        // Determine status class based on the Status value
+        const statusClass =
+            item.Status === "on-time"
+                ? "status-on-time"
+                : item.Status === "delayed"
+                ? "status-delayed"
+                : item.Status === "canceled"
+                ? "status-canceled"
+                : "";
+    
         return (
             <tr key={index} className="data">
                 <td>{item.Flight_ID}</td>
@@ -209,31 +219,17 @@ const AdminScheduleFlight = () => {
                 <td>{item.Created_time}</td>
                 <td>{modifiedBy}</td>
                 <td>{modifiedTime}</td>
+                <td className={statusClass}>{item.Status}</td>
                 <td>
                     <div className="dropdown">
-                        {/* <button
-                            className="btn btn-secondary dropdown-toggle"
-                            type="button"
-                            id={`dropdownMenuButton${index}`}
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            Actions
-                        </button> */}
                         <ul className="dropdown-menu" aria-labelledby={`dropdownMenuButton${index}`}>
                             <li>
-                                <button
-                                    className="dropdown-item"
-                                    onClick={() => handleEdit(item)}
-                                >
+                                <button className="dropdown-item" onClick={() => handleEdit(item)}>
                                     Edit
                                 </button>
                             </li>
                             <li>
-                                <button
-                                    className="dropdown-item"
-                                    onClick={() => {handleRemove(item.Flight_ID) }}
-                                >
+                                <button className="dropdown-item" onClick={() => {handleRemove(item.Flight_ID)}}>
                                     Remove
                                 </button>
                             </li>
@@ -271,6 +267,7 @@ const AdminScheduleFlight = () => {
                                             <th>Created Time</th>
                                             <th>Modified By</th>
                                             <th>Modified Time</th>
+                                            <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>

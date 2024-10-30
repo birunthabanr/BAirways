@@ -51,20 +51,20 @@ const ScheduleQuery = () => {
 };
 
 // Function to add a new schedule
-const addSchedule = (Aircraft_ID,Route_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By) => {
-  console.log(Aircraft_ID, Route_ID,Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By);
+const addSchedule = (Aircraft_ID,Route_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By,Status) => {
+  console.log(Aircraft_ID, Route_ID,Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By,Status);
     return new Promise((resolve, reject) => {
       // const addScheduleQuery = `
       //   INSERT INTO FlightSchedules (Aircraft_ID, Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By, Created_time, Modified_by, Modified_time) 
       //   VALUES (?, ?, ?, ?, ?, NOW(), ?, NOW());
       // `;
       
-      const addScheduleQuery = `call InsertFlight(?,?,?,?,?,?)`;
+      const addScheduleQuery = `call InsertFlight(?,?,?,?,?,?,?)`;
      
 
       connection.query(
         addScheduleQuery, 
-        [Aircraft_ID, Route_ID,Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By], 
+        [Aircraft_ID, Route_ID,Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By,Status], 
         (err, result) => {
           if (err) {
             reject('Error adding schedule: ' + err.stack);
@@ -102,11 +102,11 @@ const addSchedule = (Aircraft_ID,Route_ID, Departure_date_time, Expected_arrival
       // const Flight_price = scheduleData.Flight_price;
       // const Modified_by = scheduleData.Modified_by;
       const updateScheduleQuery = `
-             call UpdateFlightSchedule(?,?,?,?,?,?,?,now())
+             call UpdateFlightSchedule(?,?,?,?,?,?,?,now(),?)
       `;
       connection.query(
         updateScheduleQuery, 
-        [scheduleData.Flight_ID,scheduleData.Route_ID,scheduleData.Aircraft_ID,scheduleData.Departure_date_time,scheduleData.Expected_arrival_date_time,scheduleData.Flight_price,scheduleData.Modified_by], // Use Flight_ID here
+        [scheduleData.Flight_ID,scheduleData.Route_ID,scheduleData.Aircraft_ID,scheduleData.Departure_date_time,scheduleData.Expected_arrival_date_time,scheduleData.Flight_price,scheduleData.Modified_by,scheduleData.Status], // Use Flight_ID here
         (err, result) => {
           if (err) {
             reject('Error updating schedule: ' + err.stack);

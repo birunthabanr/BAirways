@@ -3,11 +3,12 @@ const router = express.Router();
 const {addSchedule, getAllFlightSchedules, updateSchedule,deleteSchedule,countFlightSchedules,getScheduleById,GetFLightDetailsByAirports,TakeFlightbyID} = require("../models/FlightSchedules");
 
 router.post("/", async (req, res) => {
-    const { Aircraft_ID, Route_ID,Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By } = req.body;
+    console.log(req.body);
+    const { Aircraft_ID, Route_ID,Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By ,Status} = req.body;
     // console.log(Aircraft_ID, Route_ID,Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By);
 
     try {
-        await addSchedule(Aircraft_ID, Route_ID,Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By);
+        await addSchedule(Aircraft_ID, Route_ID,Departure_date_time, Expected_arrival_date_time, Flight_price, Created_By,Status);
         res.json({ message: "Flight schedule created successfully!" });
     } catch (err) {
         console.error("Error creating flight schedule:", err);

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {insertModel,fetchAllModels,deleteModel} = require('../models/AircraftsModels');
+const {insertModel,fetchAllModels,deleteModel,getModelById} = require('../models/AircraftsModels');
 
 
 router.post('/', async (req, res) => {
@@ -44,6 +44,18 @@ router.delete('/:Model_ID', async (req, res) => {
     } catch (err) {
         console.error('Error deleting model:', err);
         res.status(500).json({ error: "Failed to delete model." });
+    }
+});
+
+router.get('/:Model_ID', async (req, res) => {
+    const Model_ID = req.params.Model_ID;
+
+    try {
+        const model = await getModelById(Model_ID);
+        res.json(model);
+    } catch (err) {
+        console.error('Error fetching model:', err);
+        res.status(500).json({ error: "Failed to fetch model." });
     }
 });
 

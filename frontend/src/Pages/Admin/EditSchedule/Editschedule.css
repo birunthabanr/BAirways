@@ -61,3 +61,7 @@ label {
 .btn-btn-primary1:hover {
     background-color: #0056b3; /* Lighter blue on hover */
 }
+
+.wide-dropdown {
+    width: 220px; /* Matches the width of .form-control */
+}

@@ -137,6 +137,21 @@ const EditSchedule = () => {
                         onChange={handleChange}
                     />
                 </div>
+                <div className="form-group">
+                <label htmlFor="Status">Status</label>
+                <select
+                    className="form-control wide-dropdown"
+                    id="Status"
+                    name="Status"
+                    value={flight.Status}
+                    onChange={handleChange}
+                >
+                    <option value="on-time">on-time</option>
+                    <option value="delayed">delayed</option>
+                    <option value="canceled">canceled</option>
+                </select>
+                </div>
+
 
                 <div className="form-group">
                     <label htmlFor="Created_By">Modified By</label>
