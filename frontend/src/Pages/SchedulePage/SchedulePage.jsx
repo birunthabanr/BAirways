@@ -41,8 +41,9 @@ const Schedule = () => {
         BusinessClassSeatCount,
         PlatinumClassSeatCount,
       };
-      console.log(response);
+      console.log(response); // This should return the seat counts
 
+      // Navigate to the booking page and pass the seat configuration
       navigate(`/book/${flight.FLight_ID}`, { state: { seatCounts } });
     } catch (error) {
       console.error("Error fetching seat counts:", error);
@@ -51,8 +52,8 @@ const Schedule = () => {
 
   return (
     <div>
-      {isAdmin ? <AdminNav /> : <Navbar classname="mb-10" />}
-      <div className="contain mt-100">
+      <AdminNav />
+      <div className="contain">
         <div className="row">
           <div className="col-md-12">
             <div className="card">

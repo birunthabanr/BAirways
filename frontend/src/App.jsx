@@ -26,17 +26,21 @@ import Report2 from "./Pages/Reports/Report 2/Report_2";
 import Report3 from "./Pages/Reports/Report 3/Report_3";
 import Report4 from "./Pages/Reports/Report 4/Report_4";
 // import BookSeats from './Pages//BookSeats/BookSeats';
-import SearchFlight from "./Pages/SearchFlight/SearchFlight";
-import SeatBooking from "./components/Seats/Seat";
-import Seats from "./components/Seats/SeatBooking";
-import EditSchedule from "./Pages/Admin/EditSchedule/EditSchedule";
-import Report5 from "./Pages/Reports/Report 5/Report_5";
-import AddRoutes from "./Pages/Admin/AddRoutes/AddRoutes";
-import FlightRoute from "./Pages/Admin/Route/Route";
+import SearchFlight from './Pages/SearchFlight/SearchFlight';
+import SeatBooking from './components/Seats/Seat';
+import Seats from './components/Seats/SeatBooking';
+import EditSchedule from './Pages/Admin/EditSchedule/EditSchedule';
+import Report5 from './Pages/Reports/Report 5/Report_5';
+import AddRoutes from './Pages/Admin/AddRoutes/AddRoutes';
+import FlightRoute from './Pages/Admin/Route/Route';
+
 
 const App = () => {
+
+  
   return (
-    <AuthProvider>
+    
+    <Router>
       <div>
         <Router>
           <div>

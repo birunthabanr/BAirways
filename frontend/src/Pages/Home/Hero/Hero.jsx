@@ -68,7 +68,7 @@ const Hero = () => {
             className="bg-blue-400 px-5 py-2 rounded-md border-[2px] border-blue-400 border-solid ease-in-out blueShadowBig"
             onClick={handleBookNowClick}
           >
-            <p className="font-semibold text-lg">Let's Get Started</p>
+            <p className="font-semibold text-lg">Book Now!</p>
           </motion.button>
         </motion.div>
 
