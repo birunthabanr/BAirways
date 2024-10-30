@@ -5,6 +5,7 @@ import axios from "axios";
 import "./Loginpage.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../helpers/AuthContext";
+import Navbar from "../Navbar/Navbar";
 
 function Loginpage() {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
@@ -121,303 +122,306 @@ function Loginpage() {
   };
 
   return (
-    <div className={`container ${isSignUpMode ? "sign-up-mode" : ""}`}>
-      <div className="forms-container">
-        <div className="signin-signup">
-          {/* Sign-in Form */}
-          <Formik
-            initialValues={{ username: "", password: "" }}
-            validationSchema={signInSchema}
-            onSubmit={handleLogInSubmit}
-          >
-            <Form className="sign-in-form">
-              <h2 className="title text-4xl font-semibold text-gray-200">
-                Log in
-              </h2>
-              <div className="input-field">
-                <i className="fas fa-user"></i>
-                <Field
-                  className="LoginInput"
-                  type="text"
-                  name="username"
-                  placeholder="Username"
+    <div>
+      <Navbar />
+      <div className={`container ${isSignUpMode ? "sign-up-mode" : ""}`}>
+        <div className="forms-container">
+          <div className="signin-signup">
+            {/* Sign-in Form */}
+            <Formik
+              initialValues={{ username: "", password: "" }}
+              validationSchema={signInSchema}
+              onSubmit={handleLogInSubmit}
+            >
+              <Form className="sign-in-form">
+                <h2 className="title text-4xl font-semibold text-gray-200">
+                  Log in
+                </h2>
+                <div className="input-field">
+                  <i className="fas fa-user"></i>
+                  <Field
+                    className="LoginInput"
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                  />
+                  <ErrorMessage
+                    name="username"
+                    component="div"
+                    className="error-message"
+                  />
+                </div>
+                <div className="input-field">
+                  <i className="fas fa-lock"></i>
+                  <Field
+                    className="LoginInput"
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                  />
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="error-message"
+                  />
+                </div>
+                <input
+                  type="submit"
+                  value="Login"
+                  className="bg-blue-400 px-10 py-2 rounded-md border-[2px] border-blue-400 border-solid ease-in-out blueShadowBig font-semibold"
                 />
-                <ErrorMessage
-                  name="username"
-                  component="div"
-                  className="error-message"
+                <button
+                  onClick={handleGuest}
+                  className="bg-blue-400 px-10 mt-5 py-2 rounded-full border-[2px] border-blue-400 border-solid ease-in-out blueShadowBig font-semibold"
+                >
+                  Continue as Guest
+                </button>
+              </Form>
+            </Formik>
+
+            {/* Sign-up Form */}
+            <Formik
+              initialValues={{
+                firstName: "",
+                secondName: "",
+                username: "",
+                email: "",
+                password: "",
+                country: "",
+                dob: "",
+                address: "",
+                city: "",
+                gender: "",
+                phone: "",
+              }}
+              validationSchema={signUpSchema}
+              // onSubmit={handleLogInSubmit}
+              onSubmit={handleSignUpSubmit}
+            >
+              <Form className="sign-up-form">
+                <h2 className="title text-4xl font-semibold text-gray-200">
+                  Sign up
+                </h2>
+
+                <div className="input-field-row">
+                  <div className="input-field">
+                    <i className="fas fa-user"></i>
+                    <Field
+                      className="LoginInput"
+                      type="text"
+                      name="firstName"
+                      placeholder="First Name"
+                    />
+                    <ErrorMessage
+                      name="firstName"
+                      component="span"
+                      className="error-message"
+                    />
+                  </div>
+                  <div className="input-field">
+                    <i className="fas fa-user"></i>
+                    <Field
+                      className="LoginInput"
+                      type="text"
+                      name="secondName"
+                      placeholder="Last Name"
+                    />
+                    <ErrorMessage
+                      name="secondName"
+                      component="span"
+                      className="error-message"
+                    />
+                  </div>
+                </div>
+
+                <div className="input-field">
+                  <i className="fas fa-user"></i>
+                  <Field
+                    className="LoginInput"
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                  />
+                  <ErrorMessage
+                    name="username"
+                    component="div"
+                    className="error-message"
+                  />
+                </div>
+
+                <div className="input-field">
+                  <i className="fas fa-envelope"></i>
+                  <Field
+                    className="LoginInput"
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                  />
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="error-message"
+                  />
+                </div>
+
+                <div className="input-field">
+                  <i className="fas fa-lock"></i>
+                  <Field
+                    className="LoginInput"
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                  />
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="error-message"
+                  />
+                </div>
+
+                <div className="input-field-row">
+                  <div className="input-field">
+                    <i className="fas fa-flag"></i>
+                    <Field
+                      className="LoginInput"
+                      type="text"
+                      name="country"
+                      placeholder="Country"
+                    />
+                    <ErrorMessage
+                      name="country"
+                      component="div"
+                      className="error-message"
+                    />
+                  </div>
+
+                  <div className="input-field">
+                    <i className="fas fa-calendar"></i>
+                    <Field
+                      className="LoginInput"
+                      type="date"
+                      name="dob"
+                      placeholder="Date of Birth"
+                      style={{ color: "black" }}
+                    />
+                    <ErrorMessage
+                      name="dob"
+                      component="div"
+                      className="error-message"
+                    />
+                  </div>
+                </div>
+
+                <div className="input-field-row">
+                  <div className="input-field">
+                    <i className="fas fa-address-card"></i>
+                    <Field
+                      className="LoginInput"
+                      type="text"
+                      name="address"
+                      placeholder="Address"
+                    />
+                    <ErrorMessage
+                      name="address"
+                      component="div"
+                      className="error-message"
+                    />
+                  </div>
+
+                  <div className="input-field">
+                    <i className="fas fa-city"></i>
+                    <Field
+                      className="LoginInput"
+                      type="text"
+                      name="city"
+                      placeholder="City"
+                    />
+                    <ErrorMessage
+                      name="city"
+                      component="div"
+                      className="error-message"
+                    />
+                  </div>
+                </div>
+
+                <div className="input-field-row">
+                  <div className="input-field">
+                    <i className="fas fa-venus-mars"></i>
+                    <Field className="LoginInput" as="select" name="gender">
+                      <option value="">Select Gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </Field>
+                    <ErrorMessage
+                      name="gender"
+                      component="div"
+                      className="error-message"
+                    />
+                  </div>
+
+                  <div className="input-field">
+                    <i className="fas fa-phone"></i>
+                    <Field
+                      className="LoginInput"
+                      type="text"
+                      name="phone"
+                      placeholder="Phone Number"
+                    />
+                    <ErrorMessage
+                      name="phone"
+                      component="div"
+                      className="error-message"
+                    />
+                  </div>
+                </div>
+
+                <input
+                  type="submit"
+                  className="bg-blue-400 px-10 py-2 rounded-md border-[2px] border-blue-400 border-solid ease-in-out blueShadowBig font-semibold"
+                  value="Sign up"
                 />
-              </div>
-              <div className="input-field">
-                <i className="fas fa-lock"></i>
-                <Field
-                  className="LoginInput"
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="error-message"
-                />
-              </div>
-              <input
-                type="submit"
-                value="Login"
-                className="bg-blue-400 px-10 py-2 rounded-md border-[2px] border-blue-400 border-solid ease-in-out blueShadowBig font-semibold"
-              />
+              </Form>
+            </Formik>
+          </div>
+        </div>
+
+        <div className="panels-container">
+          <div className="panel left-panel">
+            <div className="content">
+              <h3>New here ?</h3>
+              <p>
+                Create an account with us today! Enjoy easy bookings, exclusive
+                offers, and stay updated with the latest travel news. Join our
+                community now and elevate your travel experience!
+              </p>
               <button
-                onClick={handleGuest}
-                className="bg-blue-400 px-10 mt-5 py-2 rounded-md border-[2px] border-blue-400 border-solid ease-in-out blueShadowBig font-semibold"
+                onClick={handleSignUpClick}
+                className="btn transparent"
+                id="sign-up-btn"
               >
-                Continue as Guest
-              </button>
-            </Form>
-          </Formik>
-
-          {/* Sign-up Form */}
-          <Formik
-            initialValues={{
-              firstName: "",
-              secondName: "",
-              username: "",
-              email: "",
-              password: "",
-              country: "",
-              dob: "",
-              address: "",
-              city: "",
-              gender: "",
-              phone: "",
-            }}
-            validationSchema={signUpSchema}
-            // onSubmit={handleLogInSubmit}
-            onSubmit={handleSignUpSubmit}
-          >
-            <Form className="sign-up-form">
-              <h2 className="title text-4xl font-semibold text-gray-200">
                 Sign up
-              </h2>
-
-              <div className="input-field-row">
-                <div className="input-field">
-                  <i className="fas fa-user"></i>
-                  <Field
-                    className="LoginInput"
-                    type="text"
-                    name="firstName"
-                    placeholder="First Name"
-                  />
-                  <ErrorMessage
-                    name="firstName"
-                    component="span"
-                    className="error-message"
-                  />
-                </div>
-                <div className="input-field">
-                  <i className="fas fa-user"></i>
-                  <Field
-                    className="LoginInput"
-                    type="text"
-                    name="secondName"
-                    placeholder="Last Name"
-                  />
-                  <ErrorMessage
-                    name="secondName"
-                    component="span"
-                    className="error-message"
-                  />
-                </div>
-              </div>
-
-              <div className="input-field">
-                <i className="fas fa-user"></i>
-                <Field
-                  className="LoginInput"
-                  type="text"
-                  name="username"
-                  placeholder="Username"
-                />
-                <ErrorMessage
-                  name="username"
-                  component="div"
-                  className="error-message"
-                />
-              </div>
-
-              <div className="input-field">
-                <i className="fas fa-envelope"></i>
-                <Field
-                  className="LoginInput"
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                />
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className="error-message"
-                />
-              </div>
-
-              <div className="input-field">
-                <i className="fas fa-lock"></i>
-                <Field
-                  className="LoginInput"
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="error-message"
-                />
-              </div>
-
-              <div className="input-field-row">
-                <div className="input-field">
-                  <i className="fas fa-flag"></i>
-                  <Field
-                    className="LoginInput"
-                    type="text"
-                    name="country"
-                    placeholder="Country"
-                  />
-                  <ErrorMessage
-                    name="country"
-                    component="div"
-                    className="error-message"
-                  />
-                </div>
-
-                <div className="input-field">
-                  <i className="fas fa-calendar"></i>
-                  <Field
-                    className="LoginInput"
-                    type="date"
-                    name="dob"
-                    placeholder="Date of Birth"
-                    style={{ color: "black" }}
-                  />
-                  <ErrorMessage
-                    name="dob"
-                    component="div"
-                    className="error-message"
-                  />
-                </div>
-              </div>
-
-              <div className="input-field-row">
-                <div className="input-field">
-                  <i className="fas fa-address-card"></i>
-                  <Field
-                    className="LoginInput"
-                    type="text"
-                    name="address"
-                    placeholder="Address"
-                  />
-                  <ErrorMessage
-                    name="address"
-                    component="div"
-                    className="error-message"
-                  />
-                </div>
-
-                <div className="input-field">
-                  <i className="fas fa-city"></i>
-                  <Field
-                    className="LoginInput"
-                    type="text"
-                    name="city"
-                    placeholder="City"
-                  />
-                  <ErrorMessage
-                    name="city"
-                    component="div"
-                    className="error-message"
-                  />
-                </div>
-              </div>
-
-              <div className="input-field-row">
-                <div className="input-field">
-                  <i className="fas fa-venus-mars"></i>
-                  <Field className="LoginInput" as="select" name="gender">
-                    <option value="">Select Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                  </Field>
-                  <ErrorMessage
-                    name="gender"
-                    component="div"
-                    className="error-message"
-                  />
-                </div>
-
-                <div className="input-field">
-                  <i className="fas fa-phone"></i>
-                  <Field
-                    className="LoginInput"
-                    type="text"
-                    name="phone"
-                    placeholder="Phone Number"
-                  />
-                  <ErrorMessage
-                    name="phone"
-                    component="div"
-                    className="error-message"
-                  />
-                </div>
-              </div>
-
-              <input
-                type="submit"
-                className="bg-blue-400 px-10 py-2 rounded-md border-[2px] border-blue-400 border-solid ease-in-out blueShadowBig font-semibold"
-                value="Sign up"
-              />
-            </Form>
-          </Formik>
-        </div>
-      </div>
-
-      <div className="panels-container">
-        <div className="panel left-panel">
-          <div className="content">
-            <h3>New here ?</h3>
-            <p>
-              Create an account with us today! Enjoy easy bookings, exclusive
-              offers, and stay updated with the latest travel news. Join our
-              community now and elevate your travel experience!
-            </p>
-            <button
-              onClick={handleSignUpClick}
-              className="btn transparent"
-              id="sign-up-btn"
-            >
-              Sign up
-            </button>
+              </button>
+            </div>
+            <img src="img/log.svg" className="image" alt="" />
           </div>
-          <img src="img/log.svg" className="image" alt="" />
-        </div>
-        <div className="panel right-panel">
-          <div className="content">
-            <h3>One of us ?</h3>
-            <p>
-              Log in to your account here for quick access to bookings, updates,
-              and exclusive offers.
-            </p>
-            <button
-              onClick={handleSignInClick}
-              className="btn transparent"
-              id="sign-in-btn"
-            >
-              Sign in
-            </button>
+          <div className="panel right-panel">
+            <div className="content">
+              <h3>One of us ?</h3>
+              <p>
+                Log in to your account here for quick access to bookings,
+                updates, and exclusive offers.
+              </p>
+              <button
+                onClick={handleSignInClick}
+                className="btn transparent"
+                id="sign-in-btn"
+              >
+                Sign in
+              </button>
+            </div>
+            <img src="img/register.svg" className="image" alt="" />
           </div>
-          <img src="img/register.svg" className="image" alt="" />
         </div>
       </div>
     </div>

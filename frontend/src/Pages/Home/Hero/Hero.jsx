@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
+import { Images } from "../../../assets/Images";
 
 import Navbar from "../../../components/Navbar/Navbar";
 
@@ -64,7 +65,7 @@ const Hero = () => {
 
           <motion.button
             className="bg-blue-400 px-5 py-2 rounded-md border-[2px] border-blue-400 border-solid ease-in-out blueShadowBig"
-            onClick={handleBookNowClick} // Attach the click handler
+            onClick={handleBookNowClick}
           >
             <p className="font-semibold text-lg">Let's Get Started</p>
           </motion.button>
@@ -72,6 +73,14 @@ const Hero = () => {
 
         <div className="w-[70%] h-fill rounded-md flex items-end justify-end absolute top-0 -right-48">
           {/* Add a plane image in the assets and uncomment this line */}
+          <motion.img
+            className="w-full aspect-[4/2] object-contain mt-10"
+            src={Images.Hero1}
+            alt="plane image"
+            initial="initial"
+            animate="animate"
+            variants={imageVariants}
+          />
           {/* <motion.img className="w-full aspect-[4/2] object-contain" src={Plane} alt='plane image' initial="initial" animate="animate" variants={imageVariants} /> */}
         </div>
       </div>

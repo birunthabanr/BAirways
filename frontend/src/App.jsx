@@ -39,7 +39,7 @@ const App = () => {
       <div>
         <Router>
           <div>
-            <main className="min-h-screen flex flex-col bg-gradient-to-r from-slate-800 to-slate-950 text-white text-sm sm:text-base">
+            <main className="min-h-screen flex flex-col bg-[#131313] text-white text-sm sm:text-base">
               {/* <Navbar /> */}
               {/* <div style={{ marginTop: '80px' }}> */}
               <div>
