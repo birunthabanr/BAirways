@@ -5,6 +5,7 @@ import Home from "./Pages/Home/Home";
 import Loginpage from "./components/LoginPage/Loginpage";
 import SchedulePage from "./Pages/SchedulePage/SchedulePage";
 import BookingPage from "./Pages/BookingPage/BookingPage";
+import FlightResults from "./Pages/FlightResults";
 import EditPage from "./Pages/EditPage/EditPage";
 import AddSchedulePage from "./Pages/AddSchedulePage/AddSchedulePage";
 import AdminPage from "./Pages/AdminPage/AdminPage";
@@ -39,7 +40,7 @@ const App = () => {
       <div>
         <Router>
           <div>
-            <main className="min-h-screen flex flex-col bg-[#131313] text-white text-sm sm:text-base">
+            <main className="min-h-screen flex flex-col bg-[#131313] text-white text-sm sm:text-base overflow-hidden">
               {/* <Navbar /> */}
               {/* <div style={{ marginTop: '80px' }}> */}
               <div>
@@ -58,6 +59,7 @@ const App = () => {
                   <Route path="/admin/add-airplane" element={<AddAirplane />} />
                   <Route path="/admin/model" element={<Model />} />
                   <Route path="/admin/add-model" element={<AddModel />} />
+                  <Route path="/flight-results" element={<FlightResults />} />
                   <Route
                     path="/admin/edit-airplane/:id"
                     element={<EditAirplane />}

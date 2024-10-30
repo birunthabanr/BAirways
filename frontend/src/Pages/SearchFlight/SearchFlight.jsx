@@ -63,7 +63,7 @@ const SearchFlight = () => {
     <div className="flex items-center justify-center p-10 min-h-screen bg-gradient-to-r from-blue-1100 to-blue-900">
       <Navbar />
 
-      <div className="flex flex-col items-center space-y-10">
+      <div className="flex flex-col items-center space-y-10" id="Background">
         {/* Row of Numbers */}
         <div className="flex space-x-10">
           <div className="block bg-gradient-to-r from-blue-500 to-blue-700 rounded-full py-7 px-12">

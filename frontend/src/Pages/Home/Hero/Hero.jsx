@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Images } from "../../../assets/Images";
+import Ticket from "../../../components/Ticket";
 
 import Navbar from "../../../components/Navbar/Navbar";
 
@@ -26,7 +27,7 @@ const Hero = () => {
   };
 
   const handleBookNowClick = () => {
-    navigate("/login");
+    navigate("/search-flight");
   };
 
   return (

@@ -168,11 +168,11 @@ function Loginpage() {
                 <input
                   type="submit"
                   value="Login"
-                  className="bg-blue-400 px-10 py-2 rounded-md border-[2px] border-blue-400 border-solid ease-in-out blueShadowBig font-semibold"
+                  className="bg-blue-400 px-10 py-2 rounded-md border-[2px] border-blue-400 border-solid ease-in-out font-semibold"
                 />
                 <button
                   onClick={handleGuest}
-                  className="bg-blue-400 px-10 mt-5 py-2 rounded-full border-[2px] border-blue-400 border-solid ease-in-out blueShadowBig font-semibold"
+                  className="bg-blue-400 px-10 mt-5 py-2 rounded-full border-[2px] border-blue-400 border-solid ease-in-out font-semibold"
                 >
                   Continue as Guest
                 </button>

@@ -1,6 +1,16 @@
 import React from "react";
 
-const Ticket = () => {
+const Ticket = ({
+  flightID,
+  firstName,
+  lastName,
+  departureAirport,
+  departureTime,
+  arrivalAirport,
+  arrivalTime,
+  seatID,
+  price,
+}) => {
   return (
     <div class="bg-white shadow-xl rounded-lg max-w-lg w-full">
       <div class="p-6">
@@ -11,39 +21,42 @@ const Ticket = () => {
 
         <div class="bg-blue-500 text-white rounded-t-lg p-4">
           <p class="font-semibold text-lg">
-            Flight: <span class="ml-2 font-normal">FLIGHT-ID-1234</span>
+            Flight: <span class="ml-2 font-normal text-white">{flightID}</span>
           </p>
           <p class="font-semibold text-lg">
-            Passenger: <span class="ml-2 font-normal">John Doe</span>
+            Passenger:{" "}
+            <span class="ml-2 font-normal text-white">
+              {firstName + " " + lastName}
+            </span>
           </p>
         </div>
 
         <div class="grid grid-cols-2 gap-4 p-6 bg-white text-gray-800">
           <div>
-            <p class="text-gray-600 font-semibold">Departure</p>
+            <p class="text-gray-600 font-semibold">{departureAirport}</p>
             <p>City Name</p>
-            <p>10:00 AM, 2024-10-28</p>
+            <p>{departureTime}</p>
           </div>
 
           <div>
-            <p class="text-gray-600 font-semibold">Arrival</p>
+            <p class="text-gray-600 font-semibold">{arrivalAirport}</p>
             <p>City Name</p>
-            <p>12:00 PM, 2024-10-28</p>
+            <p>{arrivalTime}</p>
           </div>
 
           <div class="col-span-2 border-t mt-4 pt-4">
             <p class="text-gray-600 font-semibold">Seat</p>
-            <p>12A</p>
+            <p>{seatID}</p>
           </div>
 
           <div class="col-span-2">
             <p class="text-gray-600 font-semibold">Price</p>
-            <p>$150.00</p>
+            <p>{price}</p>
           </div>
         </div>
 
         <div class="bg-blue-500 rounded-b-lg p-4 text-center text-white">
-          <p>Thank you for choosing our airline! Have a pleasant journey.</p>
+          <p>Thank you for choosing BAirways! Have a pleasant journey.</p>
         </div>
       </div>
     </div>

@@ -48,7 +48,7 @@ const Navbar = () => {
 
         <nav className="navbar flex items-center space-x-6">
           <a href="/">Home</a>
-          <a href="/">Book</a>
+          <a href="/search-flight">Book</a>
           <a onClick={handleScheduleClick}>Flight Schedule</a>
           {!authState ? (
             <>
