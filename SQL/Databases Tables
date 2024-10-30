@@ -1,0 +1,115 @@
+USE Bairways;
+
+CREATE TABLE IF NOT EXISTS Passenger (
+    Passenger_ID INT AUTO_INCREMENT PRIMARY KEY,
+    FirstName VARCHAR(50) NOT NULL,
+    SecondName VARCHAR(50) NOT NULL,
+    Country VARCHAR(50) NOT NULL,
+    DOB DATE NOT NULL,
+    Address VARCHAR(100),
+    City VARCHAR(50) NOT NULL,
+    Email VARCHAR(50) UNIQUE,
+    Gender VARCHAR(10),
+    Phone_number VARCHAR(20),
+    Num_of_booking INT DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS Reward (
+    Reward_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Reward_class VARCHAR(30) NOT NULL UNIQUE,
+    Discount FLOAT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Registered (
+    Username VARCHAR(30) PRIMARY KEY,
+    Password VARCHAR(255) NOT NULL,
+    Passenger_ID INT NOT NULL,
+    Reward_ID INT,
+    FOREIGN KEY (Passenger_ID) REFERENCES Passenger(Passenger_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Reward_ID) REFERENCES Reward(Reward_ID)
+);
+
+CREATE TABLE IF NOT EXISTS Aircraft_model (
+    Model_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Model_name VARCHAR(10) NOT NULL UNIQUE,
+    EconomyClassSeatCount INT NOT NULL,
+    BusinessClassSeatCount INT NOT NULL,
+    PlatinumClassSeatCount INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Aircraft (
+    Aircraft_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Model_ID INT NOT NULL,
+    FOREIGN KEY (Model_ID) REFERENCES Aircraft_model(Model_ID) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Airport (
+    Airport_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Short_code VARCHAR(10) NOT NULL UNIQUE,
+    Name VARCHAR(30) NOT NULL,
+    Country VARCHAR(30) NOT NULL,
+    State VARCHAR(30),
+    City VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Route (
+    Route_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Departure_Airport_ID INT NOT NULL,
+    Arrival_Airport_ID INT NOT NULL,
+    Distance FLOAT NOT NULL,
+    FOREIGN KEY (Departure_Airport_ID) REFERENCES Airport(Airport_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Arrival_Airport_ID) REFERENCES Airport(Airport_ID) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Admin (
+    Admin_ID VARCHAR(30) PRIMARY KEY,
+    Password VARCHAR(255) NOT NULL,
+    Name VARCHAR(30) NOT NULL,
+    Last_logging_time DATETIME
+);
+
+CREATE TABLE IF NOT EXISTS FlightSchedule (
+    Flight_ID VARCHAR(7) PRIMARY KEY,
+    Route_ID INT NOT NULL,
+    Aircraft_ID INT NOT NULL,
+    Departure_date_time DATETIME NOT NULL,
+    Expected_arrival_date_time DATETIME NOT NULL,
+    Flight_price FLOAT NOT NULL,
+    Created_By VARCHAR(30),
+    Created_time DATE DEFAULT CURRENT_DATE,
+    Modified_by VARCHAR(30),
+    Modified_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (Route_ID) REFERENCES Route(Route_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Aircraft_ID) REFERENCES Aircraft(Aircraft_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Created_By) REFERENCES Admin(Admin_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Modified_By) REFERENCES Admin(Admin_ID) ON DELETE SET NULL
+);
+
+CREATE TABLE IF NOT EXISTS Class (
+    Class_ID INT AUTO_INCREMENT PRIMARY KEY,
+    ClassType VARCHAR(20) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS Seat (
+    Seat_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Aircraft_ID INT NOT NULL,
+    Class_ID INT NOT NULL,
+    Row_num INT NOT NULL,
+    Col_num INT NOT NULL,
+    Seat_Price FLOAT NOT NULL,
+    FOREIGN KEY (Aircraft_ID) REFERENCES Aircraft(Aircraft_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Class_ID) REFERENCES Class(Class_ID) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Ticket (
+    Ticket_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Passenger_ID INT NOT NULL,
+    Flight_ID VARCHAR(7) NOT NULL,
+    Seat_ID INT NOT NULL,
+    Price FLOAT NOT NULL,
+    FOREIGN KEY (Passenger_ID) REFERENCES Passenger(Passenger_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Flight_ID) REFERENCES FlightSchedule(Flight_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Seat_ID) REFERENCES Seat(Seat_ID) ON DELETE CASCADE
+);
+
+

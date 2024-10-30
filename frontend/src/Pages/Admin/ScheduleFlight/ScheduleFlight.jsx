@@ -127,7 +127,9 @@ const AdminScheduleFlight = () => {
     let navigate = useNavigate();
 
     const handleEdit = (flight) => {
-        navigate(`/admin/edit-schedule/${flight.FLight_ID}`, { state: { flight } });
+        console.log("hello")
+        console.log("this is the flight",flight.Flight_ID);
+        navigate(`/admin/edit-schedule/${flight.Flight_ID}`, { state: { flight } });
     };
 
     // const handleRemove = (Flight_ID) => {
@@ -180,7 +182,10 @@ const AdminScheduleFlight = () => {
                         ? new Date(flight.Expected_arrival_date_time).toISOString().slice(0, 19).replace('T', ' ') 
                         : '';
                     const ModifiedDateTime = flight.Modified_time
-                    ? new Date(flight.Modified_time).toISOString().slice(0, 19).replace('T', ' ') 
+                    ? new   Date(flight.Modified_time).toISOString().slice(0, 19).replace('T', ' ') 
+                    : '';
+                    const CreatedTimeDateTime = flight.Created_By
+                    ? new Date(flight.Created_By).toISOString().slice(0, 19).replace('T', ' ') 
                     : '';
 
                     const price = flight.Flight_price+'$';
@@ -191,7 +196,8 @@ const AdminScheduleFlight = () => {
                         Departure_date_time: departureDateTime,
                         Expected_arrival_date_time: arrivalDateTime,
                         Modified_time: ModifiedDateTime,
-                        Flight_price : price
+                        Flight_price : price,
+                        Created_By : CreatedTimeDateTime
                     };
                 });
                 setSchedule(fetchedFlight);
@@ -232,7 +238,7 @@ const AdminScheduleFlight = () => {
                             <li>
                                 <button
                                     className="dropdown-item"
-                                    onClick={() => handleEdit(item.Flight_ID)}
+                                    onClick={() => handleEdit(item)}
                                 >
                                     Edit
                                 </button>
