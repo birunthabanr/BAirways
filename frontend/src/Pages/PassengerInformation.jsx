@@ -74,22 +74,15 @@ const PassengerInfo = () => {
       email,
       phone,
     };
-    const bookingDetails = {
+
+    localStorage.setItem('bookingInfo', JSON.stringify({
       passengerInfo,
-      flightID: state.flight.Flight_ID,
-      classType: state.travelClass,
-    };
+      flightDetails: state.flight,
+      classType: state.travelClass
+    }));
 
-    const response = await fetch("http://localhost:5174/api/book-flight", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(bookingDetails),
-    });
-    const data = await response.json();
-
-    if (data.message) {
-      navigate("/confirmation", { state: { bookingID: data.bookingID } });
-    }
+    // Navigate to ticket page
+    navigate("/ticket-view");
   };
 
   return (

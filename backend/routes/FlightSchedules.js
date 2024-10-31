@@ -13,6 +13,7 @@ const {
   searchFlights,
 } = require("../models/FlightSchedules");
 const connection = require("../database/connection");
+const {validateToken} = require('../middleware/AuthMiddleware');
 
 router.post("/", async (req, res) => {
   const {
@@ -172,6 +173,59 @@ router.get("/byID", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.send("Error fetching schedule");
+  }
+});
+
+router.get("/discounted-price", validateToken, async (req, res) => {
+  try {
+    const flightId = req.query.flightId;
+    const username = req.user.username;
+
+    // Get reward class from registered user
+    const rewardClassQuery = `
+      SELECT r.Reward_class 
+      FROM Registered reg
+      JOIN Passenger p ON reg.Passenger_ID = p.Passenger_ID
+      JOIN Reward r ON reg.Reward_ID = r.Reward_ID
+      WHERE reg.Username = ?
+    `;
+
+    connection.query(rewardClassQuery, [username], (err, rewardResults) => {
+      if (err) {
+        console.error("Error getting reward class:", err);
+        return res.status(500).json({ error: "Database error" });
+      }
+
+      if (rewardResults.length === 0) {
+        return res.json({ discountedPrice: null });
+      }
+
+      const rewardClass = rewardResults[0].Reward_class;
+
+      console.log(rewardClass);
+
+      // Get discounted price from view
+      const discountQuery = `
+        SELECT Discounted_Price 
+        FROM flightdiscountedprices 
+        WHERE Flight_ID = ? AND Reward_class = ?
+      `;
+
+      connection.query(discountQuery, [flightId, rewardClass], (err, priceResults) => {
+        if (err) {
+          console.error("Error getting discounted price:", err);
+          return res.status(500).json({ error: "Database error" });
+        }
+
+        res.json({ 
+          discountedPrice: priceResults[0]?.Discounted_Price || null,
+          rewardClass: rewardClass 
+        });
+      });
+    });
+  } catch (error) {
+    console.error("Error in discounted price route:", error);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
