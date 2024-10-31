@@ -133,28 +133,32 @@ router.post("/booked/:FLight_ID", async (req, res) => {
   // Map "Gold" class to "Business" in the database
   const classType = selectedClass === "Gold" ? "Business" : selectedClass;
 
+  // Get class ID based on class type
+  const classIdMap = {
+    'Economy': 1,
+    'Business': 2,
+    'Platinum': 3
+  };
+
+  const classId = classIdMap[classType];
+
   // Query to check if the seat is already booked
   connection.query(
-    `SELECT t.Flight_ID, s.Class_ID, s.Row_num, s.Col_num 
-       FROM ticket AS t 
-       JOIN seat AS s ON t.Seat_ID = s.Seat_ID 
-       JOIN class AS c ON c.Class_ID = s.Class_ID 
-       WHERE t.Flight_ID = ? AND c.ClassType = ? AND s.Row_num = ? AND s.Col_num = ?;`,
-    [id, classType, i + 1, j + 1],
-    function (err, result, fields) {
+    `SELECT s.Seat_ID, s.Status
+     FROM seat s
+     JOIN Aircraft a ON s.Aircraft_ID = a.Aircraft_ID
+     JOIN FlightSchedule fs ON fs.Aircraft_ID = a.Aircraft_ID
+     WHERE fs.Flight_ID = ? 
+     AND s.Class_ID = ? 
+     AND s.Row_num = ? 
+     AND s.Col_num = ?`,
+    [id, classId, i + 1, j + 1],
+    function (err, result) {
       if (err) {
         console.log(err);
         res.status(500).send("Database error");
       } else {
-        // If no results, the seat is not booked
-        if (result.length === 0) {
-          console.log("not booked");
-          res.send(false);
-        } else {
-          // If results are found, the seat is booked
-          console.log("booked");
-          res.send(true);
-        }
+        res.send(result[0]?.Status === 'Booked' || result[0]?.Status === 'in-progress');
       }
     }
   );
@@ -181,6 +185,34 @@ router.get("/byAirports", async (req, res) => {
     res.send("Error fetching schedule");
   }
 });
+
+router.post("/details/:Flight_ID", async (req, res) => {
+  const { Flight_ID } = req.params;
+  const seatSelections = req.body; // Array of seat objects
+
+  try {
+    const updatePromises = seatSelections.map(seat => {
+      return new Promise((resolve, reject) => {
+        const query = `CALL UpdateSeatStatus(?, ?, ?, ?)`;
+
+        connection.query(query, 
+          [seat.Flight_ID, seat.ClassType, seat.Row_num, seat.Col_num],
+          (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+          }
+        );
+      });
+    });
+
+    await Promise.all(updatePromises);
+    res.json({ success: true, message: "Seats status updated successfully" });
+  } catch (error) {
+    console.error("Error updating seat status:", error);
+    res.status(500).json({ error: "Failed to update seat status" });
+  }
+});
+
 
 router.get("/modify/id", async (req, res) => {
   try {

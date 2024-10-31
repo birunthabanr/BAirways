@@ -4,7 +4,7 @@ const {insertUser, getUserByEmail, countUsers, GetPassengerAgeGroupByFlight, Get
 const {insertRegistered, getRegisteredByUsername} = require('../models/RegisteredUsers');
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
-// const { validateToken } = require("../middleware/AuthMiddleware");
+const { validateToken } = require("../middleware/AuthMiddleware");
 
 
 router.post("/signup", async (req, res) => {
@@ -80,6 +80,35 @@ router.post("/signup", async (req, res) => {
 //     }
 // });
 
+// Add this new endpoint
+router.get("/details", validateToken, async (req, res) => {
+    try {
+      const passengerId = req.user.passengerId;
+      
+      // Using the existing database connection
+      const query = `
+        SELECT FirstName, SecondName, Country, DOB, Address, City, Email, Gender, Phone_number 
+        FROM Passenger 
+        WHERE Passenger_ID = ?
+      `;
+      
+      connection.query(query, [passengerId], (err, results) => {
+        if (err) {
+          console.error('Error fetching user details:', err);
+          return res.json({ error: "Failed to fetch user details" });
+        }
+        
+        if (results.length === 0) {
+          return res.json({ error: "User not found" });
+        }
+        
+        res.json(results[0]);
+      });
+    } catch (error) {
+      console.error('Error in /details route:', error);
+      res.json({ error: "An error occurred while fetching user details" });
+    }
+  });
 
 router.get("/count", async (req, res) => {
     try {

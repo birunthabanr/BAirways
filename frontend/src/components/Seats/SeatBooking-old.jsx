@@ -95,14 +95,14 @@ function Seats(props) {
   console.log("Rending")
   useEffect(() => {
 
-    axios.get(`http://localhost:5174/schedule/booking/${FLight_ID}`).then((response) => {
+    // axios.get(`http://localhost:5174/schedule/booking/${FLight_ID}`).then((response) => {
 
-      setSeatConfig(response.data);
+    //   setSeatConfig(response.data);
 
-      console.log(response)
-    //   console.log("dhhhL ", response.data[0].Price)
-      setObject(response.data)
-      setSeatConfig(response.data);
+    //   console.log(response)
+    // //   console.log("dhhhL ", response.data[0].Price)
+    //   setObject(response.data)
+    //   setSeatConfig(response.data);
     //   console.log(object)
 
     });

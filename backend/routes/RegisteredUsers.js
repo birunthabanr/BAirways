@@ -58,10 +58,9 @@ router.post("/login", async (req, res) => {
 
         // Generate token
         const accessToken = sign(
-            { username: user.username, id: user.id },
-            "importantsecret",
-            { expiresIn: '1h' }  // Optional expiration time
-        );
+            { username: user.Username, passengerId: user.Passenger_ID },
+            "importantsecret"
+          );
 
         return res.json({ accessToken });
 

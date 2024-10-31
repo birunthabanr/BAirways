@@ -118,9 +118,38 @@ function Seats(props) {
     setSelectedSeat(seat);
   };
 
-  const handleProceed = () => {
+  const handleProceed = async () => {
     if (selectedClass && selectedSeat) {
-      setConfirmBooking(true); // Show confirmation modal
+      // Parse the seat coordinates from the selectedSeat string (format: "row,col")
+      const [row, col] = selectedSeat.split(',').map(Number);
+      
+      // Create the seat details object
+      const seatDetails = {
+        Flight_ID: FLight_ID,
+        Row_num: row,
+        Col_num: col,
+        ClassType: selectedClass
+      };
+  
+      // Store in localStorage
+      localStorage.setItem('currentBooking', JSON.stringify(seatDetails));
+  
+      try {
+        // Make API call to update seat status
+        const response = await axios.post(
+          `http://localhost:5174/schedule/details/${FLight_ID}`,
+          [seatDetails] // API expects an array of seat objects
+        );
+  
+        if (response.data.success) {
+          setConfirmBooking(true); // Show confirmation modal
+        } else {
+          alert("Failed to reserve seat. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error reserving seat:", error);
+        alert(error.response?.data?.error || "Failed to reserve seat. Please try again.");
+      }
     } else {
       alert("Please select a class and a seat before proceeding.");
     }
@@ -128,11 +157,13 @@ function Seats(props) {
 
   const confirmAndNavigate = () => {
     setConfirmBooking(false); // Hide modal
-    navigate("/finalize-booking", {
+    const seatDetails = JSON.parse(localStorage.getItem('currentBooking'));
+    
+    navigate("/passenger-info", {
       state: {
-        FLight_ID,
-        selectedClass,
-        selectedSeat,
+        FLight_ID: seatDetails.Flight_ID,
+        selectedClass: seatDetails.ClassType,
+        selectedSeat: `${seatDetails.Row_num},${seatDetails.Col_num}`,
       },
     });
   };

@@ -34,6 +34,8 @@ import Report5 from "./Pages/Reports/Report 5/Report_5";
 import AddRoutes from "./Pages/Admin/AddRoutes/AddRoutes";
 import FlightRoute from "./Pages/Admin/Route/Route";
 import FinalizeBooking from "./components/FinalizeBooking/FinalizeBooking";
+import TicketView from "./Pages/TicketView";
+import PassengerInfo from "./Pages/PassengerInformation";
 
 const App = () => {
   return (
@@ -88,6 +90,8 @@ const App = () => {
                   <Route path="/admin/routes" element={<FlightRoute />} />
                   {/* Define other routes here */}
                   <Route path="/finalize-booking" element={<FinalizeBooking />} />
+                  <Route path="/ticket-view" element={<TicketView />} />
+                  <Route path="/passenger-info" element={<PassengerInfo />} />
                 </Routes>
               </div>
             </main>
