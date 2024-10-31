@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import Navbar from "../Navbar/Navbar";
 
 
 function SeatCollection(props) {
@@ -10,7 +11,11 @@ function SeatCollection(props) {
 
 
   const [bookingData, setBookingData] = useState({});
-  const [selectedSeat, setSelectedSeat] = useState(null);
+  const [selectedSeat, setSelectedSeat] = useState({
+    Platinum: null,
+    Gold: null,
+    Economy: null,
+  });
 
   console.log("bookingData",bookingData,rows, columns,selectedClass, "Platinum")
 
@@ -29,8 +34,11 @@ function SeatCollection(props) {
   }, [FLight_ID, rows, columns, selectedClass]);
 
   const handleSeatClick = (seatKey) => {
-    setSelectedSeat(seatKey);
-    onSeatSelect(seatKey);  // Pass selected seat to parent
+    setSelectedSeat((prev) => ({
+      ...prev,
+      [selectedClass]: seatKey, // Update the selected seat for the current class
+    }));
+    onSeatSelect(seatKey); // Pass selected seat to parent
   };
 
   var count = 1;
@@ -44,8 +52,8 @@ function SeatCollection(props) {
       let className = "w-1/10 px-3 py-3 rounded-2xl ml-2.5 my-1 ";
       if (bookingData[seatKey]) {
         className += "bg-red-400";  // Booked seat
-      } else if (seatKey === selectedSeat) {
-        className += "bg-red-600";  // Selected seat
+      } else if (seatKey === selectedSeat[selectedClass]) {
+        className += "bg-red-600";  // Selected seat for the current class
       } else {
         className += "bg-gray-400 hover:bg-gray-500";  // Available seat
       }
@@ -115,15 +123,19 @@ function Seats(props) {
   };
 
   const handleSeatSelect = (seat) => {
-    setSelectedSeat(seat);
+    setSelectedSeat((prev) => ({
+      ...prev,
+      [selectedClass]: seat, // Set the selected seat for the current class
+    }));
   };
 
   const handleProceed = async () => {
-    if (selectedClass && selectedSeat) {
-      // Parse the seat coordinates from the selectedSeat string (format: "row,col")
-      const [row, col] = selectedSeat.split(',').map(Number);
-      
-      // Create the seat details object
+    if (selectedClass && selectedSeat && selectedSeat[selectedClass]) {
+      // Get the seat coordinates for the selected class
+      const seatString = selectedSeat[selectedClass];
+      const [row, col] = seatString.split(',').map(Number);
+  
+      // Rest of your code remains the same
       const seatDetails = {
         Flight_ID: FLight_ID,
         Row_num: row,
@@ -196,52 +208,53 @@ function Seats(props) {
   };
 
   return (
-    <section className="bg-gradient-to-b from-blue-900 to-black min-h-screen flex items-center justify-center mt-10">
-      <div className="bg-gradient-to-b from-blue-900 to-black flex rounded-2xl shadow-lg items-center">
+    <section className="bg-[#131313] min-h-screen flex items-center justify-center mt-10 overflow-y-hidden">
+      <Navbar />
+      <div className="bg-white/10 backdrop-blur-md to-black flex rounded-2xl shadow-lg items-center px-10 mt-10 mb-100">
         <div className="flex-col w-1/3">
           <div className="w-full my-4 py-0">
-            <h5 className="text-center px-12 text-lg">AirCraft Model</h5>
+            <h5 className="text-center px-12 py-10 font-medium text-2xl">AirCraft Model</h5>
             <h6></h6>
           </div>
 
           <div className="w-full px-5 py-3">
             <div
-              className={`w-full px- py-1 ${selectedClass === "Platinum"
-                ? "bg-cyan-600"
-                : "bg-cyan-500 hover:bg-cyan-600"
+              className={`w-full px-5 py-5 items-center ${selectedClass === "Platinum"
+                ? "bg-blue-800"
+                : "bg-blue-400 hover:bg-blue-400"
                 } rounded-2xl `}
               onClick={() => handleClassSelection("Platinum")}
             >
-              <h4 className="text-lg">Platinum Class</h4>
-              <h4 className="text-sm">{`Price: $${platPrice}`}</h4>
+              <h4 className="text-lg block">Platinum Class</h4>
+              <h4 className="text-lg block">{`Price: $${platPrice}`}</h4>
             </div>
             <div
-              className={`w-full px-0 py-1 ${selectedClass === "Gold"
-                ? "bg-cyan-600"
-                : "bg-cyan-500 hover:bg-cyan-600 my-5"
+              className={`w-full px-5 py-5 items-center ${selectedClass === "Gold"
+                ? "bg-blue-800"
+                : "bg-blue-400 hover:bg-blue-400"
                 } my-5 rounded-2xl`}
               onClick={() => handleClassSelection("Gold")}
             >
-              <h4 className="text-lg">Gold Class</h4>
-              <h4 className="text-sm">{`Price: $${goldPrice}`}</h4>
+              <h4 className="text-lg block">Gold Class<br /></h4>
+              <h4 className="text-lg block">{`Price : $${goldPrice}`}</h4>
             </div>
             <div
-              className={`w-full px-0 py-1 ${selectedClass === "Economy"
-                ? "bg-cyan-600"
-                : "bg-cyan-500 hover:bg-cyan-600"
+              className={`w-full px-5 py-5 items-center ${selectedClass === "Economy"
+                ? "bg-blue-800"
+                : "bg-blue-400 hover:bg-blue-400"
                 } rounded-2xl`}
               onClick={() => handleClassSelection("Economy")}
             >
-              <h4 className="text-lg">Economy Class</h4>
-              <h4 className="text-sm">{`Price: $${econPrice}`}</h4>
+              <h4 className="text-lg block">Economy Class</h4>
+              <h4 className="text-lg block">{`Price: $${econPrice}`}</h4>
             </div>
           </div>
 
           <div className="flex justify-center px-5 mb-2 py-6">
             <button
               type="button"
-              onClick={handleProceed}
-              className="px-12 bg-[#F97827] rounded-xl text-white py-2 hover:scale-105 duration-300"
+              onClick={() => handleProceed()}
+              className="bg-[#F97827] px-10 py-5 rounded-full border-black border-solid text-white font-medium text-xl"
             >
               Proceed
             </button>
@@ -249,13 +262,13 @@ function Seats(props) {
         </div>
         {renderSeatNumbers()}
         {confirmBooking && (
-          <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50 text-black">
             <div className="bg-white rounded-lg p-6">
               <h2 className="text-lg font-semibold">Confirm Booking</h2>
               <p className="mt-2">Are you sure you want to proceed with this booking?</p>
               <div className="flex justify-end mt-4">
                 <button onClick={() => setConfirmBooking(false)} className="bg-gray-300 px-4 py-2 rounded mr-2">Cancel</button>
-                <button onClick={confirmAndNavigate} className="bg-[#F97827] text-white px-4 py-2 rounded">Confirm</button>
+                <button onClick={confirmAndNavigate} className="bg-[#F97827] text-white px-4 py-2 rounded hover:bg-[#D34827]">Confirm</button>
               </div>
             </div>
           </div>

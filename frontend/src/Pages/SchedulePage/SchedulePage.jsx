@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import "./SchedulePage.css";
-import AdminNav from '../../components/AdminNav/AdminNav';
+import Navbar from '../../components/Navbar/Navbar';
 
 const Schedule = ({ isAdmin }) => {
     const [schedule, setSchedule] = useState([]);
@@ -39,7 +39,8 @@ const Schedule = ({ isAdmin }) => {
 
     return (
         <div>
-            <AdminNav />
+            <Navbar />
+            <div className='h-24'></div>
             <div className="contain">
                 <div className="row">
                     <div className="col-md-12">

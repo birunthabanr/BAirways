@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Ticket from "../components/Ticket";
+import Navbar from "../components/Navbar/Navbar";
 
 const TicketView = () => {
     const [bookingData, setBookingData] = useState(null);
@@ -53,6 +54,8 @@ const TicketView = () => {
   
     return (
       <div className="flex flex-col items-center">
+        <Navbar />
+        <div className="h-44"></div>
         <Ticket
           flightID={flightData.Flight_ID}
           firstName={bookingData.passengerInfo.fname}
