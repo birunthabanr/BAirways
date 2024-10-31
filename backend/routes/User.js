@@ -5,6 +5,7 @@ const {insertRegistered, getRegisteredByUsername} = require('../models/Registere
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const { validateToken } = require("../middleware/AuthMiddleware");
+const connection = require('../database/connection');
 
 
 router.post("/signup", async (req, res) => {
@@ -83,16 +84,18 @@ router.post("/signup", async (req, res) => {
 // Add this new endpoint
 router.get("/details", validateToken, async (req, res) => {
     try {
-      const passengerId = req.user.passengerId;
+      const username = req.user.username;
       
-      // Using the existing database connection
+      // Using the existing database connection with JOIN query
       const query = `
-        SELECT FirstName, SecondName, Country, DOB, Address, City, Email, Gender, Phone_number 
-        FROM Passenger 
-        WHERE Passenger_ID = ?
+        SELECT p.FirstName, p.SecondName, p.Country, p.DOB, p.Address, 
+               p.City, p.Email, p.Gender, p.Phone_number 
+        FROM Passenger p
+        JOIN Registered r ON p.Passenger_ID = r.Passenger_ID
+        WHERE r.Username = ?
       `;
       
-      connection.query(query, [passengerId], (err, results) => {
+      connection.query(query, [username], (err, results) => {
         if (err) {
           console.error('Error fetching user details:', err);
           return res.json({ error: "Failed to fetch user details" });

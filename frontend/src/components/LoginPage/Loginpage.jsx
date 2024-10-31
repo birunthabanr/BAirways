@@ -14,7 +14,7 @@ function Loginpage() {
   const handleSignUpClick = () => setIsSignUpMode(true);
   const handleSignInClick = () => setIsSignUpMode(false);
 
-  // const {setAuthState} = useContext(AuthContext);
+  const {setAuthState} = useContext(AuthContext);
   //const [authState, setAuthState] = useState(false);
 
   let navigate = useNavigate();
